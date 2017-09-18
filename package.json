@@ -4,8 +4,7 @@
   "description": "A 3-D Secure merchant plug-in (MPI) for payment gateways.",
   "main": "index.html",
   "scripts": {
-    "serve": "gulp serve",
-    "test": "gulp test"
+    "dev": "gulp serve"
   },
   "repository": {
     "type": "git",
@@ -28,7 +27,11 @@
   "homepage": "https://github.com/clearhaus/3dsecure.io#readme",
   "devDependencies": {
     "browser-sync": "^2.18.13",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-sass": "^3.1.0"
-  }
+    "gulp-clean": "^0.3.2",
+    "gulp-sass": "^3.1.0",
+    "run-sequence": "^2.1.0"
+  },
+  "dependencies": {}
 }
