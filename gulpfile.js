@@ -4,6 +4,7 @@ const gulp        = require('gulp'),
       runSequence = require('run-sequence'),
       del         = require('del'),
       sass        = require('gulp-sass'),
+      autoprefixr = require('gulp-autoprefixer'),
       browserSync = require('browser-sync'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
@@ -40,6 +41,7 @@ gulp.task('copyJS', () => {
 gulp.task('transpSass', () => {
   return gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixr({ browsers: ['last 10 versions'] }))
     .pipe(gulp.dest('dist/assets'));
 });
 
