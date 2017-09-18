@@ -1,0 +1,34 @@
+{
+  "name": "3dsecure.io",
+  "version": "0.0.0",
+  "description": "A 3-D Secure merchant plug-in (MPI) for payment gateways.",
+  "main": "index.html",
+  "scripts": {
+    "serve": "gulp serve",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clearhaus/3dsecure.io.git"
+  },
+  "keywords": [
+    "3dsecure",
+    "3dsecure.io",
+    "clearhaus",
+    "payment",
+    "gateway",
+    "api",
+    "maninak"
+  ],
+  "author": "Clearhaus",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/clearhaus/3dsecure.io/issues"
+  },
+  "homepage": "https://github.com/clearhaus/3dsecure.io#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  }
+}
