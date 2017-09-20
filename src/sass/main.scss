@@ -1,4 +1,166 @@
+/*-----------------------------*\
+ *  VARIABLES
+\*-----------------------------*/
+
+/*
+    Misc global variables
+*/
+$font-size-base: 20px;
+
+$opacity-primary: 0.87;
+$opacity-secondary: 0.54;
+
+/*
+    Colors
+*/
+$color-primary-dark: #000;
+$color-primary-light: #fff;
+
+/*
+    Breakpoints
+*/
+$brk-phone-vs-tablet-port: 600px;
+$brk-tablet-port-vs-tablet-land: 900px;
+$brk-tablet-land-vs-desktop: 1200px;
+$brk-desktop-vs-big-desktop: 1800px;
+
+/*
+    Reset non-uniform browser defaults
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.1s ease-out;
+}
+
+a:hover {
+  opacity: $opacity-secondary;
+}
+
+  
+
+/*-----------------------------*\
+ *  UTILITIES
+\*-----------------------------*/
+
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}
+
+.x-space-between {
+  display: flex;
+  justify-content: space-between
+}
+
+.y-center {
+  display: flex;
+  align-items: center;
+}
+
+.secondary {
+  opacity: $opacity-secondary;
+}
+
+.ul-horizontal {
+  list-style-type: none;
+
+  li {
+    display: inline;
+  }
+}
+
+
+
+/*-----------------------------*\
+ *  TYPOGRAPHY
+\*-----------------------------*/
+
+@font-face {
+  font-family: 'Calibre';
+  src:  url('./fonts/CalibreWeb-Regular.woff2') format('woff2'),
+        url('./fonts/CalibreWeb-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Calibre';
+  src:  url('./fonts/CalibreWeb-Semibold.woff2') format('woff2'),
+        url('./fonts/CalibreWeb-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularPro';
+  src:  url('./fonts/lineto-circular-pro-medium.woff2') format('woff2'),
+        url('./fonts/lineto-circular-pro-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+$calibre: Calibre, Arial, Helvetica, sans-serif;
+$circularPro: CircularPro, Arial, Helvetica, sans-serif;
+
+
+
+/*-----------------------------*\
+ *  PRODUCT PAGE
+\*-----------------------------*/
+
 body {
-  color: red;
-  filter: blur(2px);
+  font-size: $font-size-base;
+
+  section.header {
+    display: grid;
+    grid-template-columns: 1fr minmax($brk-tablet-port-vs-tablet-land, $brk-tablet-land-vs-desktop - 1) 1fr;
+    grid-template-areas: 'gutter-l content gutter-r';
+  }
+}
+
+header {
+  grid-area: content;
+  height: 4em;
+  font-family: $calibre;
+  font-size: 0.9em;
+  color: $color-primary-dark;
+
+  aside.logo {
+    font-family: $circularPro;
+    
+    img {
+      max-height: 2em;
+      max-width: 2em;
+      margin-right: 0.25em;
+    }
+  }
+
+  nav ul {
+  
+    li {
+      padding-right: 1em;
+      padding-left: 1em;
+      
+      a {
+        padding-bottom: 0.1em;
+      }
+    }
+
+    li.current a {
+        border-bottom: 0.125em solid;
+    }
+  }
+
+  .cta span {
+    margin-right: 0.25em;
+  }
 }
