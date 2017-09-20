@@ -70,6 +70,19 @@ a:hover {
 .secondary {
   opacity: $opacity-secondary;
 }
+.padding-horiz-xs { padding-right: 0.25em;  padding-left: 0.25em; }
+.padding-horiz-sm { padding-right: 0.5em;   padding-left: 0.5em;  }
+.padding-horiz-md { padding-right: 1em;     padding-left: 1em;    }
+.padding-horiz-lg { padding-right: 2em;     padding-left: 2em;    }
+.padding-horiz-xl { padding-right: 4em;     padding-left: 4em;    }
+
+.padding-vert-xs  { padding-top: 0.25em;  padding-bottom: 0.25em; }
+.padding-vert-sm  { padding-top: 0.5em;   padding-bottom: 0.5em;  }
+.padding-vert-md  { padding-top: 1em;     padding-bottom: 1em;    }
+.padding-vert-lg  { padding-top: 2em;     padding-bottom: 2em;    }
+.padding-vert-xl  { padding-top: 4em;     padding-bottom: 4em;    }
+
+.secondary { opacity: $opacity-secondary; }
 
 .ul-horizontal {
   list-style-type: none;
