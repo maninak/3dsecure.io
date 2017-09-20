@@ -34,18 +34,7 @@
       <div class="hero"></div>
     </main>
     <span class="imports">
-      <!-- TODO find out why when importing the polyfill programmatically it doesn't work -->
-      <!-- <script async defer>
-        var isCssGridSupported = document.createElement('test-grid').style.gridTemplateRows === "";
-        if (!isCssGridSupported) {
-          var gridPolyfillEl = document.createElement('script');
-          gridPolyfillEl.defer = true;
-          gridPolyfillEl.src = './assets/css-grid-polyfill.min.js';
-          document.querySelector('.imports').appendChild(gridPolyfillEl);
-        }
-      </script> -->
       <link rel="stylesheet" href="./assets/main.css">
-      <script defer src="./assets/css-grid-polyfill.min.js"></script>
       <script async defer src="./assets/main.js"></script>
     </span>
   </body>
