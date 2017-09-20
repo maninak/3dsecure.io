@@ -4,8 +4,8 @@
   "description": "A 3-D Secure merchant plug-in (MPI) for payment gateways.",
   "main": "index.html",
   "scripts": {
-    "dev": "gulp serveDev",
-    "prod": "gulp buildProd"
+    "dev": "gulp serve:dev",
+    "prod": "gulp build:prod"
   },
   "repository": {
     "type": "git",

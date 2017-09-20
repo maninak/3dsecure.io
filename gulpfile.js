@@ -14,31 +14,31 @@ const reload = browserSync.reload;
 
 
 // default task executed with plain `gulp` command
-gulp.task('default', ['serve-dev']);
+gulp.task('default', ['serve:dev']);
 
 // delete `dist` folder
-gulp.task('cleanDist', () => {
+gulp.task('clean:dist', () => {
   return del('dist');
 });
 
 // copy assets from `src` to `dist` folder
-gulp.task('copyAssets', () => {
-  return gulp.src([ 'src/assets/**/*' ]).pipe(gulp.dest('dist'));
+gulp.task('copy:assets', () => {
+  return gulp.src([ 'src/assets/**/*' ]).pipe(gulp.dest('dist/assets'));
 });
 
 // copy raw html files from `src` to `dist` folder (for developments)
-gulp.task('copyHTML', () => {
+gulp.task('copy:html', () => {
   return gulp.src('src/*.html').pipe(gulp.dest('dist'));
 });
 
 
 // copy raw js files from `src` to `dist` folder (for developments)
-gulp.task('copyJS', () => {
+gulp.task('copy:js', () => {
   return gulp.src('src/js/**/*.js').pipe(gulp.dest('dist/assets'));
 });
 
 // compile scss files into css
-gulp.task('transpSass', () => {
+gulp.task('transpile:sass', () => {
   return gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixr({ browsers: ['last 10 versions'] }))
@@ -46,8 +46,8 @@ gulp.task('transpSass', () => {
 });
 
 // serve unminified code and watch for src changes. If any detected rebuild `dist` and reload browser
-gulp.task('serveDev', () => {
-  runSequence('cleanDist', ['copyAssets', 'copyHTML', 'copyJS', 'transpSass']);
+gulp.task('serve:dev', () => {
+  runSequence('clean:dist', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass']);
   
   browserSync({
     server: { baseDir: 'dist' },
@@ -56,19 +56,19 @@ gulp.task('serveDev', () => {
 
   gulp.watch(
     ['src/**/*'],
-    () => { runSequence('cleanDist', ['copyAssets', 'copyHTML', 'copyJS', 'transpSass'], reload); }
+    () => { runSequence('clean:dist', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass'], reload); }
   );
 });
 
 // minify css files
-gulp.task('minifyCSS', () => {
+gulp.task('minify:css', () => {
   return gulp.src('dist/assets/*.css')
     .pipe(cssnano())
     .pipe(gulp.dest('dist/assets'));
 });
 
 // minify html files
-gulp.task('minifyHTML', () => {
+gulp.task('minify:html', () => {
   return gulp.src('src/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
@@ -82,12 +82,12 @@ gulp.task('minifyHTML', () => {
 });
 
 // build css for production
-gulp.task('buildProdCSS', () => {
-  runSequence('transpSass', 'minifyCSS');
+gulp.task('build:css-prod', () => {
+  runSequence('transpile:sass', 'minify:css');
 });
 
 // minify js files
-gulp.task('minifyJS', () => {
+gulp.task('minify:js', () => {
   return gulp.src('src/js/*.js')
     .pipe(
       uglifyjs({
@@ -120,6 +120,6 @@ gulp.task('minifyJS', () => {
     .pipe(gulp.dest('dist/assets'));
 });
 
-gulp.task('buildProd', () => {
-  runSequence('cleanDist', ['copyAssets', 'buildProdCSS', 'minifyHTML', 'minifyJS']);
+gulp.task('build:prod', () => {
+  runSequence('clean:dist', ['copy:assets', 'build:css-prod', 'minify:html', 'minify:js']);
 });
