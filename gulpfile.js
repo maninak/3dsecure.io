@@ -41,7 +41,7 @@ gulp.task('copy:js', () => {
 gulp.task('transpile:sass', () => {
   return gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixr({ browsers: ['last 10 versions'] }))
+    .pipe(autoprefixr({ browsers: ['last 5 versions'] }))
     .pipe(gulp.dest('dist/assets'));
 });
 
