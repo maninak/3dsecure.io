@@ -5,8 +5,9 @@
 \*-----------------------------*/
 
 const gulp        = require('gulp'),
-      runSequence = require('run-sequence'),
-      del         = require('del'),
+      fs          = require('fs'),
+      clean       = require('gulp-clean'),
+      newer       = require('gulp-newer'),
       sass        = require('gulp-sass'),
       autoprefixr = require('gulp-autoprefixer'),
       browserSync = require('browser-sync'),
@@ -14,8 +15,6 @@ const gulp        = require('gulp'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
       uglifyjs    = require('gulp-uglify');
-
-const reload = browserSync.reload;
 
 
 
@@ -37,73 +36,110 @@ const ASSETS_SRC_GLOB = `${SRC_DIR}/assets/**/*`,
  *  TASKS
 \*-----------------------------*/
 
+/*
+    Shared
+*/
+
 // default task executed with plain `gulp` command
-gulp.task('default', ['serve:dev']);
+gulp.task('default', () => {
+  return gulp.series('serve:dev')
+});
 
-// delete `dist` folder
+// delete dest folder
 gulp.task('clean:dest', () => {
-  return del(DEST_DIR);
+  try {
+    // fs.accessSync() tests if DEST_DIR exists and if not it throws
+    // this way gulp.src() won't execute and crash
+    fs.accessSync(DEST_DIR);
+    return gulp.src(DEST_DIR, { read: false }).pipe(clean());
+  }
+  catch (e) {
+    return gulp.src('.');
+  }
 });
 
-// copy assets from `src` to `dist` folder
+/*
+    Development
+*/
+
+// copy raw assets from src to dest folder
 gulp.task('copy:assets', () => {
-  return gulp.src(ASSETS_SRC_GLOB).pipe(gulp.dest(`${DEST_DIR}/assets`));
+  return gulp.src(ASSETS_SRC_GLOB)
+    .pipe(newer(`${DEST_DIR}/assets`))
+    .pipe(gulp.dest(`${DEST_DIR}/assets`))
+    .pipe(browserSync.reload({ stream:true }));
 });
 
-// copy raw html files from `src` to `dist` folder (for developments)
+// copy raw html files from src to dest folder
 gulp.task('copy:html', () => {
-  return gulp.src(HTML_SRC_GLOB).pipe(gulp.dest(DEST_DIR));
+  return gulp.src(HTML_SRC_GLOB)
+    .pipe(newer(DEST_DIR))
+    .pipe(gulp.dest(DEST_DIR))
+    .pipe(browserSync.reload({ stream:true }));
 });
 
-
-// copy raw js files from `src` to `dist` folder (for developments)
+// copy raw js files from src to dest folder
 gulp.task('copy:js', () => {
-  return gulp.src(JS_SRC_GLOB).pipe(gulp.dest(`${DEST_DIR}/assets`));
+  return gulp.src(JS_SRC_GLOB)
+    .pipe(newer(`${DEST_DIR}/assets`))
+    .pipe(gulp.dest(`${DEST_DIR}/assets`))
+    .pipe(browserSync.reload({ stream:true }));
 });
 
-// compile scss files into css
+// compile scss files into css and add vendor prefixes
 gulp.task('transpile:sass', () => {
   return gulp.src(SASS_SRC_GLOB)
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixr({ browsers: ['last 5 versions'] }))
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
+    .pipe(newer(`${DEST_DIR}/assets`))
+    .pipe(gulp.dest(`${DEST_DIR}/assets`))
+    .pipe(browserSync.reload({ stream:true }));
 });
 
-// serve unminified code and watch for src changes. If any detected rebuild `dist` and reload browser
-gulp.task('serve:dev', () => {
-  runSequence('clean:dest', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass']);
-  
+// make a fresh dev build
+gulp.task(
+    'build:dev',
+    gulp.series('clean:dest', gulp.parallel('copy:assets', 'copy:html', 'copy:js', 'transpile:sass'))
+);
+
+// on asset file changes, refresh dev build and reload browser
+gulp.task('watch:assets', () => {
+  gulp.watch(ASSETS_SRC_GLOB, gulp.series('copy:assets'));
+});
+
+// on html source file changes, refresh dev build and reload browser
+gulp.task('watch:html', () => {
+  gulp.watch(HTML_SRC_GLOB, gulp.series('copy:html'));
+});
+
+// on js source file changes, refresh dev build and reload browser
+gulp.task('watch:js', () => {
+  gulp.watch(JS_SRC_GLOB, gulp.series('copy:js'));
+});
+
+// on sass source file changes, refresh dev build and reload browser
+gulp.task('watch:sass', () => {
+  gulp.watch(SASS_SRC_GLOB, gulp.series('transpile:sass'));
+});
+
+// wrapper task that calls all watchers
+gulp.task('watch:all', gulp.parallel('watch:assets', 'watch:html', 'watch:js', 'watch:sass'));
+
+// launch a web server
+gulp.task('launch:web-server', (done) => {
   browserSync({
     server: { baseDir: DEST_DIR },
     open: false,
-  });
-
-  gulp.watch(
-    [`${SRC_DIR}/**/*`],
-    () => { runSequence('clean:dest', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass'], reload); }
-  );
+  }, done);
 });
 
-// remove unused css rules
-gulp.task('treeshake:css', () => {
-  return gulp.src(`${DEST_DIR}/assets/*.css`)
-    .pipe(uncss({
-      html: [HTML_SRC_GLOB]
-    }))
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
-});
+// serve unoptimized code and watch for src changes
+gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server', 'watch:all'))
+);
 
-// minify css files
-gulp.task('minify:css', () => {
-  return gulp.src(`${DEST_DIR}/assets/*.css`)
-    .pipe(cssnano())
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
-});
-
-// build css for production
-gulp.task('build:css-prod', () => {
-  runSequence('transpile:sass', 'treeshake:css', 'minify:css');
-});
+/*
+    Production
+*/
 
 // minify html files
 gulp.task('minify:html', () => {
@@ -153,6 +189,24 @@ gulp.task('minify:js', () => {
     .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
-gulp.task('build:prod', () => {
-  runSequence('clean:dest', ['copy:assets', 'build:css-prod', 'minify:html', 'minify:js']);
+// remove unused css rules
+gulp.task('treeshake:css', () => {
+  return gulp.src(`${DEST_DIR}/assets/*.css`)
+    .pipe(uncss({ html: [HTML_SRC_GLOB] }))
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
+
+// minify css files
+gulp.task('minify:css', () => {
+  return gulp.src(`${DEST_DIR}/assets/*.css`)
+    .pipe(cssnano())
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
+});
+
+// build css for production
+gulp.task('build:css-prod', gulp.series('transpile:sass', 'treeshake:css', 'minify:css'));
+
+// make a fresh production build
+gulp.task('build:prod',
+    gulp.series('clean:dest', gulp.parallel('copy:assets', 'minify:html', 'minify:js', 'build:css-prod'))
+);
