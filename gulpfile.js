@@ -6,6 +6,7 @@ const gulp        = require('gulp'),
       sass        = require('gulp-sass'),
       autoprefixr = require('gulp-autoprefixer'),
       browserSync = require('browser-sync'),
+      uncss       = require('gulp-uncss'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
       uglifyjs    = require('gulp-uglify');
@@ -60,11 +61,25 @@ gulp.task('serve:dev', () => {
   );
 });
 
+// remove unused css rules
+gulp.task('treeshake:css', () => {
+  return gulp.src('dist/assets/*.css')
+    .pipe(uncss({
+      html: ['src/**/*.html']
+    }))
+    .pipe(gulp.dest('dist/assets'));
+});
+
 // minify css files
 gulp.task('minify:css', () => {
   return gulp.src('dist/assets/*.css')
     .pipe(cssnano())
     .pipe(gulp.dest('dist/assets'));
+});
+
+// build css for production
+gulp.task('build:css-prod', () => {
+  runSequence('transpile:sass', 'treeshake:css', 'minify:css');
 });
 
 // minify html files
@@ -79,11 +94,6 @@ gulp.task('minify:html', () => {
       sortClassName: true,
     }))
     .pipe(gulp.dest('dist'));
-});
-
-// build css for production
-gulp.task('build:css-prod', () => {
-  runSequence('transpile:sass', 'minify:css');
 });
 
 // minify js files
