@@ -1,5 +1,9 @@
 'use strict';
 
+/*-----------------------------*\
+ *  PLUGINS
+\*-----------------------------*/
+
 const gulp        = require('gulp'),
       runSequence = require('run-sequence'),
       del         = require('del'),
@@ -14,67 +18,86 @@ const gulp        = require('gulp'),
 const reload = browserSync.reload;
 
 
+
+/*-----------------------------*\
+ *  CONFIG
+\*-----------------------------*/
+
+const SRC_DIR         = 'src',
+      DEST_DIR        = 'dist';
+
+const ASSETS_SRC_GLOB = `${SRC_DIR}/assets/**/*`,
+      HTML_SRC_GLOB   = `${SRC_DIR}/*.html`,
+      SASS_SRC_GLOB   = `${SRC_DIR}/sass/**/*.scss`,
+      JS_SRC_GLOB     = `${SRC_DIR}/js/**/*.js`;
+
+
+
+/*-----------------------------*\
+ *  TASKS
+\*-----------------------------*/
+
 // default task executed with plain `gulp` command
 gulp.task('default', ['serve:dev']);
 
 // delete `dist` folder
-gulp.task('clean:dist', () => {
-  return del('dist');
+gulp.task('clean:dest', () => {
+  return del(DEST_DIR);
 });
 
 // copy assets from `src` to `dist` folder
 gulp.task('copy:assets', () => {
-  return gulp.src([ 'src/assets/**/*' ]).pipe(gulp.dest('dist/assets'));
+  return gulp.src(ASSETS_SRC_GLOB).pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 // copy raw html files from `src` to `dist` folder (for developments)
 gulp.task('copy:html', () => {
-  return gulp.src('src/*.html').pipe(gulp.dest('dist'));
+  return gulp.src(HTML_SRC_GLOB).pipe(gulp.dest(DEST_DIR));
 });
 
 
 // copy raw js files from `src` to `dist` folder (for developments)
 gulp.task('copy:js', () => {
-  return gulp.src('src/js/**/*.js').pipe(gulp.dest('dist/assets'));
+  return gulp.src(JS_SRC_GLOB).pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 // compile scss files into css
 gulp.task('transpile:sass', () => {
-  return gulp.src('src/sass/**/*.scss')
+  return gulp.src(SASS_SRC_GLOB)
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixr({ browsers: ['last 5 versions'] }))
-    .pipe(gulp.dest('dist/assets'));
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 // serve unminified code and watch for src changes. If any detected rebuild `dist` and reload browser
 gulp.task('serve:dev', () => {
-  runSequence('clean:dist', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass']);
+  runSequence('clean:dest', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass']);
   
   browserSync({
-    server: { baseDir: 'dist' },
+    server: { baseDir: DEST_DIR },
     open: false,
   });
 
   gulp.watch(
-    ['src/**/*'],
-    () => { runSequence('clean:dist', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass'], reload); }
+    [`${SRC_DIR}/**/*`],
+    () => { runSequence('clean:dest', ['copy:assets', 'copy:html', 'copy:js', 'transpile:sass'], reload); }
   );
 });
 
 // remove unused css rules
 gulp.task('treeshake:css', () => {
-  return gulp.src('dist/assets/*.css')
+  return gulp.src(`${DEST_DIR}/assets/*.css`)
     .pipe(uncss({
-      html: ['src/**/*.html']
+      html: [HTML_SRC_GLOB]
     }))
-    .pipe(gulp.dest('dist/assets'));
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 // minify css files
 gulp.task('minify:css', () => {
-  return gulp.src('dist/assets/*.css')
+  return gulp.src(`${DEST_DIR}/assets/*.css`)
     .pipe(cssnano())
-    .pipe(gulp.dest('dist/assets'));
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 // build css for production
@@ -84,7 +107,7 @@ gulp.task('build:css-prod', () => {
 
 // minify html files
 gulp.task('minify:html', () => {
-  return gulp.src('src/*.html')
+  return gulp.src(HTML_SRC_GLOB)
     .pipe(htmlmin({
       collapseWhitespace: true,
       minifyCSS: true,
@@ -93,12 +116,12 @@ gulp.task('minify:html', () => {
       sortAttributes: true,
       sortClassName: true,
     }))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(DEST_DIR));
 });
 
 // minify js files
 gulp.task('minify:js', () => {
-  return gulp.src('src/js/*.js')
+  return gulp.src(JS_SRC_GLOB)
     .pipe(
       uglifyjs({
         compress: {
@@ -127,9 +150,9 @@ gulp.task('minify:js', () => {
         }
       })
     )
-    .pipe(gulp.dest('dist/assets'));
+    .pipe(gulp.dest(`${DEST_DIR}/assets`));
 });
 
 gulp.task('build:prod', () => {
-  runSequence('clean:dist', ['copy:assets', 'build:css-prod', 'minify:html', 'minify:js']);
+  runSequence('clean:dest', ['copy:assets', 'build:css-prod', 'minify:html', 'minify:js']);
 });
