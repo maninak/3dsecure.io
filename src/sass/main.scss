@@ -31,14 +31,12 @@ $opacity-secondary: 0.54;
 \*-----------------------------*/
 
 * {
-  critical: this;
   margin: 0;
   padding: 0;
 }
 
 a,
 a:visited {
-  critical: this;
   color: inherit;
   text-decoration: none;
   transition: opacity 0.1s ease-out;
@@ -58,38 +56,32 @@ a:hover {
 .float-r { float: right; }
 
 .x-space-between {
-  critical: this;
   display: flex;
   justify-content: space-between
 }
 
 .y-center {
-  critical: this;
   display: flex;
   align-items: center;
 }
 
-.padding-horiz-xs { critical: this; padding-right: 0.25em;  padding-left: 0.25em;   }
-.padding-horiz-sm { critical: this; padding-right: 0.5em;   padding-left: 0.5em;    }
-.padding-horiz-md { critical: this; padding-right: 1em;     padding-left: 1em;      }
-.padding-horiz-lg { critical: this; padding-right: 2em;     padding-left: 2em;      }
-.padding-horiz-xl { critical: this; padding-right: 4em;     padding-left: 4em;      }
+.padding-horiz-xs { padding-right: 0.25em;  padding-left: 0.25em;   }
+.padding-horiz-sm { padding-right: 0.5em;   padding-left: 0.5em;    }
+.padding-horiz-md { padding-right: 1em;     padding-left: 1em;      }
+.padding-horiz-lg { padding-right: 2em;     padding-left: 2em;      }
+.padding-horiz-xl { padding-right: 4em;     padding-left: 4em;      }
 
-.padding-vert-xs  { critical: this; padding-top: 0.25em;    padding-bottom: 0.25em; }
-.padding-vert-sm  { critical: this; padding-top: 0.5em;     padding-bottom: 0.5em;  }
-.padding-vert-md  { critical: this; padding-top: 1em;       padding-bottom: 1em;    }
-.padding-vert-lg  { critical: this; padding-top: 2em;       padding-bottom: 2em;    }
-.padding-vert-xl  { critical: this; padding-top: 4em;       padding-bottom: 4em;    }
+.padding-vert-xs  { padding-top: 0.25em;    padding-bottom: 0.25em; }
+.padding-vert-sm  { padding-top: 0.5em;     padding-bottom: 0.5em;  }
+.padding-vert-md  { padding-top: 1em;       padding-bottom: 1em;    }
+.padding-vert-lg  { padding-top: 2em;       padding-bottom: 2em;    }
+.padding-vert-xl  { padding-top: 4em;       padding-bottom: 4em;    }
 
 .secondary { opacity: $opacity-secondary; }
 
 .ul-horizontal {
-  critical: this;
   list-style-type: none;
-  li { 
-    critical: this; 
-    display: inline;
-  }
+  li { display: inline; }
 }
 
 
@@ -99,7 +91,6 @@ a:hover {
 \*-----------------------------*/
 
 @font-face {
-  critical: this;
   font-family: 'Calibre';
   src:  url('./assets/fonts/CalibreWeb-Regular.woff2') format('woff2'),
         url('./assets/fonts/CalibreWeb-Regular.woff') format('woff');
@@ -115,7 +106,6 @@ a:hover {
 }
 
 @font-face {
-  critical: this;
   font-family: 'CircularPro';
   src:  url('./assets/fonts/lineto-circular-pro-medium.woff2') format('woff2'),
         url('./assets/fonts/lineto-circular-pro-medium.woff') format('woff');
@@ -133,11 +123,9 @@ $circularPro: CircularPro, Arial, Helvetica, sans-serif;
 \*-----------------------------*/
 
 body {
-  critical: this;
   font-size: $font-size-base;
 
   section.header {
-    critical: this;
     display: grid;
     grid-template-columns:
         1fr 
@@ -153,7 +141,6 @@ body {
     Header module
 */
 header {
-  critical: this;
   grid-area: content;
   height: 4em;
   font-family: $calibre;
@@ -161,11 +148,9 @@ header {
   color: $color-primary-dark;
 
   aside.logo {
-    critical: this;
     font-family: $circularPro;
     
     img {
-      critical: this;
       max-width: 3em;
       max-height: 3em;
       margin-right: 0.25em;
@@ -173,17 +158,14 @@ header {
   }
 
   .main-pages a {
-    critical: this;
     padding-bottom: 0.1em;
   }
 
   .main-pages .current a {
-    critical: this;
     border-bottom: 0.125em solid;
   }
 
   .cta span {
-    critical: this;
     margin-right: 0.25em;
   }
 }

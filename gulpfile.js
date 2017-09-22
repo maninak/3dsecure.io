@@ -14,8 +14,8 @@ const gulp        = require('gulp'),
       uncss       = require('gulp-uncss'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
-      criticalCss = require('gulp-critical-css'),
-      inlinesrc   = require('gulp-inline-source'),
+      critical    = require('critical').stream,
+      gutil       = require('gulp-util'),
       uglifyjs    = require('gulp-uglify');
 
 
@@ -142,10 +142,20 @@ gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server
     Production
 */
 
+// Generate & Inline Critical-path CSS into HTML files
 gulp.task('inline:html', () => {
   return gulp.src(`${DEST_DIR}/*.html`)
-    .pipe(inlinesrc())
-    .pipe(gulp.dest(DEST_DIR));
+      .pipe(critical({
+        base: `${DEST_DIR}`,
+        inline: true,
+        css: [`${DEST_DIR}/main.css`],
+        width: 1200,
+        heigh: 1000,
+        minify: true,
+        timeout: 30000,
+      }))
+      .on('error', (err) => { gutil.log(gutil.colors.red(err.message)); })
+      .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
 // minify html files
@@ -202,7 +212,6 @@ gulp.task('minify:js', () => {
 gulp.task('treeshake:css', () => {
   return gulp.src(`${DEST_DIR}/*.css`)
     .pipe(uncss({ html: [HTML_SRC_GLOB] }))
-    .pipe(criticalCss()) // generate *.critical.css
     .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
