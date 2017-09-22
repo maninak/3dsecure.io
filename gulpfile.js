@@ -15,6 +15,7 @@ const gulp        = require('gulp'),
       uncss       = require('gulp-uncss'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
+      cachebust   = require('gulp-cache-bust'),
       critical    = require('critical').stream,
       gutil       = require('gulp-util'),
       uglifyjs    = require('gulp-uglify');
@@ -238,6 +239,7 @@ gulp.task('minify:html', () => {
       sortAttributes: true,
       sortClassName: true,
     }))
+    .pipe(cachebust()) // append md5 hash to filenames of dependencies
     .pipe(gulp.dest(DEST_DIR));
 });
 
