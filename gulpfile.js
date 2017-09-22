@@ -14,6 +14,8 @@ const gulp        = require('gulp'),
       uncss       = require('gulp-uncss'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
+      criticalCss = require('gulp-critical-css'),
+      inlinesrc   = require('gulp-inline-source'),
       uglifyjs    = require('gulp-uglify');
 
 
@@ -51,7 +53,8 @@ gulp.task('clean:dest', () => {
     // fs.accessSync() tests if DEST_DIR exists and if not it throws
     // this way gulp.src() won't execute and crash
     fs.accessSync(DEST_DIR);
-    return gulp.src(DEST_DIR, { read: false }).pipe(clean());
+    return gulp.src(DEST_DIR, { read: false })
+      .pipe(clean());
   }
   catch (e) {
     return gulp.src('.');
@@ -81,8 +84,8 @@ gulp.task('copy:html', () => {
 // copy raw js files from src to dest folder
 gulp.task('copy:js', () => {
   return gulp.src(JS_SRC_GLOB)
-    .pipe(newer(`${DEST_DIR}/assets`))
-    .pipe(gulp.dest(`${DEST_DIR}/assets`))
+    .pipe(newer(`${DEST_DIR}`))
+    .pipe(gulp.dest(`${DEST_DIR}`))
     .pipe(browserSync.reload({ stream:true }));
 });
 
@@ -91,16 +94,15 @@ gulp.task('transpile:sass', () => {
   return gulp.src(SASS_SRC_GLOB)
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixr({ browsers: ['last 5 versions'] }))
-    .pipe(newer(`${DEST_DIR}/assets`))
-    .pipe(gulp.dest(`${DEST_DIR}/assets`))
+    .pipe(newer(`${DEST_DIR}`))
+    .pipe(gulp.dest(`${DEST_DIR}`))
     .pipe(browserSync.reload({ stream:true }));
 });
 
 // make a fresh dev build
 gulp.task(
     'build:dev',
-    gulp.series('clean:dest', gulp.parallel('copy:assets', 'copy:html', 'copy:js', 'transpile:sass'))
-);
+    gulp.series('clean:dest', gulp.parallel('copy:assets', 'copy:html', 'copy:js', 'transpile:sass')));
 
 // on asset file changes, refresh dev build and reload browser
 gulp.task('watch:assets', () => {
@@ -134,16 +136,21 @@ gulp.task('launch:web-server', (done) => {
 });
 
 // serve unoptimized code and watch for src changes
-gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server', 'watch:all'))
-);
+gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server', 'watch:all')));
 
 /*
     Production
 */
 
+gulp.task('inline:html', () => {
+  return gulp.src(`${DEST_DIR}/*.html`)
+    .pipe(inlinesrc())
+    .pipe(gulp.dest(DEST_DIR));
+});
+
 // minify html files
 gulp.task('minify:html', () => {
-  return gulp.src(HTML_SRC_GLOB)
+  return gulp.src(`${DEST_DIR}/*.html`)
     .pipe(htmlmin({
       collapseWhitespace: true,
       minifyCSS: true,
@@ -154,6 +161,8 @@ gulp.task('minify:html', () => {
     }))
     .pipe(gulp.dest(DEST_DIR));
 });
+
+gulp.task('generate:html-prod', gulp.series('copy:html', 'inline:html', 'minify:html'));
 
 // minify js files
 gulp.task('minify:js', () => {
@@ -186,27 +195,29 @@ gulp.task('minify:js', () => {
         }
       })
     )
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
+    .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
 // remove unused css rules
 gulp.task('treeshake:css', () => {
-  return gulp.src(`${DEST_DIR}/assets/*.css`)
+  return gulp.src(`${DEST_DIR}/*.css`)
     .pipe(uncss({ html: [HTML_SRC_GLOB] }))
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
+    .pipe(criticalCss()) // generate *.critical.css
+    .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
 // minify css files
 gulp.task('minify:css', () => {
-  return gulp.src(`${DEST_DIR}/assets/*.css`)
+  return gulp.src(`${DEST_DIR}/*.css`)
     .pipe(cssnano())
-    .pipe(gulp.dest(`${DEST_DIR}/assets`));
+    .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
 // build css for production
-gulp.task('build:css-prod', gulp.series('transpile:sass', 'treeshake:css', 'minify:css'));
+gulp.task('generate:css-prod', gulp.series('transpile:sass', 'treeshake:css', 'minify:css'));
 
 // make a fresh production build
 gulp.task('build:prod',
-    gulp.series('clean:dest', gulp.parallel('copy:assets', 'minify:html', 'minify:js', 'build:css-prod'))
-);
+    gulp.series('clean:dest', 
+        gulp.parallel('copy:assets', 
+            gulp.series(gulp.parallel('minify:js', 'generate:css-prod'), 'generate:html-prod'))));

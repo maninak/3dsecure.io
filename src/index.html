@@ -1,11 +1,12 @@
 <html>
   <head>
     <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <link inline rel="stylesheet" href="./main.critical.css">
     <script async>
       var loadCss = function() {
           var cssLink = document.createElement('link');
           cssLink.rel = 'stylesheet';
-          cssLink.href = './assets/main.css';
+          cssLink.href = './main.css';
           var head = document.getElementsByTagName('head')[0];
           head.parentNode.insertBefore(cssLink, head);
       };
@@ -17,7 +18,7 @@
       <header class="x-space-between y-center">
         <aside class="logo">
           <a class="y-center" href="#top">
-            <img alt="3dsecure.io logo" src="./assets/images/logo.png">
+            <img alt="3dsecure.io logo" src="./assets/img/logo.png">
             <span class="product-name">3dsecure.io</span>
           </a>
         </aside>
@@ -46,8 +47,8 @@
       <div class="hero"></div>
     </main>
     <span class="imports">
-      <noscript><link rel="stylesheet" href="./assets/main.css"></noscript>
-      <script async defer src="./assets/main.js"></script>
+      <noscript><link rel="stylesheet" href="./main.css"></noscript>
+      <script async defer src="./main.js"></script>
     </span>
   </body>
 </html>
