@@ -1,5 +1,16 @@
 <html>
-  <head></head>
+  <head>
+    <script async>
+      var loadCss = function() {
+          var cssLink = document.createElement('link');
+          cssLink.rel = 'stylesheet';
+          cssLink.href = './assets/main.css';
+          var head = document.getElementsByTagName('head')[0];
+          head.parentNode.insertBefore(cssLink, head);
+      };
+      window.addEventListener('load', loadCss);
+    </script>
+  </head>
   <body>
     <section class="header padding-vert-sm">
       <header class="x-space-between y-center">
@@ -34,7 +45,7 @@
       <div class="hero"></div>
     </main>
     <span class="imports">
-      <link rel="stylesheet" href="./assets/main.css">
+      <noscript><link rel="stylesheet" href="./assets/main.css"></noscript>
       <script async defer src="./assets/main.js"></script>
     </span>
   </body>
