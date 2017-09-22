@@ -11,6 +11,7 @@ const gulp        = require('gulp'),
       sass        = require('gulp-sass'),
       autoprefixr = require('gulp-autoprefixer'),
       browserSync = require('browser-sync'),
+      imagemin    = require('gulp-imagemin'),
       uncss       = require('gulp-uncss'),
       cssnano     = require('gulp-cssnano'),
       htmlmin     = require('gulp-htmlmin'),
@@ -142,8 +143,22 @@ gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server
     Production
 */
 
+gulp.task('minify:images', () => {
+	return gulp.src(`${DEST_DIR}/assets/img/*`)
+    .pipe(imagemin([
+      imagemin.gifsicle({ interlaced: true }),
+      imagemin.jpegtran({ progressive: true }),
+      imagemin.optipng({ optimizationLevel: 5 }),
+      imagemin.svgo({
+        plugins: [
+          { removeViewBox: true }
+        ]
+      })
+    ]))
+    .pipe(gulp.dest(`${DEST_DIR}/assets/img`))
+});
 
-gulp.task('generate:html-prod', gulp.series('copy:html', 'inline:html', 'minify:html'));
+gulp.task('generate:assets-prod', gulp.series('copy:assets', 'minify:images'));
 
 // Minify JS files
 gulp.task('minify:js', () => {
@@ -232,5 +247,5 @@ gulp.task('generate:html-prod', gulp.series('copy:html', 'inline:html', 'minify:
 // Make a fresh production build
 gulp.task('build:prod',
     gulp.series('clean:dest', 
-        gulp.parallel('copy:assets', 
+        gulp.parallel('generate:assets-prod', 
             gulp.series(gulp.parallel('minify:js', 'generate:css-prod'), 'generate:html-prod'))));
