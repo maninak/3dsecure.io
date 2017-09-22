@@ -147,22 +147,26 @@ header {
   font-size: 0.9em;
   color: $color-primary-dark;
 
-  aside.logo {
-    font-family: $circularPro;
+  .logo {
     
     img {
-      max-width: 3em;
-      max-height: 3em;
       margin-right: 0.25em;
+    }
+
+    .product-name {
+      font-family: $circularPro;
     }
   }
 
-  .main-pages a {
-    padding-bottom: 0.1em;
-  }
-
-  .main-pages .current a {
-    border-bottom: 0.125em solid;
+  .main-pages {
+    
+    a {
+      padding-bottom: 0.1em;
+    }
+    
+    .current a {
+      border-bottom: 0.125em solid;
+    }
   }
 
   .cta span {
