@@ -42,12 +42,12 @@ const ASSETS_SRC_GLOB = `${SRC_DIR}/assets/**/*`,
     Shared
 */
 
-// default task executed with plain `gulp` command
+// Default task executed with plain `gulp` command
 gulp.task('default', () => {
   return gulp.series('serve:dev')
 });
 
-// delete dest folder
+// Delete dest folder
 gulp.task('clean:dest', () => {
   try {
     // fs.accessSync() tests if DEST_DIR exists and if not it throws
@@ -65,7 +65,7 @@ gulp.task('clean:dest', () => {
     Development
 */
 
-// copy raw assets from src to dest folder
+// Copy raw assets from src to dest folder
 gulp.task('copy:assets', () => {
   return gulp.src(ASSETS_SRC_GLOB)
     .pipe(newer(`${DEST_DIR}/assets`))
@@ -73,7 +73,7 @@ gulp.task('copy:assets', () => {
     .pipe(browserSync.reload({ stream:true }));
 });
 
-// copy raw html files from src to dest folder
+// Copy raw HTML files from src to dest folder
 gulp.task('copy:html', () => {
   return gulp.src(HTML_SRC_GLOB)
     .pipe(newer(DEST_DIR))
@@ -81,7 +81,7 @@ gulp.task('copy:html', () => {
     .pipe(browserSync.reload({ stream:true }));
 });
 
-// copy raw js files from src to dest folder
+// Copy raw JS files from src to dest folder
 gulp.task('copy:js', () => {
   return gulp.src(JS_SRC_GLOB)
     .pipe(newer(`${DEST_DIR}`))
@@ -89,7 +89,7 @@ gulp.task('copy:js', () => {
     .pipe(browserSync.reload({ stream:true }));
 });
 
-// compile scss files into css and add vendor prefixes
+// Transpile SCSS files into CSS and add vendor prefixes
 gulp.task('transpile:sass', () => {
   return gulp.src(SASS_SRC_GLOB)
     .pipe(sass().on('error', sass.logError))
@@ -99,35 +99,35 @@ gulp.task('transpile:sass', () => {
     .pipe(browserSync.reload({ stream:true }));
 });
 
-// make a fresh dev build
+// Make a fresh dev build
 gulp.task(
     'build:dev',
     gulp.series('clean:dest', gulp.parallel('copy:assets', 'copy:html', 'copy:js', 'transpile:sass')));
 
-// on asset file changes, refresh dev build and reload browser
+// On asset file changes, refresh dev build and reload browser
 gulp.task('watch:assets', () => {
   gulp.watch(ASSETS_SRC_GLOB, gulp.series('copy:assets'));
 });
 
-// on html source file changes, refresh dev build and reload browser
+// On HTML source file changes, refresh dev build and reload browser
 gulp.task('watch:html', () => {
   gulp.watch(HTML_SRC_GLOB, gulp.series('copy:html'));
 });
 
-// on js source file changes, refresh dev build and reload browser
+// On JS source file changes, refresh dev build and reload browser
 gulp.task('watch:js', () => {
   gulp.watch(JS_SRC_GLOB, gulp.series('copy:js'));
 });
 
-// on sass source file changes, refresh dev build and reload browser
+// On SASS source file changes, refresh dev build and reload browser
 gulp.task('watch:sass', () => {
   gulp.watch(SASS_SRC_GLOB, gulp.series('transpile:sass'));
 });
 
-// wrapper task that calls all watchers
+// Wrapper task that calls all watchers
 gulp.task('watch:all', gulp.parallel('watch:assets', 'watch:html', 'watch:js', 'watch:sass'));
 
-// launch a web server
+// Launch a web server
 gulp.task('launch:web-server', (done) => {
   browserSync({
     server: { baseDir: DEST_DIR },
@@ -135,46 +135,17 @@ gulp.task('launch:web-server', (done) => {
   }, done);
 });
 
-// serve unoptimized code and watch for src changes
+// Serve unoptimized code and watch for src changes
 gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server', 'watch:all')));
 
 /*
     Production
 */
 
-// Generate & Inline Critical-path CSS into HTML files
-gulp.task('inline:html', () => {
-  return gulp.src(`${DEST_DIR}/*.html`)
-      .pipe(critical({
-        base: `${DEST_DIR}`,
-        inline: true,
-        css: [`${DEST_DIR}/main.css`],
-        width: 1200,
-        heigh: 1000,
-        minify: true,
-        timeout: 30000,
-      }))
-      .on('error', (err) => { gutil.log(gutil.colors.red(err.message)); })
-      .pipe(gulp.dest(`${DEST_DIR}`));
-});
-
-// minify html files
-gulp.task('minify:html', () => {
-  return gulp.src(`${DEST_DIR}/*.html`)
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      minifyCSS: true,
-      minifyJS: true,
-      minifyURLs: true,
-      sortAttributes: true,
-      sortClassName: true,
-    }))
-    .pipe(gulp.dest(DEST_DIR));
-});
 
 gulp.task('generate:html-prod', gulp.series('copy:html', 'inline:html', 'minify:html'));
 
-// minify js files
+// Minify JS files
 gulp.task('minify:js', () => {
   return gulp.src(JS_SRC_GLOB)
     .pipe(
@@ -208,24 +179,57 @@ gulp.task('minify:js', () => {
     .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
-// remove unused css rules
+// Remove unutilized CSS rules
 gulp.task('treeshake:css', () => {
   return gulp.src(`${DEST_DIR}/*.css`)
     .pipe(uncss({ html: [HTML_SRC_GLOB] }))
     .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
-// minify css files
+// Minify CSS files
 gulp.task('minify:css', () => {
   return gulp.src(`${DEST_DIR}/*.css`)
     .pipe(cssnano())
     .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
-// build css for production
+// Generate CSS for production
 gulp.task('generate:css-prod', gulp.series('transpile:sass', 'treeshake:css', 'minify:css'));
 
-// make a fresh production build
+// Generate & Inline Critical-path CSS into HTML files
+gulp.task('inline:html', () => {
+  return gulp.src(`${DEST_DIR}/*.html`)
+      .pipe(critical({
+        base: `${DEST_DIR}`,
+        inline: true,
+        css: [`${DEST_DIR}/main.css`],
+        width: 1200,
+        heigh: 1000,
+        minify: true,
+        timeout: 30000,
+      }))
+      .on('error', (err) => { gutil.log(gutil.colors.red(err.message)); })
+      .pipe(gulp.dest(`${DEST_DIR}`));
+});
+
+// minify html files
+gulp.task('minify:html', () => {
+  return gulp.src(`${DEST_DIR}/*.html`)
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      minifyCSS: true,
+      minifyJS: true,
+      minifyURLs: true,
+      sortAttributes: true,
+      sortClassName: true,
+    }))
+    .pipe(gulp.dest(DEST_DIR));
+});
+
+// Generate HTML for production
+gulp.task('generate:html-prod', gulp.series('copy:html', 'inline:html', 'minify:html'));
+
+// Make a fresh production build
 gulp.task('build:prod',
     gulp.series('clean:dest', 
         gulp.parallel('copy:assets', 
