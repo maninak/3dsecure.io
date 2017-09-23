@@ -160,11 +160,16 @@ header {
 
   .main-pages {
     
-    a {
-      padding-bottom: 0.1em;
+    li {
+      padding-right: 1em;
+      padding-left: 1em;
+
+      a {
+        padding-bottom: 0.1em;
+      }
     }
-    
-    .current a {
+
+    li.current a {
       border-bottom: 0.125em solid;
     }
   }
