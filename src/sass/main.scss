@@ -82,7 +82,7 @@ h1 {
   letter-spacing: -0.03em;
   line-height: 1.3em;
   color: $color-white;
-  text-shadow: 0.01em 0.01em 0.025em rgba(0, 0, 0, 0.23);
+  text-shadow: 0 0 0.025em rgba(0, 0, 0, 0.23);
 }
 
   
@@ -179,7 +179,6 @@ a:hover {
 .product-name {
   font-family: $font-circularPro;
   letter-spacing: 0;
-  text-shadow: 0.01em 0.01em 0.025em rgba(0, 0, 0, 0.23);
 }
 
 
