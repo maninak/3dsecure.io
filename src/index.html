@@ -2,18 +2,57 @@
   <head>
     <meta name=viewport content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-control" content="public" content="max-age=31536000">
-    <script async>
-      var loadCss = function() {
-          var cssLink = document.createElement('link');
-          cssLink.rel = 'stylesheet';
-          cssLink.href = './main.css';
-          var head = document.getElementsByTagName('head')[0];
-          head.parentNode.insertBefore(cssLink, head);
-      };
-      window.addEventListener('load', loadCss);
+    <!-- Declare helper var for .woff2 font type format feature detection -->
+    <script>
+      var supportsWoff2 = (function(win){
+        if (!window.FontFace) { return false; }
+        var f = new FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+        f.load();
+        return f.status === 'loading';
+      })(this);
     </script>
-    <noscript><link rel="stylesheet" href="./main.css"></noscript>
+    <!-- Declare helper function for async CSS loading -->
+    <script>
+      function getCssLoader(href) {
+        return function() {
+            var cssLink = document.createElement('link');
+            cssLink.rel = 'stylesheet';
+            cssLink.href = href;
+            document.head.appendChild(cssLink);
+        };
+      }
+    </script>
+    <!-- Register async loader for `main.css` and `fonts-woff[2].css` -->
+    <script>
+      var styleElement = document.createElement('style');
+      styleElement.rel = 'stylesheet';
+      document.head.appendChild(styleElement);
+      // Check if we have visited page recently and have stored fonts in localstorage to use them immediately.
+      // If not, then async load them and store them.
+      var fontFileUrl = supportsWoff2 ? '/assets/fonts/fonts-woff2.css' : '/assets/fonts/fonts-woff.css';
+      var storedFontFileUrl = localStorage[fontFileUrl];
+      if (storedFontFileUrl) { styleElement.textContent = storedFontFileUrl; }
+      else {
+        var request = new XMLHttpRequest();
+        request.open('GET', window.location.href + fontFileUrl);
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                localStorage[fontFileUrl] = styleElement.textContent = request.responseText;
+            }
+        };
+        request.send();
+      }
+      // Also load other CSS files (simpler)
+      window.addEventListener('load', getCssLoader('./main.css'));
+    </script>
+    <noscript>
+      <link rel="stylesheet" href="./assets/fonts/fonts-woff.css">
+      <link rel="stylesheet" href="./main.css">
+    </noscript>
   </head>
+
+
+
   <body>
     <header>
       <section class="navbar padding-vert-md">
@@ -61,4 +100,5 @@
       <script async defer src="./main.js"></script>
     </span>
   </body>
+  <!-- to chrisiou -->
 </html>
