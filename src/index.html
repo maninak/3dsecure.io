@@ -58,6 +58,16 @@
     </header>
     <main></main>
     <span class="imports">
+      <script async defer> 
+        var isCssGridSupported = document.createElement('test-grid').style.gridTemplateRows === ""; 
+        if (!isCssGridSupported) { 
+          var gridPolyfillEl = document.createElement('script'); 
+          gridPolyfillEl.defer = true; 
+          gridPolyfillEl.src = './assets/vendor/css-grid-polyfill.min.js'; 
+          document.head.appendChild(gridPolyfillEl); 
+        } 
+      </script> 
+      <noscript><script async defer src="./assets/vendor/css-grid-polyfill.min.js"></script></noscript>
       <script async defer src="./main.js"></script>
     </span>
   </body>
