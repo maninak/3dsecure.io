@@ -5,7 +5,7 @@
 /*
     Colors
 */
-$color-primary: #17335e; // TODO try #0084b1 bak: #17335e
+$color-primary: #17335e;
 $color-primary-lighter: #1b5f87;
 $color-primary-darker: #091323;
 
@@ -48,31 +48,10 @@ $opacity-tertiary: 0.23;
  *  TYPOGRAPHY
 \*-----------------------------*/
 
-@font-face {
-  font-family: 'Calibre';
-  src:  url('./assets/fonts/CalibreWeb-Regular.woff2') format('woff2'),
-        url('./assets/fonts/CalibreWeb-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Calibre';
-  src:  url('./assets/fonts/CalibreWeb-Semibold.woff2') format('woff2'),
-        url('./assets/fonts/CalibreWeb-Semibold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-}
+// Actual font files are embedded as BASE64 in `fonts-woff[2].scss`
 
-@font-face {
-  font-family: 'CircularPro';
-  src:  url('./assets/fonts/lineto-circular-pro-medium.woff2') format('woff2'),
-        url('./assets/fonts/lineto-circular-pro-medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-$font-calibre: Calibre, Arial, Helvetica, sans-serif;
-$font-circularPro: CircularPro, Arial, Helvetica, sans-serif;
+$font-calibre: Calibre,-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans","Helvetica Neue", sans-serif;
+$font-circularPro: Circular, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
 
 h1 {
   margin-bottom: 0.66666em;
@@ -82,7 +61,7 @@ h1 {
   letter-spacing: -0.03em;
   line-height: 1.3em;
   color: $color-white;
-  text-shadow: 0.01em 0.01em 0.025em rgba(0, 0, 0, 0.23);
+  text-shadow: 0 0 0.025em rgba(0, 0, 0, 0.23);
 }
 
   
@@ -179,7 +158,6 @@ a:hover {
 .product-name {
   font-family: $font-circularPro;
   letter-spacing: 0;
-  text-shadow: 0.01em 0.01em 0.025em rgba(0, 0, 0, 0.23);
 }
 
 
@@ -196,7 +174,16 @@ body {
 
   header {
     min-height: 100vh;
-    background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-lighter 80%);
+    background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-lighter 80%); // default bleu
+    // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
+    // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
+    // background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%); // moshy pastel grayz
+    // background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); // self-respec
+    // background-image: linear-gradient(45deg, #874da2 0%, #c43a30 100%); // hip pink-purp
+    // background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); // dusk blue-purplez
+
+    // background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
+    // background-blend-mode: multiply,multiply; // grey globe on links
   }
 
   section {
@@ -265,7 +252,7 @@ section.hero {
       .hero--copy--descr {
         margin-bottom: 2em;
         font-family: $font-calibre;
-        font-size: 1.3em;
+        font-size: 1.2em;
         line-height: 1.15em;
         letter-spacing: -0.0005em;
       }
