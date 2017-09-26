@@ -144,7 +144,7 @@ h1 {
 a,
 a:visited {
   color: inherit;
-  transition: opacity 0.1s ease;
+  transition: color 0.1s ease;
 }
 
 a:hover {
@@ -213,6 +213,11 @@ section.navbar {
 
   .navbar--brand img {
     margin-right: 0.25em;
+    transition: filter 0.1s ease;
+  }
+
+  .navbar--brand a:hover img {
+    filter: hue-rotate(-160deg);
   }
 
   .navbar--main-links li {
