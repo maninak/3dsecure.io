@@ -122,13 +122,24 @@ h1 {
 
 .btn {
   display: inline-block;
-  padding: 0.6em 1.5em 0.6em 1.5em;
+  padding: ($font-size-base * 0.7) ($font-size-base * 1.4) ($font-size-base * 0.7) ($font-size-base * 1.4);
   border-radius: 50px;
   font-family: $font-calibre;
-  font-size: $font-size-base * 0.9;
+  font-size: $font-size-base * 0.7;
   font-weight: bold;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.btn--outline {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.1s ease;
+}
+
+.btn--outline:hover {
+  border-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
 }
 
 .btn--accent {
@@ -159,6 +170,17 @@ h1 {
 * {
   margin: 0;
   padding: 0;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a, 
+h5 a,
+h6 a,
+p a {
+  border-bottom: white 0.05em solid;
+  text-decoration: none;
 }
 
 a,
@@ -238,28 +260,9 @@ section.navbar {
     transition: filter 0.1s ease;
   }
 
-  .navbar--brand a:hover img {
-    filter: hue-rotate(-160deg);
-  }
-
   .navbar--main-links li {
     padding-right: 1em;
     padding-left: 1em;
-  }
-
-  .navbar--cta {
-  
-    span {
-      margin-right: 0.25em;
-    }
-    
-    svg {
-      fill: $color-white-trans;
-    }
-
-    a:hover svg {
-      fill: $color-accent-lighter;
-    }
   }
 
   a {
@@ -280,9 +283,12 @@ section.hero {
       .hero--copy--descr {
         margin-bottom: 2em;
         font-family: $font-calibre;
-        font-size: 1.2em;
+        font-size: 1.1em;
         line-height: 1.15em;
-        letter-spacing: -0.0005em;
+      }
+
+      .btn {
+        font-size: 0.8em;
       }
   }
 
