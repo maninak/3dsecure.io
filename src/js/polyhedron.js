@@ -13,6 +13,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(maxResolution(800), maxResolution(800));
 renderer.setClearColor(0x000000, 0);
 document.querySelector('.js-polyhedron-container').appendChild(renderer.domElement);
+document.querySelector('.js-polyhedron-container canvas').style.zIndex = 5;
+document.querySelector('.js-polyhedron-container canvas').style.position = 'relative';
 
 /*
     Lights
