@@ -33,6 +33,26 @@ $brk-tablet-prtr-vs-tablet-lnds: 900px;
 $brk-tablet-lnds-vs-desktop: 1200px;
 $brk-desktop-vs-big-desktop: 1800px;
 
+@mixin for-phone-only {
+  @media (max-width: $brk-phone-vs-tablet-prtr -1) { @content; }
+}
+
+@mixin for-tablet-portrait-up {
+  @media (min-width: $brk-phone-vs-tablet-prtr) { @content; }
+}
+
+@mixin for-tablet-landscape-up {
+  @media (min-width: $brk-tablet-prtr-vs-tablet-lnds) { @content; }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: $brk-tablet-lnds-vs-desktop) { @content; }
+}
+
+@mixin for-big-desktop-up {
+  @media (min-width: $brk-desktop-vs-big-desktop) { @content; }
+}
+
 /*
     Misc
 */
@@ -144,7 +164,7 @@ h1 {
 a,
 a:visited {
   color: inherit;
-  transition: opacity 0.1s ease;
+  transition: color 0.1s ease;
 }
 
 a:hover {
@@ -173,7 +193,9 @@ body {
   font-size: $font-size-base;
 
   header {
-    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
     background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-lighter 80%); // default bleu
     // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
     // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
@@ -213,6 +235,11 @@ section.navbar {
 
   .navbar--brand img {
     margin-right: 0.25em;
+    transition: filter 0.1s ease;
+  }
+
+  .navbar--brand a:hover img {
+    filter: hue-rotate(-160deg);
   }
 
   .navbar--main-links li {
@@ -247,6 +274,7 @@ section.hero {
   color: $color-white;
 
   .hero--copy {
+    z-index: 6;
     width: $brk-phone-vs-tablet-prtr;
     
       .hero--copy--descr {
@@ -256,5 +284,37 @@ section.hero {
         line-height: 1.15em;
         letter-spacing: -0.0005em;
       }
+  }
+
+  .js-polyhedron-container {
+    z-index: 3;
+    position: relative;
+    
+    canvas {
+      z-index: 5;
+      display: block;
+      position: relative;
+    }
+
+    @include for-tablet-portrait-up {
+      right: -50vw;
+      bottom: -30vh;
+      width: 800px;
+      height: 800px;
+    }
+  }
+
+  .js-polyhedron-container:before {
+    content: "";
+    z-index: 4;
+    display:block;
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    margin-top: calc((800px - 600px)/2);
+    margin-left: calc((800px - 600px)/2);
+    border-radius: 50%;
+    background-color: rgba(3, 5, 9, 0.7);
+    filter: blur(110px);
   }
 }
