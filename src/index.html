@@ -11,19 +11,30 @@
         return f.status === 'loading';
       })(this);
     </script>
-    <!-- Declare helper function for async CSS loading -->
+    <!-- Declare helper function for async CSS and JS loading -->
     <script>
       function getCssLoader(href) {
         return function() {
-            var cssLink = document.createElement('link');
-            cssLink.rel = 'stylesheet';
-            cssLink.href = href;
-            document.head.appendChild(cssLink);
+            var el = document.createElement('link');
+            el.rel = 'stylesheet';
+            el.href = href;
+            document.head.appendChild(el);
+        };
+      }
+      function getJsLoader(src, onload) {
+        return function() {
+            var el = document.createElement('script');
+            el.onload = onload;
+            el.async = true;
+            el.defer = true;
+            el.src = src;
+            document.head.appendChild(el);
         };
       }
     </script>
-    <!-- Register async loader for `main.css` and `fonts-woff[2].css` -->
+    <!-- Register async loaders for needed resources -->
     <script>
+      // Async load `fonts-woff[2].css` (if needed)
       var styleElement = document.createElement('style');
       styleElement.rel = 'stylesheet';
       document.head.appendChild(styleElement);
@@ -42,8 +53,18 @@
         };
         request.send();
       }
-      // Also load other CSS files (simpler)
+      // Async load `main.css`
       window.addEventListener('load', getCssLoader('./main.css'));
+      // Async load `main.js`
+      window.addEventListener('load', getJsLoader('./main.js'));
+      // Async load in sequence `three.min.js` --> `polyhedron.js` --> then begin rendering
+      window.addEventListener('load', 
+          getJsLoader('./assets/vendor/three.min.js', 
+              getJsLoader('./polyhedron.js', function() {
+                render();
+              })
+          )
+      );
     </script>
     <noscript>
       <link rel="stylesheet" href="./assets/fonts/fonts-woff.css">
@@ -93,12 +114,12 @@
           </p>
           <a class="btn btn--accent" href="./enroll.html">BECOME 3D SECURED TODAY</a>
         </div>
+        <aside class="js-polyhedron-container"></aside>
       </section>
     </header>
-    <main></main>
-    <span class="imports">
-      <script async defer src="./main.js"></script>
-    </span>
+    <main>
+
+    </main>
   </body>
   <!-- to chrisiou -->
 </html>
