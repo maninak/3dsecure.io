@@ -289,12 +289,6 @@ section.hero {
   .js-polyhedron-container {
     z-index: 3;
     position: relative;
-    
-    canvas {
-      z-index: 5;
-      display: block;
-      position: relative;
-    }
 
     @include for-tablet-portrait-up {
       right: -50vw;
