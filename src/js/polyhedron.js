@@ -20,8 +20,8 @@ document.querySelector('.js-polyhedron-container canvas').style.position = 'rela
     Lights
 */
 var lights = [];
-lights[0] = new THREE.SpotLight(0xffffff,1,0);
-lights[1] = new THREE.SpotLight(0xffffff,0.25,0);
+lights[0] = new THREE.SpotLight(0xffffff, 1, 0);
+lights[1] = new THREE.SpotLight(0xffffff, 0.25, 0);
 
 lights[0].position.set(25, 100, 80);
 lights[1].position.set(-100, -200, 100);
