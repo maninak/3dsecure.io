@@ -35,8 +35,8 @@ scene.add(lights[1]);
 var polyhedron = new THREE.Mesh(
   new THREE.IcosahedronGeometry(2.5, 0),
   new THREE.MeshPhongMaterial({
-    color: 0x1b5f87,
-    emissive: 0x072534,
+    color: 0x009688,
+    emissive: 0x6c1326,
     emissiveIntensity: 1,
     side: THREE.FrontSide,
     flatShading: true,
