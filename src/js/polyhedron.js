@@ -20,8 +20,8 @@ document.querySelector('.js-polyhedron-container canvas').style.position = 'rela
     Lights
 */
 var lights = [];
-lights[0] = new THREE.SpotLight(0xffffff,1,0);
-lights[1] = new THREE.SpotLight(0xffffff,0.25,0);
+lights[0] = new THREE.SpotLight(0xffffff, 1, 0);
+lights[1] = new THREE.SpotLight(0xffffff, 0.25, 0);
 
 lights[0].position.set(25, 100, 80);
 lights[1].position.set(-100, -200, 100);
@@ -35,8 +35,8 @@ scene.add(lights[1]);
 var polyhedron = new THREE.Mesh(
   new THREE.IcosahedronGeometry(2.5, 0),
   new THREE.MeshPhongMaterial({
-    color: 0x1b5f87,
-    emissive: 0x072534,
+    color: 0x009688,
+    emissive: 0x6c1326,
     emissiveIntensity: 1,
     side: THREE.FrontSide,
     flatShading: true,

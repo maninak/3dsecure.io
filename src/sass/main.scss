@@ -5,13 +5,15 @@
 /*
     Colors
 */
-$color-primary: #17335e;
-$color-primary-lighter: #1b5f87;
-$color-primary-darker: #091323;
 
-$color-accent: #ed9410;
-$color-accent-lighter: #ff9900;
-$color-accent-darker: #c27a0e;
+
+$color-primary: #009688;
+$color-primary-brighter: #00e6cf;
+$color-primary-darker: #004d45;
+
+$color-accent: #d9264d;
+$color-accent-brighter: #f20d3e;
+$color-accent-darker: #6c1326;
 
 $color-success: #187a27;
 $color-failure: #f42011;
@@ -20,9 +22,9 @@ $color-light: #f7faff;
 $color-grey: #d4d9e1;
 $color-dark: #030509;
 
-$color-white: #fff;
+$color-white: rgba(255, 255, 255, 1);
 $color-white-trans: rgba(255, 255, 255, 0.87);
-$color-black:#000;
+$color-black:rgba(0, 0, 0, 1);
 $color-black-trans: rgba(0, 0, 0, 0.87);
 
 /*
@@ -80,7 +82,6 @@ h1 {
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1.3em;
-  color: $color-white;
   text-shadow: 0 0 0.025em rgba(0, 0, 0, 0.23);
 }
 
@@ -133,13 +134,14 @@ h1 {
 
 .btn--outline {
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.1s ease;
+  transition: border 0.1s ease;
+  transition: background-color 0.1s ease;
 }
 
 .btn--outline:hover {
   border-color: rgba(255, 255, 255, 0);
   background-color: rgba(255, 255, 255, 0.1);
-  color: inherit;
+  color: $color-white;
 }
 
 .btn--accent {
@@ -149,7 +151,7 @@ h1 {
 }
 
 .btn--accent:hover {
-  background-color: $color-accent-darker;
+  background-color: $color-accent-brighter;
   color: inherit;
 }
 
@@ -179,7 +181,7 @@ h4 a,
 h5 a,
 h6 a,
 p a {
-  border-bottom: white 0.05em solid;
+  border-bottom: $color-white-trans 0.05em solid !important;
   text-decoration: none;
 }
 
@@ -187,10 +189,19 @@ a,
 a:visited {
   color: inherit;
   transition: color 0.1s ease;
+  transition: border 0.1s ease;
 }
 
-a:hover {
-  color: $color-accent-lighter;
+a:not(.no-link-style):not(.btn) {
+  margin-bottom: -0.1em; // counters the border-bottom offsetting
+  border-bottom: 0.1em transparent solid;
+  transition: color 0.1s ease;
+  transition: border-color 0.15s ease;
+}
+
+a:not(.no-link-style):not(.btn):hover {
+  border-bottom: 0.1em $color-accent-brighter solid !important;
+  color: $color-white;
 }
 
 .current a {
@@ -218,7 +229,9 @@ body {
     position: relative;
     overflow: hidden;
     height: 100vh;
-    background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-lighter 80%); // default bleu
+    // background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-brighter 80%); // default bleu
+    // background-image: linear-gradient(-30deg, $color-primary 0%, #6694af 80%); // brighter default bleu
+    background-image: linear-gradient(-30deg, #fff 0%, $color-primary 60%); // terquose with default bleu
     // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
     // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
     // background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%); // moshy pastel grayz
@@ -253,16 +266,31 @@ section.navbar {
   height: $font-size-base * 3;
   font-family: $font-calibre;
   font-size: 0.9em;
-  color: $color-white;
+  color: $color-white-trans;
 
-  .navbar--brand img {
-    margin-right: 0.25em;
-    transition: filter 0.1s ease;
+  .navbar--brand {
+    img {
+      margin-right: 0.25em;
+      opacity: 0.9; // TODO delete when placeholder img is deleted
+      filter: hue-rotate(155deg); // TODO delete when placeholder img is deleted
+      transition: filter 0.1s ease;
+    }
+
+    span {
+      margin-bottom: -0.1em;
+      border-bottom: 0.1em transparent solid;
+      transition: color 0.1s ease;
+      transition: border-color 0.15s ease;
+    }
+
+    a:hover span {
+      border-bottom: 0.1em $color-accent-brighter solid;
+      color: $color-white;
+    }
   }
 
-  .navbar--main-links li {
-    padding-right: 1em;
-    padding-left: 1em;
+  .navbar--main-links a {
+    padding: 0.5em 1em 0.5em 1em;
   }
 
   a {
@@ -314,7 +342,7 @@ section.hero {
     margin-top: calc((800px - 600px)/2);
     margin-left: calc((800px - 600px)/2);
     border-radius: 50%;
-    background-color: rgba(3, 5, 9, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     filter: blur(110px);
   }
 }
