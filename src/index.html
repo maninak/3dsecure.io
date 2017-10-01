@@ -13,7 +13,7 @@
     </script>
     <!-- Declare helper function for async CSS and JS loading -->
     <script>
-      var ASSET_TYPE = { JS: 'script', CSS: 'style' };
+      // Takes a url to a CSS asset and returns function that will syncronously fetch that asset
       function getCssLoader(href) {
         return function() {
             var el = document.createElement('link');
@@ -22,9 +22,9 @@
             document.head.appendChild(el);
         };
       }
+      // Takes a url to a JS asset and returns function that will fetch that asset
       function getJsLoader(src, onload) {
         return function() {
-            console.log('getJsLoader just run for '+ src); // TODO delete
             var el = document.createElement('script');
             el.onload = onload;
             el.async = true;
@@ -33,6 +33,8 @@
             document.head.appendChild(el);
         };
       }
+      // Enum of asset types
+      var ASSET_TYPE = { JS: 'script', CSS: 'style' };
       // Check if we have visited page recently and have stored the assets in localstorage to use them immediately.
       // If not, then async load them and then store them for instant future loads.
       function loadFromCacheOrFetchAndCache(assetUrl, assetType, callback) {
@@ -40,8 +42,10 @@
         document.head.appendChild(e);
         var storedAsset = localStorage[assetUrl];
         if (storedAsset) {
-          e.onload = callback;
+          // use events to enable calling of the callback when done loading of stored asset
+          e.addEventListener(`node-loading-${assetUrl}`, callback);
           e.textContent = storedAsset;
+          e.dispatchEvent(new CustomEvent(`node-loading-${assetUrl}`));
         }
         else {
           var req = new XMLHttpRequest();
