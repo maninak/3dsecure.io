@@ -13,6 +13,7 @@
     </script>
     <!-- Declare helper function for async CSS and JS loading -->
     <script>
+      // Takes a url to a CSS asset and returns function that will syncronously fetch that asset
       function getCssLoader(href) {
         return function() {
             var el = document.createElement('link');
@@ -21,6 +22,7 @@
             document.head.appendChild(el);
         };
       }
+      // Takes a url to a JS asset and returns function that will fetch that asset
       function getJsLoader(src, onload) {
         return function() {
             var el = document.createElement('script');
@@ -31,44 +33,52 @@
             document.head.appendChild(el);
         };
       }
+      // Enum of asset types
+      var ASSET_TYPE = { JS: 'script', CSS: 'style' };
+      // Check if we have visited page recently and have stored the assets in localstorage to use them immediately.
+      // If not, then async load them and then store them for instant future loads.
+      function loadFromCacheOrFetchAndCache(assetUrl, assetType, callback) {
+        var e = document.createElement(assetType);
+        document.head.appendChild(e);
+        var storedAsset = localStorage[assetUrl];
+        if (storedAsset) {
+          // use events to enable calling of the callback when done loading of stored asset
+          e.addEventListener(`node-loading-${assetUrl}`, callback);
+          e.textContent = storedAsset;
+          e.dispatchEvent(new CustomEvent(`node-loading-${assetUrl}`));
+        }
+        else {
+          var req = new XMLHttpRequest();
+          req.open('GET', window.location.href + assetUrl);
+          req.onload = function() {
+            if ((req.status >= 200) && (req.status < 400)) {
+              localStorage[assetUrl] = e.textContent = req.responseText;
+            }
+            if (callback) { callback(); }
+          };
+          req.send();
+        }
+      }
     </script>
-    <!-- Register async loaders for needed resources -->
+    <!-- Register async loaders for required assets -->
     <script>
       // Async load `fonts-woff[2].css` (if needed)
-      var styleElement = document.createElement('style');
-      styleElement.rel = 'stylesheet';
-      document.head.appendChild(styleElement);
-      // Check if we have visited page recently and have stored fonts in localstorage to use them immediately.
-      // If not, then async load them and store them.
       var fontFileUrl = supportsWoff2 ? '/assets/fonts/fonts-woff2.css' : '/assets/fonts/fonts-woff.css';
-      var storedFontFileUrl = localStorage[fontFileUrl];
-      if (storedFontFileUrl) { styleElement.textContent = storedFontFileUrl; }
-      else {
-        var request = new XMLHttpRequest();
-        request.open('GET', window.location.href + fontFileUrl);
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 400) {
-                localStorage[fontFileUrl] = styleElement.textContent = request.responseText;
-            }
-        };
-        request.send();
-      }
+      loadFromCacheOrFetchAndCache(fontFileUrl, ASSET_TYPE.CSS);
       // Async load `main.css`
-      window.addEventListener('load', getCssLoader('./main.css'));
+      window.addEventListener('load', getCssLoader('/main.css'));
       // Async load `main.js`
-      window.addEventListener('load', getJsLoader('./main.js'));
+      window.addEventListener('load', getJsLoader('/main.js'));
       // Async load in sequence `three.min.js` --> `polyhedron.js` --> then begin rendering
-      window.addEventListener('load', 
-          getJsLoader('./assets/vendor/three.min.js', 
-              getJsLoader('./polyhedron.js', function() {
-                render();
-              })
-          )
+      loadFromCacheOrFetchAndCache(
+          '/assets/vendor/three.min.js',
+          ASSET_TYPE.JS,
+          getJsLoader('/polyhedron.js', function() { render(); })
       );
     </script>
     <noscript>
-      <link rel="stylesheet" href="./assets/fonts/fonts-woff.css">
-      <link rel="stylesheet" href="./main.css">
+      <link rel="stylesheet" href="/assets/fonts/fonts-woff.css">
+      <link rel="stylesheet" href="/main.css">
     </noscript>
   </head>
 
@@ -80,7 +90,7 @@
         <div class="x-space-between y-center">
           <aside class="navbar--brand">
             <a class="no-link-style y-center" href="#top" title="Go to Home page">
-              <img alt="3dsecure.io logo icon polyhedron 3d secure" src="./assets/img/logo.png" width="40px" height="40px">
+              <img alt="3dsecure.io logo icon polyhedron 3d secure" src="/assets/img/logo.png" width="40px" height="40px">
               <span class="product-name">3dsecure.io</span>
             </a>
           </aside>
@@ -89,16 +99,16 @@
               <a href="#pricing">
                 <li>Pricing</li>
               </a>
-              <a href="./docs.html">
+              <a href="/docs.html">
                 <li>Docs</li>
               </a>
-              <a href="./support.html">
+              <a href="/support.html">
                 <li>Support</li>
               </a>
             </ul>
           </nav>
           <aside class="navbar--cta">
-            <a class="btn btn--outline" href="./enroll.html" title="Enroll in 3dsecure.io">
+            <a class="btn btn--outline" href="/enroll.html" title="Enroll in 3dsecure.io">
               <span>Get your API key</span>
             </a>
           </aside>
@@ -110,7 +120,7 @@
           <p class="hero--copy--descr">
             3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#3D-Secure-in-a-nutshell" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
           </p>
-          <a class="btn btn--accent" href="./enroll.html">BECOME 3D SECURED TODAY</a>
+          <a class="btn btn--accent" href="/enroll.html">BECOME 3D SECURED TODAY</a>
         </div>
         <aside class="js-polyhedron-container"></aside>
       </section>
