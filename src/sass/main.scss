@@ -367,13 +367,13 @@ section.hero {
 /*
     Features section
 */
-.features-section-wrapper {
+.features-backdrop {
   width: 100%;
   position: relative;
   background: linear-gradient(-5deg, $color-primary-light, $color-white);
 }
 
-.features-section-wrapper::after {
+.features-backdrop::after {
   content: '';
   width: 100%;
   height: 100%;
