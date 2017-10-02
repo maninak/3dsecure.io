@@ -307,6 +307,10 @@ section.hero {
   .hero--copy {
     z-index: 6;
     width: $brk-phone-vs-tablet-prtr;
+
+      h1 {
+        color: $color-white;
+      }
     
       .hero--copy--descr {
         margin-bottom: 2em;
