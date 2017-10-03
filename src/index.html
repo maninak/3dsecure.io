@@ -43,9 +43,9 @@
         var storedAsset = localStorage[assetUrl];
         if (storedAsset) {
           // use events to enable calling of the callback when done loading of stored asset
-          e.addEventListener(`node-loading-${assetUrl}`, callback);
+          e.addEventListener(`done-loading: ` + assetUrl, callback);
           e.textContent = storedAsset;
-          e.dispatchEvent(new CustomEvent(`node-loading-${assetUrl}`));
+          e.dispatchEvent(new CustomEvent(`done-loading: ` + assetUrl));
         }
         else {
           var req = new XMLHttpRequest();
@@ -90,13 +90,15 @@
         <div class="x-space-between y-center">
           <aside class="navbar--brand">
             <a class="no-link-style y-center" href="#top" title="Go to Home page">
-              <img alt="3dsecure.io logo icon polyhedron 3d secure" src="assets/img/logo.png" width="40px" height="40px">
+              <img  src="assets/img/logo.png"
+                    alt="3dsecure.io logo icon polyhedron 3d secure"
+                    width="40px">
               <span class="product-name">3dsecure.io</span>
             </a>
           </aside>
           <nav>
             <ul class="navbar--main-links ul-horizontal x-space-between y-center">
-              <a href="#pricing">
+              <a href="#pricing" onclick="smoothScroll('pricing')">
                 <li>Pricing</li>
               </a>
               <a href="docs.html">
@@ -118,7 +120,7 @@
         <div class="hero--copy">
           <h1>3D Secure <br>Merchant Plugin <br>For Payment Gateways</h1>
           <p class="hero--copy--descr">
-            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#3D-Secure-in-a-nutshell" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
+            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a  onclick="smoothScroll('3ds-benefits')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
           </p>
           <a class="btn btn--accent" href="enroll.html">BECOME 3D SECURED TODAY</a>
         </div>
@@ -127,12 +129,14 @@
     </header>
     <main>
       <div class="features-backdrop">
-        <section class="features padding-vert-xxl">
+        <section class="features">
           <h2>Features</h2>
-          <div class="feat-wrapper">
+          <div class="feat-wrapper columns-x3">
             <div class="feat-wrapper--feat">
                 <div class="feat-wrapper--feat--icon-bg">
-                  <img src="assets/img/shapes.svg" alt="child toy blocks shapes round" width=28px height=28px>
+                  <img  src="assets/img/shapes.svg"
+                        alt="child toy blocks shapes round"
+                        width="28px">
                 </div>
               <h4>Simple</h4>
               <p>Determine if a card is enrolled for 3-D Secure authentication with a single API request.</p>
@@ -140,14 +144,19 @@
             </div>
             <div class="feat-wrapper--feat">
               <div class="feat-wrapper--feat--icon-bg">
-                <img src="assets/img/turning-to-right.svg" alt="right turn avoid obstacle round" width=28px height=28px>
+                <img  src="assets/img/turning-to-right.svg"
+                      alt="right turn avoid obstacle round"
+                      width="28px"
+                      height="28px">
               </div>
               <h4>Agile</h4>
               <p>No need to acquire and maintain complicated and expensive licenses from credit card providers.</p>
             </div>
             <div class="feat-wrapper--feat">
                 <div class="feat-wrapper--feat--icon-bg">
-                  <img src="assets/img/cloud.svg" alt="cloud round" width=28px height=28px>
+                  <img  src="assets/img/cloud.svg"
+                        alt="cloud round"
+                        width="28px">
                 </div>
               <h4>Managed</h4>
               <p>Nothing for you to host, manage or keep up to date.</p>
@@ -156,7 +165,47 @@
           </div>
         </section>
       </div>
+      <div class="pricing-backdrop" id="pricing">
+        <section class="pricing">
+          <div class="columns-x3">
+            <div class="pricing--title y-center">
+              <h2>
+                <span>Pricing</span><br>
+                <span class="secondary">lets you set</span><br>
+                <span class="tertiary">and forget</span>
+              </h2>
+            </div>
+            <div class="pricing--price y-center primary">
+              <div class="pricing--price--wrap">
+                <div class="pricing--price--wrap--plan"><strong>&euro;599</strong> / month</div>
+                <div class="pricing--price--wrap--discl secondary">price not subject to VAT</div>
+              </div>
+            </div>
+            <div class="pricing--traits primary">
+              <div class="pricing--traits--trait y-center">
+                <img  src="assets/img/checkmark.svg"
+                      alt="checkmark filled black angled"
+                      width="22px">
+                <span>No setup fees</span>
+              </div>
+              <div class="pricing--traits--trait y-center">
+                <img  src="assets/img/checkmark.svg"
+                      alt="checkmark filled black angled"
+                      width="22px">
+                <span>No per transaction fees</span>
+              </div>
+              <div class="pricing--traits--trait y-center">
+                <img  src="assets/img/checkmark.svg"
+                      alt="checkmark filled black angled"
+                      width="22px">
+                <span>Fixed, predictable pricing</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   </body>
   <!-- to chrisiou -->
 </html>
+  

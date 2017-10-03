@@ -107,17 +107,46 @@ p {
  *  UTILITIES
 \*-----------------------------*/
 
+/*
+    Fixed size variables
+*/
+$xs:  $font-size-base * 0.25; // extra small
+$sm:  $font-size-base * 0.5;  // small
+$md:  $font-size-base * 1;    // medium
+$lg:  $font-size-base * 2;    // large
+$xl:  $font-size-base * 4;    // extra large
+$ul:  $font-size-base * 8;    // ultra large
+
+/*
+    Displat and layout HTML helper classes
+*/
 .float-l { float: left;  }
 .float-r { float: right; }
 
+.x-center {
+  display: flex;
+  justify-content: center;
+}
+
 .x-space-between {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .y-center {
   display: flex;
   align-items: center;
+}
+
+.columns-x3 {
+  display: grid;
+  grid-template-columns:
+      260px
+      minmax(40px,  1fr)
+      260px
+      minmax(40px,  1fr)
+      260px;
+  grid-template-areas: 'left gutter-l middle gutter-r right';
 }
 
 .ul-horizontal {
@@ -128,19 +157,84 @@ p {
   }
 }
 
-.padding-horiz-xs   { padding-right: $font-size-base * 0.25;  padding-left: $font-size-base * 0.25;   }
-.padding-horiz-sm   { padding-right: $font-size-base * 0.5;   padding-left: $font-size-base * 0.5;    }
-.padding-horiz-md   { padding-right: $font-size-base * 1;     padding-left: $font-size-base * 1;      }
-.padding-horiz-lg   { padding-right: $font-size-base * 2;     padding-left: $font-size-base * 2;      }
-.padding-horiz-xl   { padding-right: $font-size-base * 4;     padding-left: $font-size-base * 4;      }
-.padding-horiz-xxl  { padding-right: $font-size-base * 8;     padding-left: $font-size-base * 8;      }
+/*
+    Arithmetic functions
+*/
+@function pow($number, $exp) {
+  $value: 1;
+  @if $exp > 0 {
+    @for $i from 1 through $exp {
+      $value: $value * $number;
+    }
+  }
+  @else if $exp < 0 {
+    @for $i from 1 through -$exp {
+      $value: $value / $number;
+    }
+  }
+  @return $value;
+}
 
-.padding-vert-xs    { padding-top: $font-size-base * 0.25;    padding-bottom: $font-size-base * 0.25; }
-.padding-vert-sm    { padding-top: $font-size-base * 0.5;     padding-bottom: $font-size-base * 0.5;  }
-.padding-vert-md    { padding-top: $font-size-base * 1;       padding-bottom: $font-size-base * 1;    }
-.padding-vert-lg    { padding-top: $font-size-base * 2;       padding-bottom: $font-size-base * 2;    }
-.padding-vert-xl    { padding-top: $font-size-base * 4;       padding-bottom: $font-size-base * 4;    }
-.padding-vert-xxl   { padding-top: $font-size-base * 8;       padding-bottom: $font-size-base * 8;    }
+@function fact($number) {
+  $value: 1;
+  @if $number > 0 {
+    @for $i from 1 through $number {
+      $value: $value * $i;
+    }
+  }
+  @return $value;
+}
+
+@function pi() {
+  @return 3.14159265359;
+}
+
+@function rad($angle) {
+  $unit: unit($angle);
+  $unitless: $angle / ($angle * 0 + 1);
+  // If the angle has 'deg' as unit, convert to radians.
+  @if $unit == deg {
+    $unitless: $unitless / 180 * pi();
+  }
+  @return $unitless;
+}
+
+@function sin($angle) {
+  $sin: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+  }
+  @return $sin;
+}
+
+@function cos($angle) {
+  $cos: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+  }
+  @return $cos;
+}
+
+/*
+    Box model HMTL helper classes
+*/
+.padding-horiz-xs   { padding-right: $xs; padding-left: $xs;    }
+.padding-horiz-sm   { padding-right: $sm; padding-left: $sm;    }
+.padding-horiz-md   { padding-right: $md; padding-left: $md;    }
+.padding-horiz-lg   { padding-right: $lg; padding-left: $lg;    }
+.padding-horiz-xl   { padding-right: $xl; padding-left: $xl;    }
+.padding-horiz-ul   { padding-right: $ul; padding-left: $ul;    }
+
+.padding-vert-xs    { padding-top: $xs;   padding-bottom: $xs;  }
+.padding-vert-sm    { padding-top: $sm;   padding-bottom: $sm;  }
+.padding-vert-md    { padding-top: $md;   padding-bottom: $md;  }
+.padding-vert-lg    { padding-top: $lg;   padding-bottom: $lg;  }
+.padding-vert-xl    { padding-top: $xl;   padding-bottom: $xl;  }
+.padding-vert-ul    { padding-top: $ul;   padding-bottom: $ul;  }
 
 .primary   { opacity: $opacity-primary;   }
 .secondary { opacity: $opacity-secondary; }
@@ -148,6 +242,9 @@ p {
 
 .color-accent { color: $color-accent; }
 
+/*
+    Button HTML helper classes
+*/
 .btn {
   display: inline-block;
   padding: ($font-size-base * 0.7) ($font-size-base * 1.4) ($font-size-base * 0.7) ($font-size-base * 1.4);
@@ -244,24 +341,6 @@ a:not(.no-link-style):not(.btn):hover {
 body {
   font-size: $font-size-base;
 
-  header {
-    position: relative;
-    overflow: hidden;
-    height: 100vh;
-    // background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-brighter 80%); // default bleu
-    // background-image: linear-gradient(-30deg, $color-primary 0%, #6694af 80%); // brighter default bleu
-    background-image: linear-gradient(-30deg, #fff 0%, $color-primary 60%); // terquose with default bleu
-    // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
-    // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
-    // background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%); // moshy pastel grayz
-    // background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); // self-respec
-    // background-image: linear-gradient(45deg, #874da2 0%, #c43a30 100%); // hip pink-purp
-    // background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); // dusk blue-purplez
-
-    // background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
-    // background-blend-mode: multiply,multiply; // grey globe on links
-  }
-
   section {
     display: grid;
     grid-template-columns:
@@ -279,7 +358,28 @@ body {
 }
 
 /*
-    Navnar section
+    Header (contains `Navbar` and `Hero` sections)
+*/
+header {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  // background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-brighter 80%); // default bleu
+  // background-image: linear-gradient(-30deg, $color-primary 0%, #6694af 80%); // brighter default bleu
+  background-image: linear-gradient(-30deg, #fff 0%, $color-primary 60%); // terquose with default bleu
+  // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
+  // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
+  // background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%); // moshy pastel grayz
+  // background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); // self-respec
+  // background-image: linear-gradient(45deg, #874da2 0%, #c43a30 100%); // hip pink-purp
+  // background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); // dusk blue-purplez
+
+  // background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
+  // background-blend-mode: multiply,multiply; // grey globe on links
+}
+
+/*
+    Navbar section
 */
 section.navbar {
   height: $font-size-base * 3;
@@ -389,6 +489,8 @@ section.features {
   grid-template-rows: minmax($font-size-base, auto) 1fr;
   grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
                         'gutter-l pad-l   features  pad-r gutter-r';
+  padding-top: $ul;
+  padding-bottom: $ul;
 
   h2 {
     grid-area: title;
@@ -396,14 +498,6 @@ section.features {
 
   .feat-wrapper {
     grid-area: features;
-    display: grid;
-    grid-template-columns:
-        minmax($font-size-base * 8.5, $font-size-base * 15)
-        minmax($font-size-base * 2, 1fr)
-        minmax($font-size-base * 8.5, $font-size-base * 15)
-        minmax($font-size-base * 2, 1fr)
-        minmax($font-size-base * 8.5, $font-size-base * 15);
-    grid-template-areas: 'feat1 gutter-l feat2 gutter-r feat3';
 
     .feat-wrapper--feat--icon-bg {
       width: $font-size-base * 2.7;
@@ -413,7 +507,7 @@ section.features {
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: $color-accent;
+      background-color: $color-primary;
 
       img {
         max-width: $font-size-base * 1.4;
@@ -421,8 +515,68 @@ section.features {
       }
     }
     
-    :nth-child(1).feat-wrapper--feat { grid-area: feat1; }
-    :nth-child(2).feat-wrapper--feat { grid-area: feat2; }
-    :nth-child(3).feat-wrapper--feat { grid-area: feat3; }
+    :nth-child(1).feat-wrapper--feat { grid-area: left; }
+    :nth-child(2).feat-wrapper--feat { grid-area: middle; }
+    :nth-child(3).feat-wrapper--feat { grid-area: right; }
+  }
+}
+
+/*
+    Pricing section
+*/
+section.pricing {
+  @include for-tablet-landscape-up  { padding: ($font-size-base * 13) 0; }
+  @include for-desktop-up           { padding: ($font-size-base * 15) 0; }
+
+  .pricing--title {
+    grid-area: left;
+
+    h2 {
+      margin-bottom: 0;
+
+      .tertiary {
+        filter: blur(0.03em);
+      }
+    }
+  }
+
+  .pricing--price {
+    grid-area: middle;
+    text-align: center;
+    font-family: $font-calibre;
+
+    .pricing--price--wrap {
+      display: inline-block;
+
+      .pricing--price--wrap--plan {
+        font-size: 1.8em;
+      }
+
+      .pricing--price--wrap--discl {
+        float: right;
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  .pricing--traits {
+    grid-area: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: $font-calibre;
+    font-size: 1.1em;
+
+    .pricing--traits--trait {
+      padding-top: 0.4em;
+      padding-bottom: 0.4em;
+      height: $font-size-base * 1.3;
+
+      img {
+        max-width: $font-size-base * 1.1;
+        max-height: $font-size-base * 1.1;
+        margin-right: 0.5em;
+      }      
+    }
   }
 }
