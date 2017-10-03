@@ -30,6 +30,11 @@ Number.prototype.clamp = function(min, max) {
 function getRadiansFromDegrees(degrees) { return degrees * (Math.PI / 180); } 
 
 /**
+ * Enumerated variable for use with `setPaddingSlanted()`.
+ */
+var PAD = { TOP: 'paddingTop', BOTTOM: 'paddingBottom' };
+
+/**
  * For an element with slanted background, set its bottom padding correctly, accounting for browser width.
  * 
  * Example:
@@ -37,14 +42,15 @@ function getRadiansFromDegrees(degrees) { return degrees * (Math.PI / 180); }
  * setPaddingBottomSlanted(el, 160, 5); // executes on page load to initialize
  * window.addEventListener('resize', function() { setPaddingBottomSlanted(fel, 160, 5); });
  * 
- * @param {Object} el A reference to the DOM element to which the padding will be applied
+ * @param {{}} el A reference to the DOM element to which the padding will be applied
+ * @param {{TOP, BOTTOM}} padPosition The side of the element where the padding should be applied
  * @param {Number} desiredPadding The padding desired for the element in pixels
  * @param {Number} slantAngle The angle of the slanted side in degrees
  */
-function setPaddingBottomSlanted(el, desiredPadding, slantAngle) {
-  // right-angle triangle trigonometry says "opposite_side = attached_side * tan(angle)"
+function setPaddingSlanted(el, padPosition, desiredPadding, slantAngle) {
+  // right-angle trigonometry says "opposite_side = attached_side * tan(angle)"
   var slantHeight = window.innerWidth * Math.tan(getRadiansFromDegrees(slantAngle));
-  el.style.paddingBottom = desiredPadding - (slantHeight / 2);
+  el.style[padPosition] = desiredPadding - (slantHeight / 2);
 }
 
 /**
@@ -72,8 +78,8 @@ function smoothScroll(eID) {
     var y = elm.offsetTop;
     var node = elm;
     while (node.offsetParent && node.offsetParent != document.body) {
-        node = node.offsetParent;
-        y += node.offsetTop;
+      node = node.offsetParent;
+      y += node.offsetTop;
     } return y;
   }
 
@@ -81,7 +87,7 @@ function smoothScroll(eID) {
   var stopY = elmYPosition(eID);
   var distance = stopY > startY ? stopY - startY : startY - stopY;
   if (distance < 100) {
-      scrollTo(0, stopY); return;
+    scrollTo(0, stopY); return;
   }
   var speed = Math.round(distance / 100);
   if (speed >= 20) speed = 20;
@@ -89,14 +95,14 @@ function smoothScroll(eID) {
   var leapY = stopY > startY ? startY + step : startY - step;
   var timer = 0;
   if (stopY > startY) {
-      for ( var i=startY; i<stopY; i+=step ) {
-          setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-          leapY += step; if (leapY > stopY) leapY = stopY; timer++;
-      } return;
+    for ( var i=startY; i<stopY; i+=step ) {
+      setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
+      leapY += step; if (leapY > stopY) leapY = stopY; timer++;
+    } return;
   }
   for ( var i=startY; i>stopY; i-=step ) {
-      setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-      leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
+    setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
+    leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
   }
 }
 
@@ -108,11 +114,12 @@ function smoothScroll(eID) {
 
 /*
     Set correct bottom padding for `Features` section
-*/
+*/ 
 var featuresSectionEl = document.querySelector('section.js-bottom-padding');
-setPaddingBottomSlanted(featuresSectionEl, 160, 5); // executes on page load to initialize
-window.addEventListener('resize', function() { setPaddingBottomSlanted(featuresSectionEl, 160, 5); });
-
-/*
-    Set correct top padding for `3DS-benefits` section
-*/
+var threedsSectionEl  = document.querySelector('section.js-top-padding');
+// initialize on page load
+setPaddingSlanted(featuresSectionEl, PAD.BOTTOM, 160, 5);
+setPaddingSlanted(threedsSectionEl,  PAD.TOP,    160, 5);
+// listen for browser resize and dynamically adjust padding
+window.addEventListener('resize', function() { setPaddingSlanted(featuresSectionEl, PAD.BOTTOM, 160, 5); });
+window.addEventListener('resize', function() { setPaddingSlanted(threedsSectionEl,  PAD.TOP,    160, 5); });
