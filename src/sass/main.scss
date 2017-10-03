@@ -525,16 +525,21 @@ section.features {
     Pricing section
 */
 section.pricing {
-  padding-top: $ul + ($ul * 0.5);    // 1 + 1/2 to counteract slanted section offset on top
-  padding-bottom: $ul + ($ul * 0.5); // 1 + 1/2 to counteract slanted section offset on bottom
+  @include for-tablet-landscape-up  { padding: ($font-size-base * 13) 0; }
+  @include for-desktop-up           { padding: ($font-size-base * 15) 0; }
 
   .pricing--title {
     grid-area: left;
 
-    h2 .tertiary {
-      filter: blur(0.03em);
+    h2 {
+      margin-bottom: 0;
+
+      .tertiary {
+        filter: blur(0.03em);
+      }
     }
   }
+
   .pricing--price {
     grid-area: middle;
     text-align: center;
@@ -553,8 +558,12 @@ section.pricing {
       }
     }
   }
+
   .pricing--traits {
     grid-area: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     font-family: $font-calibre;
     font-size: 1.1em;
 
