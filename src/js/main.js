@@ -111,15 +111,3 @@ function smoothScroll(eID) {
 /*-----------------------------*\
  *  Initialization
 \*-----------------------------*/
-
-/*
-    Set correct bottom padding for `Features` section
-*/ 
-var featuresSectionEl = document.querySelector('section.js-bottom-padding');
-var threedsSectionEl  = document.querySelector('section.js-top-padding');
-// initialize on page load
-setPaddingSlanted(featuresSectionEl, PAD.BOTTOM, 160, 5);
-setPaddingSlanted(threedsSectionEl,  PAD.TOP,    160, 5);
-// listen for browser resize and dynamically adjust padding
-window.addEventListener('resize', function() { setPaddingSlanted(featuresSectionEl, PAD.BOTTOM, 160, 5); });
-window.addEventListener('resize', function() { setPaddingSlanted(threedsSectionEl,  PAD.TOP,    160, 5); });

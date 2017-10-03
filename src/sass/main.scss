@@ -490,7 +490,7 @@ section.features {
   grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
                         'gutter-l pad-l   features  pad-r gutter-r';
   padding-top: $ul;
-  padding-bottom: $font-size-base * 6; // is overwritten by javascript dynamically taking view-width into account
+  padding-bottom: $ul;
 
   h2 {
     grid-area: title;
