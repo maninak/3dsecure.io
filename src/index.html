@@ -43,13 +43,15 @@
         var storedAsset = localStorage[assetUrl];
         if (storedAsset) {
           // use events to enable calling of the callback when done loading of stored asset
-          e.addEventListener(`done-loading: ` + assetUrl, callback);
+          e.addEventListener('done-loading: ' + assetUrl, callback);
           e.textContent = storedAsset;
-          e.dispatchEvent(new CustomEvent(`done-loading: ` + assetUrl));
+          e.dispatchEvent(new CustomEvent('done-loading: ' + assetUrl));
         }
         else {
           var req = new XMLHttpRequest();
-          req.open('GET', window.location.href + assetUrl);
+          // clean-up urls like `https://3dsecure.io/#pricing`
+          var trimmedURl = window.location.href.replace(/(\/#.*)|(#.*)/g, "");
+          req.open('GET', trimmedURl + assetUrl);
           req.onload = function() {
             if ((req.status >= 200) && (req.status < 400)) {
               localStorage[assetUrl] = e.textContent = req.responseText;
