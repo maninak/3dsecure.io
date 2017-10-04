@@ -21,7 +21,7 @@ $color-primary: #009688;
 $color-primary-brighter: #00e6cf;
 $color-primary-light: #e7f5f4;
 $color-primary-grey: #cce2e0;
-$color-primary-dark: #002220;
+$color-primary-dark: #003330;
 $color-primary-darker: #000808;
 
 $color-accent: #d9264d;
@@ -138,14 +138,23 @@ $ul:  $font-size-base * 8;    // ultra large
   align-items: center;
 }
 
+.columns-x2 {
+  display: grid;
+  grid-template-columns:
+      minmax(275px, 500px)
+      minmax(40px,  auto)
+      minmax(275px, 500px);
+  grid-template-areas: 'left gutter-m right';
+}
+
 .columns-x3 {
   display: grid;
   grid-template-columns:
-      260px
+      minmax(170px, 260px)
       minmax(40px,  1fr)
-      260px
+      minmax(170px, 260px)
       minmax(40px,  1fr)
-      260px;
+      minmax(170px, 260px);
   grid-template-areas: 'left gutter-l middle gutter-r right';
 }
 
@@ -217,6 +226,44 @@ $ul:  $font-size-base * 8;    // ultra large
     $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
   }
   @return $cos;
+}
+
+/*
+    Creates slanted (diagonal) edge effect to the element wherein it is included
+
+    Example:
+    section {
+      @include slanted-edge(top, right, -10deg);
+    }
+*/
+@mixin slanted-edge($vert, $horiz, $angle) {
+  position: relative;
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: inherit;
+    z-index: -1;
+    transform: skewY($angle);
+  }
+
+  @if $vert == 'top' {
+    &::before {
+      top: 0;
+      @if $horiz == 'right' { transform-origin: left  top;    }
+      @if $horiz == 'left'  { transform-origin: right top;    }
+    }
+  }
+  
+  @if $vert == 'bottom' {
+    &::before {
+      bottom: 0;
+      @if $horiz == 'right' { transform-origin: left  bottom; }
+      @if $horiz == 'left'  { transform-origin: right bottom; }
+    }
+  }
 }
 
 /*
@@ -303,6 +350,7 @@ p a {
 
 a,
 a:visited {
+  text-decoration: none;
   color: inherit;
   transition: color 0.1s ease;
   transition: border 0.1s ease;
@@ -411,10 +459,6 @@ section.navbar {
   .navbar--main-links a {
     padding: 0.5em 1em 0.5em 1em;
   }
-
-  a {
-    text-decoration: none;
-  }
 }
 
 /*
@@ -468,38 +512,24 @@ section.hero {
     Features section
 */
 .features-backdrop {
-  width: 100%;
-  position: relative;
+  @include slanted-edge(bottom, left, -5deg);
   background: linear-gradient(-5deg, $color-primary-light, $color-white);
-}
-
-.features-backdrop::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: inherit;
-  z-index: -1;
-  bottom: 0;
-  transform-origin: right bottom;
-  transform: skewY(-5deg);
 }
 
 section.features {
   grid-template-rows: minmax($font-size-base, auto) 1fr;
   grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
                         'gutter-l pad-l   features  pad-r gutter-r';
-  padding-top: $ul;
-  padding-bottom: $ul;
+  padding: $ul 0;
 
   h2 {
     grid-area: title;
   }
 
-  .feat-wrapper {
+  .feat-wrap {
     grid-area: features;
 
-    .feat-wrapper--feat--icon-bg {
+    .feat-wrap--feat--icon-bg {
       width: $font-size-base * 2.7;
       height: $font-size-base * 2.7;
       margin-bottom: $font-size-base * 1;
@@ -515,9 +545,9 @@ section.features {
       }
     }
     
-    :nth-child(1).feat-wrapper--feat { grid-area: left; }
-    :nth-child(2).feat-wrapper--feat { grid-area: middle; }
-    :nth-child(3).feat-wrapper--feat { grid-area: right; }
+    :nth-child(1).feat-wrap--feat { grid-area: left; }
+    :nth-child(2).feat-wrap--feat { grid-area: middle; }
+    :nth-child(3).feat-wrap--feat { grid-area: right; }
   }
 }
 
@@ -577,6 +607,57 @@ section.pricing {
         max-height: $font-size-base * 1.1;
         margin-right: 0.5em;
       }      
+    }
+  }
+}
+
+/*
+    Threeds section
+*/
+.threeds-backdrop {
+  @include slanted-edge(top, right, -5deg);
+  background: $color-primary-dark;
+}
+
+section.threeds {
+  grid-template-rows: minmax($font-size-base, auto) 1fr;
+  grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
+                        'gutter-l pad-l   content   pad-r gutter-r';
+  padding: $ul 0;
+  font-family: $font-calibre;
+  color: $color-white;
+
+  h2 {
+    grid-area: title;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  .threeds--pros--pro {
+    margin-bottom: 1.8em;
+
+    img {
+      float: left;
+      max-width: $font-size-base * 2.2;
+      max-height: $font-size-base * 2.2;
+      margin-top: 0.25em;
+      margin-right: 0.8em;
+    }
+
+    span {
+      font-size: 1.2em;
+    }
+  }
+
+  .threeds--explanation {
+    grid-area: right;
+
+    p {
+      font-size: 0.95em;
+
+      a {
+        font-size: 0.9em;
+      }
     }
   }
 }
