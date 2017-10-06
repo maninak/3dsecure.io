@@ -136,13 +136,15 @@ $ul:  $font-size-base * 8;    // ultra large
   align-items: center;
 }
 
-.columns-x2 {
+.columns-x2-centered {
   display: grid;
   grid-template-columns:
-      minmax(275px, 500px)
-      minmax(40px,  auto)
-      minmax(275px, 500px);
-  grid-template-areas: 'left gutter-m right';
+      1fr
+      minmax(275px, 440px)
+      minmax(40px, 1fr)
+      minmax(275px, 440px)
+      1fr;
+  grid-template-areas: 'gutter-l left gutter-m right gutter-r';
 }
 
 .columns-x3 {
