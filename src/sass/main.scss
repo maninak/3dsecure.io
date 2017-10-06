@@ -357,14 +357,14 @@ a:visited {
 }
 
 a:not(.no-link-style):not(.btn) {
-  margin-bottom: -0.1em; // counters the border-bottom offsetting
-  border-bottom: 0.1em transparent solid;
+  margin-bottom: -0.125em; // counters the border-bottom offsetting
+  border-bottom: 0.125em transparent solid;
   transition: color 0.1s ease;
   transition: border-color 0.15s ease;
 }
 
 a:not(.no-link-style):not(.btn):hover {
-  border-bottom: 0.1em $color-accent-brighter solid !important;
+  border-bottom: 0.125em $color-accent-brighter solid !important;
   color: $color-white;
 }
 
