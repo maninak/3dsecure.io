@@ -59,9 +59,10 @@ function setPaddingSlanted(el, padPosition, desiredPadding, slantAngle) {
  * Example:
  * <a onclick="smoothScroll('info')">
  * 
- * @param {String} eID The id of the DOM element towards which to scroll the page
+ * @param {String} elId The id of the DOM element towards which to scroll the page
+ * @param {String} pos The position of the element to towards which to scroll. Can be `'middle'`. Defaults to top.
  */
-function smoothScroll(eID) {
+function smoothScroll(elId, pos) {
   function currentYPosition() {
     // Firefox, Chrome, Opera, Safari
     if (self.pageYOffset) return self.pageYOffset;
@@ -73,10 +74,19 @@ function smoothScroll(eID) {
     return 0;
   }
 
-  function elmYPosition(eID) {
-    var elm = document.getElementById(eID);
-    var y = elm.offsetTop;
-    var node = elm;
+  function elYPosition(elId) {
+    var el = document.getElementById(elId);
+
+    // if so specified, calculate element position so as to scroll to its middle
+    // if not specified, default to scrolling to the element's top
+    var y;
+    if (pos === 'middle') {
+      y = el.offsetTop + (el.clientHeight /2) - (window.innerHeight / 2);
+    } else {
+      y = el.offsetTop;
+    }
+
+    var node = el;
     while (node.offsetParent && node.offsetParent != document.body) {
       node = node.offsetParent;
       y += node.offsetTop;
@@ -84,7 +94,7 @@ function smoothScroll(eID) {
   }
 
   var startY = currentYPosition();
-  var stopY = elmYPosition(eID);
+  var stopY = elYPosition(elId);
   var distance = stopY > startY ? stopY - startY : startY - stopY;
   if (distance < 100) {
     scrollTo(0, stopY); return;
