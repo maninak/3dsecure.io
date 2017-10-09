@@ -310,9 +310,14 @@ $ul:  $font-size-base * 8;    // ultra large
 }
 
 .btn--outline:hover {
-  border-color: transparent;
+  border-color: transparent !important;
   background-color: rgba(255, 255, 255, $opacity-tertiary);
   color: $color-white;
+}
+
+.btn--full-width {
+  width: 100%;
+  text-align: center;
 }
 
 .btn--accent {
@@ -675,5 +680,81 @@ section.threeds {
         font-size: 0.9em;
       }
     }
+  }
+}
+
+/*
+    Footer section
+*/
+footer {
+  background: $color-primary-darker;
+}
+
+section.footer {
+  padding-top: calc(60px + 8vw);
+  font-family: $font-calibre;
+  color: $color-white-trans;
+
+  .footer--credits {
+    display: grid;
+    grid-template-columns: auto minmax(80px, 1fr) minmax(170px, 260px);
+    grid-template-areas: 'main gutter-m aside';
+    width: 100%;
+    padding-bottom: $font-size-base * 4;
+    border-bottom: rgba(255, 255, 255, 0.05) 1px solid;
+
+    main {
+      grid-area: main;
+      display: flex;
+      align-items: center;
+
+      h2 {
+        margin-right: $font-size-base * 1.5;
+        margin-bottom: 0;
+      }
+
+      img{
+        max-width: $font-size-base * 5;
+        max-height: $font-size-base * 5;
+        opacity: $opacity-primary;
+      }
+    }
+
+    aside {
+      grid-area: aside;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: $font-size-base * 8;
+
+      .footer--credits--member {
+        font-size: 1.4em;
+        letter-spacing: -0.03em;
+
+        .footer--credits--member--principal {
+          font-family: $font-circularPro;
+        }
+      }
+
+      .footer--credits--authorized {
+        font-size: 0.95em;
+      }
+    }
+  }
+
+  .footer--btt {
+    display: flex;
+    margin: ($font-size-base * 4) 0;
+
+    a {
+      border-color: rgba(255, 255, 255, 0.56);
+    }
+  }
+  
+  .footer--copyright {
+    text-align: center;
+    padding-bottom: $md;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, $opacity-tertiary);
   }
 }
