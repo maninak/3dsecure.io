@@ -8,7 +8,7 @@
 $font-size-base: 20px;
 
 $opacity-full: 1;
-$opacity-primary: 0.90;
+$opacity-primary: 0.87;
 $opacity-secondary: 0.54;
 $opacity-tertiary: 0.23;
 $opacity-none: 0;
@@ -45,7 +45,7 @@ $brk-tablet-lnds-vs-desktop: 1200px;
 $brk-desktop-vs-big-desktop: 1800px;
 
 @mixin for-phone-only {
-  @media (max-width: $brk-phone-vs-tablet-prtr -1) { @content; }
+  @media (max-width: $brk-phone-vs-tablet-prtr) { @content; }
 }
 
 @mixin for-tablet-portrait-up {
@@ -116,45 +116,50 @@ $xl:  $font-size-base * 4;    // extra large
 $ul:  $font-size-base * 8;    // ultra large
 
 /*
-    Displat and layout HTML helper classes
+    Layout HTML helper classes
 */
-.float-l { float: left;  }
-.float-r { float: right; }
 
-.x-center {
-  display: flex;
-  justify-content: center;
-}
-
-.x-space-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.y-center {
-  display: flex;
-  align-items: center;
-}
+// TODO delete
 
 .columns-x2-centered {
   display: grid;
-  grid-template-columns:
-      1fr
-      minmax(275px, 440px)
-      minmax(40px, 1fr)
-      minmax(275px, 440px)
-      1fr;
-  grid-template-areas: 'gutter-l left gutter-m right gutter-r';
+
+  @include for-phone-only {
+    grid-template-rows: auto
+                        auto;
+    grid-template-columns: 1fr minmax(270px, 480px) 1fr;
+    grid-template-areas:  'margin-l content-1 margin-r'
+                          'margin-l content-2 margin-r';
+  }
+
+  @include for-tablet-portrait-up {
+    grid-template-rows: auto
+                        auto;
+    grid-template-columns: 1fr minmax(270px, 480px) 1fr;
+    grid-template-areas:  'margin-l content-1 margin-r'
+                          'margin-l content-2 margin-r';
+  }
+
+  @include for-tablet-landscape-up {
+    grid-template-rows: auto;
+    grid-template-columns:
+        1fr
+        minmax(250px, 480px)
+        minmax(80px, 1fr)
+        minmax(250px, 480px)
+        1fr;
+    grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
+  }
 }
 
 .columns-x3 {
   display: grid;
   grid-template-columns:
-      minmax(170px, 260px)
-      minmax(40px,  1fr)
-      minmax(170px, 260px)
-      minmax(40px,  1fr)
-      minmax(170px, 260px);
+      minmax(133px, 260px)
+      minmax(80px,  1fr)
+      minmax(133px, 260px)
+      minmax(80px,  1fr)
+      minmax(133px, 260px);
   grid-template-areas: 'left gutter-l middle gutter-r right';
 }
 
@@ -167,74 +172,16 @@ $ul:  $font-size-base * 8;    // ultra large
 }
 
 /*
-    Arithmetic functions
-*/
-@function pow($number, $exp) {
-  $value: 1;
-  @if $exp > 0 {
-    @for $i from 1 through $exp {
-      $value: $value * $number;
-    }
-  }
-  @else if $exp < 0 {
-    @for $i from 1 through -$exp {
-      $value: $value / $number;
-    }
-  }
-  @return $value;
-}
-
-@function fact($number) {
-  $value: 1;
-  @if $number > 0 {
-    @for $i from 1 through $number {
-      $value: $value * $i;
-    }
-  }
-  @return $value;
-}
-
-@function pi() {
-  @return 3.14159265359;
-}
-
-@function rad($angle) {
-  $unit: unit($angle);
-  $unitless: $angle / ($angle * 0 + 1);
-  // If the angle has 'deg' as unit, convert to radians.
-  @if $unit == deg {
-    $unitless: $unitless / 180 * pi();
-  }
-  @return $unitless;
-}
-
-@function sin($angle) {
-  $sin: 0;
-  $angle: rad($angle);
-  // Iterate a bunch of times.
-  @for $i from 0 through 10 {
-    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
-  }
-  @return $sin;
-}
-
-@function cos($angle) {
-  $cos: 0;
-  $angle: rad($angle);
-  // Iterate a bunch of times.
-  @for $i from 0 through 10 {
-    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
-  }
-  @return $cos;
-}
-
-/*
     Creates slanted (diagonal) edge effect to the element wherein it is included
 
     Example:
     section {
       @include slanted-edge(top, right, -10deg);
     }
+
+    @param {String} $vert Choice of vertical edge. Can be `top` or `bottom`.
+    @param {String} $horiz Choice of horizontal edge. Can be `left` or `right`.
+    @param {Degrees} $vert The angle between the chosen edges. Can be positive or negative degrees.
 */
 @mixin slanted-edge($vert, $horiz, $angle) {
   position: relative;
@@ -267,29 +214,6 @@ $ul:  $font-size-base * 8;    // ultra large
 }
 
 /*
-    Box model HMTL helper classes
-*/
-.padding-horiz-xs   { padding-right: $xs; padding-left: $xs;    }
-.padding-horiz-sm   { padding-right: $sm; padding-left: $sm;    }
-.padding-horiz-md   { padding-right: $md; padding-left: $md;    }
-.padding-horiz-lg   { padding-right: $lg; padding-left: $lg;    }
-.padding-horiz-xl   { padding-right: $xl; padding-left: $xl;    }
-.padding-horiz-ul   { padding-right: $ul; padding-left: $ul;    }
-
-.padding-vert-xs    { padding-top: $xs;   padding-bottom: $xs;  }
-.padding-vert-sm    { padding-top: $sm;   padding-bottom: $sm;  }
-.padding-vert-md    { padding-top: $md;   padding-bottom: $md;  }
-.padding-vert-lg    { padding-top: $lg;   padding-bottom: $lg;  }
-.padding-vert-xl    { padding-top: $xl;   padding-bottom: $xl;  }
-.padding-vert-ul    { padding-top: $ul;   padding-bottom: $ul;  }
-
-.primary   { opacity: $opacity-primary;   }
-.secondary { opacity: $opacity-secondary; }
-.tertiary  { opacity: $opacity-tertiary;  }
-
-.color-accent { color: $color-accent; }
-
-/*
     Button HTML helper classes
 */
 .btn {
@@ -307,12 +231,12 @@ $ul:  $font-size-base * 8;    // ultra large
   border: 1px solid rgba(255, 255, 255, $opacity-tertiary);
   transition: border 0.1s ease;
   transition: background-color 0.1s ease;
-}
 
-.btn--outline:hover {
-  border-color: transparent !important;
-  background-color: rgba(255, 255, 255, $opacity-tertiary);
-  color: $color-white;
+  &:hover {
+    border-color: transparent;
+    background-color: rgba(255, 255, 255, $opacity-tertiary);
+    color: $color-white;
+  }
 }
 
 .btn--full-width {
@@ -324,11 +248,11 @@ $ul:  $font-size-base * 8;    // ultra large
   background-color: $color-accent;
   color: $color-white;
   transition: background-color 0.1s ease;
-}
 
-.btn--accent:hover {
-  background-color: $color-accent-brighter;
-  color: $color-white;
+  &:hover {
+    background-color: $color-accent-brighter;
+    color: $color-white;
+  }
 }
 
 
@@ -366,20 +290,11 @@ a:not(.no-link-style):not(.btn) {
   border-bottom: 0.125em transparent solid;
   transition: color 0.1s ease;
   transition: border-color 0.15s ease;
-}
 
-a:not(.no-link-style):not(.btn):hover {
-  border-bottom: 0.125em $color-accent-brighter solid !important;
-  color: $color-white;
-}
-
-.current a {
-  border-bottom: 0.125em solid;
-}
-
-.product-name {
-  font-family: $font-circularPro;
-  letter-spacing: 0;
+  &:hover {
+    border-bottom: 0.125em $color-accent-brighter solid !important;
+    color: $color-white;
+  }
 }
 
 
@@ -395,18 +310,15 @@ body {
   font-size: $font-size-base;
 
   section {
-    display: grid;
-    grid-template-columns:
-        1fr 
-        minmax($font-size-base, auto)
-        minmax($brk-tablet-prtr-vs-tablet-lnds - $font-size-base * 2, $brk-tablet-lnds-vs-desktop)
-        minmax($font-size-base, auto)
-        1fr;
-    grid-template-areas: 'gutter-l pad-l content pad-r gutter-r';
-  }
+    max-width: $brk-tablet-lnds-vs-desktop - ($font-size-base * 2); // ($font-size-base * 2) offsets padding
+    margin: 0 auto;
+    padding-right: $font-size-base;
+    padding-left: $font-size-base;
 
-  section > * {
-    grid-area: content;
+    @include for-phone-only {
+      padding-right: $font-size-base / 2;
+      padding-left: $font-size-base / 2;
+    }
   }
 }
 
@@ -416,7 +328,7 @@ body {
 header {
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   // background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-brighter 80%); // default bleu
   // background-image: linear-gradient(-30deg, $color-primary 0%, #6694af 80%); // brighter default bleu
   background-image: linear-gradient(-30deg, #fff 0%, $color-primary 60%); // terquose with default bleu
@@ -435,34 +347,53 @@ header {
     Navbar section
 */
 section.navbar {
-  height: $font-size-base * 3;
+  padding-top: $md;
+  padding-bottom: $md;
   font-family: $font-calibre;
   font-size: 0.9em;
   color: $color-white-trans;
 
-  .navbar--brand {
-    img {
-      margin-right: 0.25em;
-      opacity: 0.9; // TODO delete when placeholder img is deleted
-      filter: hue-rotate(155deg); // TODO delete when placeholder img is deleted
-      transition: filter 0.1s ease;
+  .navbar--wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .navbar--wrap--brand {
+      a {
+        display: flex;
+        align-items: center;
+
+        &:hover span {
+          border-bottom: 0.1em $color-accent-brighter solid;
+          color: $color-white;
+        }
+
+        img {
+          margin-right: 0.25em;
+          opacity: 0.9; // TODO delete when placeholder img is deleted
+          filter: hue-rotate(155deg); // TODO delete when placeholder img is deleted
+          transition: filter 0.1s ease;
+        }
+
+        span {
+          margin-bottom: -0.1em;
+          border-bottom: 0.1em transparent solid;
+          font-family: $font-circularPro;
+          transition: color 0.1s ease;
+          transition: border-color 0.15s ease;
+        }
+      }
     }
 
-    span {
-      margin-bottom: -0.1em;
-      border-bottom: 0.1em transparent solid;
-      transition: color 0.1s ease;
-      transition: border-color 0.15s ease;
-    }
+    .navbar--wrap--main-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    a:hover span {
-      border-bottom: 0.1em $color-accent-brighter solid;
-      color: $color-white;
+      a {
+        padding: 0.5em 1em 0.5em 1em;
+      }
     }
-  }
-
-  .navbar--main-links a {
-    padding: 0.5em 1em 0.5em 1em;
   }
 }
 
@@ -470,26 +401,54 @@ section.navbar {
     Hero section
 */
 section.hero {
+  padding-top: $xl;
+  padding-bottom: $xl;
   color: $color-white;
 
   .hero--copy {
+    position: relative;
     z-index: 6;
-    width: $brk-phone-vs-tablet-prtr;
+
+    .hero--copy--title-big {
+      @include for-tablet-portrait-up { display: none; }
+      @include for-tablet-landscape-up { display: inherit; }
+    }
+
+    .hero--copy--title-small {
+      @include for-phone-only { display: inherit; }
+      @include for-tablet-portrait-up { display: inherit; }
+      @include for-tablet-landscape-up { display: none; }
+    }
     
-      .hero--copy--descr {
-        margin-bottom: 2em;
-        font-size: 1.1em;
-        color: $color-white-trans;
-      }
+    .hero--copy--descr {
+      max-width: $brk-phone-vs-tablet-prtr;
+      margin-bottom: 2em;
+      font-size: 1.1em;
+      color: $color-white-trans;
+    }
   }
 
   .js-polyhedron-container {
+    position: absolute;
     z-index: 3;
-    position: relative;
-
+    
     @include for-tablet-portrait-up {
-      right: -50vw;
-      bottom: -30vh;
+      right: -160px;
+      bottom: -300px;
+      width: 600px;
+      height: 600px;
+    }
+
+    @include for-tablet-landscape-up {
+      right: -185px;
+      bottom: -350px;
+      width: 700px;
+      height: 700px;
+    }
+    
+    @include for-desktop-up {
+      right: -210px;
+      bottom: -400px;
       width: 800px;
       height: 800px;
     }
@@ -497,16 +456,37 @@ section.hero {
 
   .js-polyhedron-container:before {
     content: "";
-    z-index: 4;
     display:block;
     position: absolute;
-    width: 600px;
-    height: 600px;
-    margin-top: calc((800px - 600px)/2);
-    margin-left: calc((800px - 600px)/2);
-    border-radius: 50%;
     background-color: rgba(255, 255, 255, $opacity-primary);
-    filter: blur(110px);
+    z-index: 4;
+    
+    @include for-tablet-portrait-up {
+      width: 400px;
+      height: 400px;
+      margin-top: calc((600px - 400px) / 2);
+      margin-left: calc((600px - 400px) / 2);
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    
+    @include for-tablet-landscape-up {
+      width: 500px;
+      height: 500px;
+      margin-top: calc((700px - 500px) / 2);
+      margin-left: calc((700px - 500px) / 2);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    @include for-desktop-up {
+      width: 600px;
+      height: 600px;
+      margin-top: calc((800px - 600px) / 2);
+      margin-left: calc((800px - 600px) / 2);
+      border-radius: 50%;
+      filter: blur(110px);
+    }
   }
 }
 
@@ -519,10 +499,8 @@ section.hero {
 }
 
 section.features {
-  grid-template-rows: minmax($font-size-base, auto) 1fr;
-  grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
-                        'gutter-l pad-l   features  pad-r gutter-r';
-  padding: $ul 0;
+  padding-top: calc(60px + 8vw);
+  padding-bottom: calc(60px + 8vw);
 
   h2,
   h4,
@@ -530,12 +508,10 @@ section.features {
     color: $color-black-trans;
   }
 
-  h2 {
-    grid-area: title;
-  }
-
   .feat-wrap {
-    grid-area: features;
+    :nth-child(1).feat-wrap--feat { grid-area: left;    }
+    :nth-child(2).feat-wrap--feat { grid-area: middle;  }
+    :nth-child(3).feat-wrap--feat { grid-area: right;   }
 
     .feat-wrap--feat--icon-bg {
       width: $font-size-base * 2.7;
@@ -552,10 +528,6 @@ section.features {
         max-height: $font-size-base * 1.4;
       }
     }
-    
-    :nth-child(1).feat-wrap--feat { grid-area: left; }
-    :nth-child(2).feat-wrap--feat { grid-area: middle; }
-    :nth-child(3).feat-wrap--feat { grid-area: right; }
   }
 }
 
@@ -563,12 +535,14 @@ section.features {
     Pricing section
 */
 section.pricing {
-  @include for-tablet-landscape-up  { padding: ($font-size-base * 13) 0; }
-  @include for-desktop-up           { padding: ($font-size-base * 15) 0; }
+  padding-top: calc(14vw + 80px);
+  padding-bottom: calc(14vw + 80px);
   color: $color-black-trans;
 
   .pricing--title {
     grid-area: left;
+    display: flex;
+    align-items: center;
 
     h2 {
       margin-bottom: 0;
@@ -586,6 +560,8 @@ section.pricing {
 
   .pricing--price {
     grid-area: middle;
+    display: flex;
+    align-items: center;
     text-align: center;
     font-family: $font-calibre;
 
@@ -615,7 +591,6 @@ section.pricing {
     .pricing--traits--trait {
       padding-top: 0.4em;
       padding-bottom: 0.4em;
-      height: $font-size-base * 1.3;
 
       img {
         max-width: $font-size-base * 1.1;
@@ -636,24 +611,29 @@ section.pricing {
 }
 
 section.threeds {
-  grid-template-rows: minmax($font-size-base, auto) 1fr;
-  grid-template-areas:  'gutter-l pad-l   title     pad-r gutter-r'
-                        'gutter-l pad-l   content   pad-r gutter-r';
-  padding: $ul 0;
+  padding-top: calc(60px + 8vw);
+  padding-bottom: calc(60px + 8vw);
   font-family: $font-calibre;
   color: $color-white-trans;
 
   h2 {
-    grid-area: title;
     margin-bottom: 1em;
     text-align: center;
   }
 
   .threeds--pros {
-    grid-area: left;
+    grid-area: content-1;
+
+    @include for-phone-only { margin-top: 16px; } // 60px - 44px form title's margin-bottom
+    @include for-tablet-portrait-up { margin-top: 16px; } // 60px - 44px form title's margin-bottom
+    @include for-tablet-landscape-up { margin-top: 0; }
     
     .threeds--pros--pro {
       margin-bottom: 1.8em;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       img {
         float: left;
@@ -665,13 +645,20 @@ section.threeds {
       }
 
       span {
+        display:flex;
         font-size: 1.2em;
       }
     }
   }
 
   .threeds--explanation {
-    grid-area: right;
+    grid-area: content-2;
+    border-left: rgba(255, 255, 255, $opacity-tertiary) 0.5em solid;
+    padding-left: 0.5em;
+
+    @include for-phone-only { margin-top: $font-size-base * 3; }
+    @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
+    @include for-tablet-landscape-up { margin-top: 0; }
 
     p {
       font-size: 0.95em;
@@ -697,16 +684,34 @@ section.footer {
 
   .footer--credits {
     display: grid;
-    grid-template-columns: auto minmax(80px, 1fr) minmax(170px, 260px);
-    grid-template-areas: 'main gutter-m aside';
     width: 100%;
-    padding-bottom: $font-size-base * 4;
+    padding-bottom: calc(60px + 8vw);
     border-bottom: rgba(255, 255, 255, 0.05) 1px solid;
+
+    @include for-tablet-portrait-up {
+      grid-template-rows: auto
+                          auto;
+      grid-template-columns: 1fr 560px 1fr;
+      grid-template-areas:  'margin-l   main    margin-r'
+                            'margin-l   aside   margin-r';
+    }
+
+    @include for-tablet-landscape-up {
+      grid-template-columns: 560px minmax(80px, 1fr) minmax(170px, 260px);
+      grid-template-areas: 'main gutter-m aside';
+    }
 
     main {
       grid-area: main;
-      display: flex;
-      align-items: center;
+
+      @include for-tablet-portrait-up {
+
+      }
+
+      @include for-tablet-landscape-up {
+        display: flex;
+        align-items: center;
+      }
 
       .footer--credits--title {
         display: flex;
@@ -751,13 +756,34 @@ section.footer {
     aside {
       grid-area: aside;
       display: flex;
-      flex-direction: column;
       justify-content: space-between;
-      height: $font-size-base * 8;
+
+      @include for-tablet-portrait-up {
+        margin-top: $font-size-base * 2;
+      }
+
+      @include for-tablet-landscape-up {
+        min-height: $font-size-base * 8;
+        flex-direction: column;
+        margin-top: 0;
+      }
 
       .footer--credits--member {
         font-size: 1.4em;
         letter-spacing: -0.03em;
+
+        @include for-tablet-portrait-up {
+          max-width: 260px;
+          padding-right: 42px;
+          border-right: rgba(255,255,255,0.05) 1px solid;
+        }
+
+        @include for-tablet-landscape-up {
+          display: unset;
+          margin-bottom: $font-size-base * 1.5;
+          padding-right: 0;
+          border-right: none;
+        }
 
         .footer--credits--member--principal {
           font-family: $font-circularPro;
@@ -766,16 +792,24 @@ section.footer {
 
       .footer--credits--authorized {
         font-size: 0.95em;
+
+        @include for-tablet-portrait-up {
+          max-width: 260px;
+        }
       }
     }
   }
 
   .footer--btt {
     display: flex;
-    margin: ($font-size-base * 4) 0;
+    margin: ($font-size-base * 2) 0;
 
     a {
       border-color: rgba(255, 255, 255, 0.56);
+
+      &:hover {
+        border-color: transparent;
+      }
     }
   }
   
