@@ -310,9 +310,14 @@ $ul:  $font-size-base * 8;    // ultra large
 }
 
 .btn--outline:hover {
-  border-color: transparent;
+  border-color: transparent !important;
   background-color: rgba(255, 255, 255, $opacity-tertiary);
   color: $color-white;
+}
+
+.btn--full-width {
+  width: 100%;
+  text-align: center;
 }
 
 .btn--accent {
@@ -337,13 +342,13 @@ $ul:  $font-size-base * 8;    // ultra large
   padding: 0;
 }
 
-h1 a,
-h2 a,
-h3 a,
-h4 a, 
-h5 a,
-h6 a,
-p a {
+h1 a:not(.no-link-style),
+h2 a:not(.no-link-style),
+h3 a:not(.no-link-style),
+h4 a:not(.no-link-style), 
+h5 a:not(.no-link-style),
+h6 a:not(.no-link-style),
+p  a:not(.no-link-style) {
   border-bottom: $color-white-trans 0.05em solid !important;
   text-decoration: none;
 }
@@ -675,5 +680,109 @@ section.threeds {
         font-size: 0.9em;
       }
     }
+  }
+}
+
+/*
+    Footer section
+*/
+footer {
+  background: $color-primary-darker;
+}
+
+section.footer {
+  padding-top: calc(60px + 8vw);
+  font-family: $font-calibre;
+  color: $color-white-trans;
+
+  .footer--credits {
+    display: grid;
+    grid-template-columns: auto minmax(80px, 1fr) minmax(170px, 260px);
+    grid-template-areas: 'main gutter-m aside';
+    width: 100%;
+    padding-bottom: $font-size-base * 4;
+    border-bottom: rgba(255, 255, 255, 0.05) 1px solid;
+
+    main {
+      grid-area: main;
+      display: flex;
+      align-items: center;
+
+      .footer--credits--title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+
+        .footer--credits--title--prefix {
+          margin-right: 0.25em;
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+
+          &:hover .footer--credits--title--suffix {
+            margin-bottom: -0.125em;
+            border-bottom: 0.125em $color-accent-brighter solid;
+            color: $color-white;
+          }
+          
+          &:hover .footer--credits--title--clrhs-logo {
+            opacity: $opacity-full;
+          }
+
+          .footer--credits--title--suffix {
+            margin-right: $font-size-base * 1.5;
+            margin-bottom: -0.05em;
+            border-bottom: $color-white-trans 0.05em solid;
+            transition: color 0.1s ease;
+          }
+
+          .footer--credits--title--clrhs-logo {
+            max-width: $font-size-base * 5;
+            max-height: $font-size-base * 5;
+            opacity: $opacity-primary;
+            transition: opacity 0.1s ease;
+          }
+        }
+      }
+    }
+
+    aside {
+      grid-area: aside;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: $font-size-base * 8;
+
+      .footer--credits--member {
+        font-size: 1.4em;
+        letter-spacing: -0.03em;
+
+        .footer--credits--member--principal {
+          font-family: $font-circularPro;
+        }
+      }
+
+      .footer--credits--authorized {
+        font-size: 0.95em;
+      }
+    }
+  }
+
+  .footer--btt {
+    display: flex;
+    margin: ($font-size-base * 4) 0;
+
+    a {
+      border-color: rgba(255, 255, 255, 0.56);
+    }
+  }
+  
+  .footer--copyright {
+    text-align: center;
+    padding-bottom: $md;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, $opacity-tertiary);
   }
 }

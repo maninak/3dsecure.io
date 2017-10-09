@@ -86,7 +86,7 @@
 
   
   
-  <body>
+  <body id="top">
     <header>
       <section class="navbar padding-vert-md">
         <div class="x-space-between y-center">
@@ -251,6 +251,44 @@
         </section>
       </div>
     </main>
+    <footer>
+      <section class="footer">
+        <div>
+          <div class="footer--credits">
+            <main>
+              <h2 class="footer--credits--title">
+                <span class="footer--credits--title--prefix">Powered by</span>
+                <a class="no-link-style" href="https://www.clearhaus.com/" target="_blank">
+                  <span class="footer--credits--title--suffix">Clearhaus</span>
+                  <img  class="footer--credits--title--clrhs-logo"
+                        src="assets/img/clearhaus-light.svg"
+                        alt="clearhaus logo white"
+                        width="100px">
+                </a>
+              </h2>
+            </main>
+            <aside>
+              <div class="footer--credits--member">
+                <div>Visa &amp; MasterCard</div>
+                <div class="footer--credits--member--principal">Principal Member</div>
+              </div>
+              <div class="footer--credits--authorized">
+                Authorised as a pan-European Payment Institution by the Danish Financial Supervisory Authority.
+              </div>
+            </aside>
+          </div>
+          <div class="footer--btt">
+            <a class="btn btn--outline btn--full-width" href="#top" onclick="smoothScrollToId('top')">Back to top</a>
+          </div>
+          <div class="footer--copyright">
+            &copy; Copyright Clearhaus A/S, <span class="js-year"/>
+            <script>
+              document.querySelector('.js-year').innerText = new Date().getFullYear()
+            </script>
+          </div>
+        </div>
+      </section>
+    </footer>
   </body>
   <!-- to chrisiou -->
 </html>
