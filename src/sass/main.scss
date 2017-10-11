@@ -528,7 +528,7 @@ section.hero {
 */
 .features-backdrop {
   @include slanted-edge(bottom, left, -5deg);
-  background: linear-gradient(-5deg, $color-primary-light, $color-white);
+  background-image: linear-gradient(-5deg, $color-primary-light, $color-white);
 }
 
 section.features {
@@ -640,7 +640,7 @@ section.pricing {
 */
 .threeds-backdrop {
   @include slanted-edge(top, right, -5deg);
-  background: $color-primary-dark;
+  background-image: linear-gradient(-5deg, #00423e, $color-primary-dark);
 }
 
 section.threeds {
