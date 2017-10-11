@@ -13,6 +13,8 @@ $opacity-secondary: 0.54;
 $opacity-tertiary: 0.23;
 $opacity-none: 0;
 
+$url-CL-pattern-diamonds: 'assets/img/pattern-diamonds.png';
+
 /*
     Colors
 */
@@ -35,6 +37,8 @@ $color-white: rgba(255, 255, 255, $opacity-full);
 $color-white-trans: rgba(255, 255, 255, $opacity-primary);
 $color-black:rgba(0, 0, 0, $opacity-full);
 $color-black-trans: rgba(0, 0, 0, $opacity-primary);
+
+$color-CL-primary: #263347;
 
 /*
     Breakpoints
@@ -169,6 +173,47 @@ $ul:  $font-size-base * 8;    // ultra large
   li {
     display: inline;
   }
+}
+
+/*
+    Applies the provided patterned image to the vertical side of the element to which this is included.
+
+    Example:
+    section {
+      @include pattern(bottom, assets/img/dat-pattern.png)
+    }
+
+    @param {String} $verticalPosition Choice of vertical position of pattern. Can be `top` or `bottom`.
+    @param {String} $patternUrl URL to the patterned image to be applied.
+*/
+@mixin pattern($verticalPosition, $patternUrl) {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  
+    &::before {
+      content: " ";
+      display: block;
+      width: 100%;
+      height: 530px;
+      position: absolute;
+      background-size: auto;
+      background-repeat: repeat-x;
+      background-position-x: center;
+      background-image: url($patternUrl);
+      opacity: 1;
+      z-index: -1;
+
+      @if $verticalPosition == 'top' {
+        top: -262px;
+        transform: rotate(180deg);
+      }
+
+      @if $verticalPosition == 'bottom' {
+        bottom: -262px;
+      }
+    }
+
 }
 
 /*
@@ -674,7 +719,8 @@ section.threeds {
     Footer section
 */
 footer {
-  background: $color-primary-darker;
+  @include pattern(bottom, $url-CL-pattern-diamonds);
+  background-color: $color-primary-darker;
 }
 
 section.footer {
@@ -686,7 +732,6 @@ section.footer {
     display: grid;
     width: 100%;
     padding-bottom: calc(60px + 8vw);
-    border-bottom: rgba(255, 255, 255, 0.05) 1px solid;
 
     @include for-tablet-portrait-up {
       grid-template-rows: auto
@@ -725,6 +770,12 @@ section.footer {
         a {
           display: flex;
           align-items: center;
+          filter: drop-shadow(transparent 0 0 0px);
+          transition: filter 0.1s ease;
+
+          &:hover {
+            filter: drop-shadow($color-CL-primary 0 0 30px);
+          }
 
           &:hover .footer--credits--title--suffix {
             margin-bottom: -0.125em;
@@ -774,15 +825,11 @@ section.footer {
 
         @include for-tablet-portrait-up {
           max-width: 260px;
-          padding-right: 42px;
-          border-right: rgba(255,255,255,0.05) 1px solid;
         }
 
         @include for-tablet-landscape-up {
           display: unset;
           margin-bottom: $font-size-base * 1.5;
-          padding-right: 0;
-          border-right: none;
         }
 
         .footer--credits--member--principal {
@@ -805,7 +852,7 @@ section.footer {
     margin: ($font-size-base * 2) 0;
 
     a {
-      border-color: rgba(255, 255, 255, 0.56);
+      border-color: rgba(255, 255, 255, $opacity-tertiary);
 
       &:hover {
         border-color: transparent;
