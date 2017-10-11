@@ -131,7 +131,7 @@ $ul:  $font-size-base * 8;    // ultra large
   @include for-phone-only {
     grid-template-rows: auto
                         auto;
-    grid-template-columns: 1fr minmax(270px, 480px) 1fr;
+    grid-template-columns: 1fr minmax(270px, 440px) 1fr;
     grid-template-areas:  'margin-l content-1 margin-r'
                           'margin-l content-2 margin-r';
   }
@@ -139,7 +139,7 @@ $ul:  $font-size-base * 8;    // ultra large
   @include for-tablet-portrait-up {
     grid-template-rows: auto
                         auto;
-    grid-template-columns: 1fr minmax(270px, 480px) 1fr;
+    grid-template-columns: 1fr minmax(270px, 440px) 1fr;
     grid-template-areas:  'margin-l content-1 margin-r'
                           'margin-l content-2 margin-r';
   }
@@ -148,9 +148,9 @@ $ul:  $font-size-base * 8;    // ultra large
     grid-template-rows: auto;
     grid-template-columns:
         1fr
-        minmax(250px, 480px)
+        minmax(250px, 440px)
         minmax(80px, 1fr)
-        minmax(250px, 480px)
+        minmax(250px, 440px)
         1fr;
     grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
   }
