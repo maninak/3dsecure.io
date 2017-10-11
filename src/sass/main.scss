@@ -686,8 +686,8 @@ section.threeds {
 
   .threeds--explanation {
     grid-area: content-2;
-    border-left: rgba(255, 255, 255, $opacity-tertiary) 0.5em solid;
-    padding-left: 0.5em;
+    border-left: rgba(255, 255, 255, $opacity-primary) 0.5em solid;
+    padding-left: 0.8em;
 
     @include for-phone-only { margin-top: $font-size-base * 3; }
     @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
