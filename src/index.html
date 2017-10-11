@@ -88,19 +88,19 @@
   
   <body id="top">
     <header>
-      <section class="navbar padding-vert-md">
-        <div class="x-space-between y-center">
-          <aside class="navbar--brand">
-            <a class="no-link-style y-center" href="#top" title="Go to Home page">
+      <section class="navbar">
+        <div class="navbar--wrap">
+          <aside class="navbar--wrap--brand">
+            <a class="no-link-style" href="#top" title="Go to Home page">
               <img  src="assets/img/logo.png"
                     alt="3dsecure.io logo icon polyhedron 3d secure"
                     width="40px">
-              <span class="product-name">3dsecure.io</span>
+              <span>3dsecure.io</span>
             </a>
           </aside>
           <nav>
-            <ul class="navbar--main-links ul-horizontal x-space-between y-center">
-              <a href="#pricing" onclick="smoothScroll('pricing', 'middle')">
+            <ul class="navbar--wrap--main-links ul-horizontal">
+              <a href="#pricing" onclick="smoothScrollToId('pricing', 'middle')">
                 <li>Pricing</li>
               </a>
               <a href="docs.html">
@@ -111,18 +111,19 @@
               </a>
             </ul>
           </nav>
-          <aside class="navbar--cta">
+          <aside class="navbar--wrap--cta">
             <a class="btn btn--outline" href="enroll.html" title="Enroll in 3dsecure.io">
               <span>Get your API key</span>
             </a>
           </aside>
         </div>
       </section>
-      <section class="hero padding-vert-xl">
+      <section class="hero">
         <div class="hero--copy">
-          <h1>3D Secure <br>Merchant Plugin <br>For Payment Gateways</h1>
+          <h1 class="hero--copy--title-big">3D Secure <br>Merchant Plugin <br>For Payment Gateways</h1>
+          <h1 class="hero--copy--title-small">3D Secure <br>For Payment  <br>Gateways</h1>
           <p class="hero--copy--descr">
-            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#threeds" onclick="smoothScroll('3ds')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
+            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#threeds" onclick="smoothScrollToId('3ds')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
           </p>
           <a class="btn btn--accent" href="enroll.html">BECOME 3D SECURED TODAY</a>
         </div>
@@ -132,37 +133,39 @@
     <main>
       <div class="features-backdrop">
         <section class="features">
-          <h2>Features</h2>
-          <div class="feat-wrap columns-x3">
-            <div class="feat-wrap--feat">
-                <div class="feat-wrap--feat--icon-bg">
-                  <img  src="assets/img/shapes.svg"
-                        alt="child toy blocks shapes round"
-                        width="28px">
-                </div>
-              <h4>Simple</h4>
-              <p>Determine if a card is enrolled for 3-D Secure authentication with a single API request.</p>
-              <p>Integrate in a day, instead of in weeks.</p>
-            </div>
-            <div class="feat-wrap--feat">
-              <div class="feat-wrap--feat--icon-bg">
-                <img  src="assets/img/turning-to-right.svg"
-                      alt="right turn avoid obstacle round"
-                      width="28px"
-                      height="28px">
+          <div>
+            <h2>Features</h2>
+            <div class="feat-wrap columns-x3">
+              <div class="feat-wrap--feat">
+                  <div class="feat-wrap--feat--icon-bg">
+                    <img  src="assets/img/shapes.svg"
+                          alt="child toy blocks shapes round"
+                          width="28px">
+                  </div>
+                <h4>Simple</h4>
+                <p>Determine if a card is enrolled for 3-D Secure authentication with a single API request.</p>
+                <p>Integrate in a day, instead of in weeks.</p>
               </div>
-              <h4>Agile</h4>
-              <p>No need to acquire and maintain complicated and expensive licenses from credit card providers.</p>
-            </div>
-            <div class="feat-wrap--feat">
+              <div class="feat-wrap--feat">
                 <div class="feat-wrap--feat--icon-bg">
-                  <img  src="assets/img/cloud.svg"
-                        alt="cloud round"
-                        width="28px">
+                  <img  src="assets/img/turning-to-right.svg"
+                        alt="right turn avoid obstacle round"
+                        width="28px"
+                        height="28px">
                 </div>
-              <h4>Managed</h4>
-              <p>Nothing for you to host, manage or keep up to date.</p>
-              <p>This is a Software as a Service (SaaS) solution you can utilise instantly and never need to mind again.</p>
+                <h4>Agile</h4>
+                <p>No need to acquire and maintain complicated and expensive licenses from credit card providers.</p>
+              </div>
+              <div class="feat-wrap--feat">
+                  <div class="feat-wrap--feat--icon-bg">
+                    <img  src="assets/img/cloud.svg"
+                          alt="cloud round"
+                          width="28px">
+                  </div>
+                <h4>Managed</h4>
+                <p>Nothing for you to host, manage or keep up to date.</p>
+                <p>This is a Software as a Service (SaaS) solution you can utilise instantly and never need to mind again.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -170,33 +173,33 @@
       <div class="pricing-backdrop" id="pricing">
         <section class="pricing">
           <div class="columns-x3">
-            <div class="pricing--title y-center">
+            <div class="pricing--title">
               <h2>
                 <span>Pricing<br></span>
                 <span>lets you set<br></span>
                 <span>and forget</span>
               </h2>
             </div>
-            <div class="pricing--price y-center">
+            <div class="pricing--price">
               <div class="pricing--price--wrap">
                 <div class="pricing--price--wrap--plan"><strong>&euro;599</strong> / month</div>
                 <div class="pricing--price--wrap--discl">price not subject to VAT</div>
               </div>
             </div>
             <div class="pricing--traits">
-              <div class="pricing--traits--trait y-center">
+              <div class="pricing--traits--trait">
                 <img  src="assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
                       width="22px">
                 <span>No setup fees</span>
               </div>
-              <div class="pricing--traits--trait y-center">
+              <div class="pricing--traits--trait">
                 <img  src="assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
                       width="22px">
                 <span>No per transaction fees</span>
               </div>
-              <div class="pricing--traits--trait y-center">
+              <div class="pricing--traits--trait">
                 <img  src="assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
                       width="22px">
@@ -208,44 +211,46 @@
       </div>
       <div class="threeds-backdrop" id="3ds">
         <section class="threeds">
-          <h2>How 3-D Secure helps your bussiness</h2>
-          <div class="columns-x2-centered">
-            <div class="threeds--pros">
-              <div class="threeds--pros--pro">
-                <img  src="assets/img/checkmark-square.svg"
-                      alt="checkmark filled black square button"
-                      width="44px">
-                <span>Preempts and drastically reduces fraudulent chargebacks</span>
+          <div>
+            <h2>How 3-D Secure helps your bussiness</h2>
+            <div class="columns-x2-centered">
+              <div class="threeds--pros">
+                <div class="threeds--pros--pro">
+                  <img  src="assets/img/checkmark-square.svg"
+                        alt="checkmark filled black square button"
+                        width="44px">
+                  <span>Preempts and drastically reduces fraudulent chargebacks</span>
+                </div>
+                <div class="threeds--pros--pro">
+                  <img  src="assets/img/checkmark-square.svg"
+                        alt="checkmark filled black square button"
+                        width="44px">
+                  <span>Increases online purchasing due to boosted cardholder confidence</span>
+                </div>
+                <div class="threeds--pros--pro">
+                  <img  src="assets/img/checkmark-square.svg"
+                        alt="checkmark filled black square button"
+                        width="44px">
+                  <span>Reduces declined transactions and processing delays</span>
+                </div>
+                <div class="threeds--pros--pro">
+                  <img  src="assets/img/checkmark-square.svg"
+                        alt="checkmark filled black square button"
+                        width="44px">
+                  <span>Shifts transaction liability from merchant bank to card issuing bank</span>
+                </div>
               </div>
-              <div class="threeds--pros--pro">
-                <img  src="assets/img/checkmark-square.svg"
-                      alt="checkmark filled black square button"
-                      width="44px">
-                <span>Increases online purchasing due to boosted cardholder confidence</span>
+              <div class="threeds--explanation">
+                <p>
+                  At it's core, the 3-D Secure protocol is a 2-Factor authentication system adapted for credit card transactions.
+                  <br><br>
+                  It's a security solution verifying that the transacting customer is the legitimate owner of the credit card used, by requiring an additional password.That password is only shared between the legitimate card holder and the bank that issued the card. Often in real-time via SMS.
+                  <br><br>
+                  3-D Decure systems, including Verified by Visa&reg; and MasterCard SecureCode&reg;, automatically forward most of the liability from the Payment Gateway and the Merchant, back to the card-issuing bank instead.
+                  <br><br>
+                  <a href="#" title="Get a more technical overview">Learn More</a>
+                </p>
               </div>
-              <div class="threeds--pros--pro">
-                <img  src="assets/img/checkmark-square.svg"
-                      alt="checkmark filled black square button"
-                      width="44px">
-                <span>Reduces declined transactions and processing delays</span>
-              </div>
-              <div class="threeds--pros--pro">
-                <img  src="assets/img/checkmark-square.svg"
-                      alt="checkmark filled black square button"
-                      width="44px">
-                <span>Shifts transaction liability from merchant bank to card issuing bank</span>
-              </div>
-            </div>
-            <div class="threeds--explanation">
-              <p>
-                At it's core, the 3-D Secure protocol is a 2-Factor authentication system adapted for credit card transactions.
-                <br><br>
-                It's a security solution verifying that the transacting customer is the legitimate owner of the credit card used, by requiring an additional password.That password is only shared between the legitimate card holder and the bank that issued the card. Often in real-time via SMS.
-                <br><br>
-                3-D Decure systems, including Verified by Visa&reg; and MasterCard SecureCode&reg;, automatically forward most of the liability from the Payment Gateway and the Merchant, back to the card-issuing bank instead.
-                <br><br>
-                <a href="#" title="Get a more technical overview">Learn More</a>
-              </p>
             </div>
           </div>
         </section>
@@ -269,7 +274,7 @@
             </main>
             <aside>
               <div class="footer--credits--member">
-                <div>Visa &amp; MasterCard</div>
+                <div class="footer--credits--visa-mc">Visa &amp; MasterCard</div>
                 <div class="footer--credits--member--principal">Principal Member</div>
               </div>
               <div class="footer--credits--authorized">
