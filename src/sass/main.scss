@@ -224,11 +224,11 @@ $ul:  $font-size-base * 8;    // ultra large
       @include slanted-edge(top, right, -10deg);
     }
 
-    @param {String} $vert Choice of vertical edge. Can be `top` or `bottom`.
-    @param {String} $horiz Choice of horizontal edge. Can be `left` or `right`.
-    @param {Degrees} $vert The angle between the chosen edges. Can be positive or negative degrees.
+    @param {String} $verticalPosition Choice of vertical edge. Can be `top` or `bottom`.
+    @param {String} $horizontalPosition Choice of horizontal edge. Can be `left` or `right`.
+    @param {Degrees} $verticalPosition The angle between the chosen edges. Can be positive or negative degrees.
 */
-@mixin slanted-edge($vert, $horiz, $angle) {
+@mixin slanted-edge($verticalPosition, $horizontalPosition, $angle) {
   position: relative;
 
   &::before {
@@ -239,22 +239,10 @@ $ul:  $font-size-base * 8;    // ultra large
     background: inherit;
     z-index: -1;
     transform: skewY($angle);
-  }
-
-  @if $vert == 'top' {
-    &::before {
-      top: 0;
-      @if $horiz == 'right' { transform-origin: left  top;    }
-      @if $horiz == 'left'  { transform-origin: right top;    }
-    }
-  }
-  
-  @if $vert == 'bottom' {
-    &::before {
-      bottom: 0;
-      @if $horiz == 'right' { transform-origin: left  bottom; }
-      @if $horiz == 'left'  { transform-origin: right bottom; }
-    }
+    
+    $verticalPosition: 0;
+    @if $horizontalPosition == 'right' { transform-origin: left  $verticalPosition; }
+    @if $horizontalPosition == 'left'  { transform-origin: right $verticalPosition; }
   }
 }
 
