@@ -622,8 +622,10 @@ section.pricing {
     font-size: 1.1em;
 
     .pricing--traits--trait {
-      padding-top: 0.4em;
-      padding-bottom: 0.4em;
+      display: flex;
+      align-items: center;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
 
       img {
         max-width: $font-size-base * 1.1;
