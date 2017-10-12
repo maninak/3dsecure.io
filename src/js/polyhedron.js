@@ -10,7 +10,7 @@ var renderer = new THREE.WebGLRenderer({
   alpha: true,
 });
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(maxResolution(800), maxResolution(800));
+renderer.setSize(getRenderedSize(), getRenderedSize());
 renderer.setClearColor(0x000000, 0);
 document.querySelector('.js-polyhedron-container').appendChild(renderer.domElement);
 document.querySelector('.js-polyhedron-container canvas').style.zIndex = 5;
@@ -50,15 +50,19 @@ scene.add(polyhedron);
 window.addEventListener('resize', function() {
   requestAnimationFrame(function() {
     camera.updateProjectionMatrix();
-    renderer.setSize(maxResolution(800), maxResolution(800));
+    renderer.setSize(getRenderedSize(800), getRenderedSize(800));
   });
 }, false);
 
 /*
     Utilities
 */
-function maxResolution(resolution) {
-  return window.innerWidth <= resolution ? window.innerWidth : resolution;
+function getRenderedSize() {
+  // magic numbers stem from CSS design and related rules
+  if (window.innerWidth >= 1200) { return 800; }
+  else if (window.innerWidth >= 900) { return 700; }
+  else if (window.innerWidth >= 600) { return 600; }
+  else { return 400; }
 }
 
 /*
@@ -66,8 +70,8 @@ function maxResolution(resolution) {
 */      
 var render = function() {
   requestAnimationFrame(render);
-  polyhedron.rotation.x += 0.0009;
-  polyhedron.rotation.y += 0.001;
-  polyhedron.rotation.z += 0.0005;
+  polyhedron.rotation.x += 0.0007;
+  polyhedron.rotation.y += 0.0008;
+  polyhedron.rotation.z += 0.0003;
   renderer.render(scene, camera);
 };

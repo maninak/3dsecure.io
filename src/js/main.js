@@ -54,7 +54,7 @@ function setPaddingSlanted(el, padPosition, desiredPadding, slantAngle) {
 }
 
 /**
- * Scroll the page until the specified DOM element comes into view
+ * Scroll the page until the DOM element with the specified Id comes into view
  * 
  * Example:
  * <a onclick="smoothScroll('info')">
@@ -62,7 +62,7 @@ function setPaddingSlanted(el, padPosition, desiredPadding, slantAngle) {
  * @param {String} elId The id of the DOM element towards which to scroll the page
  * @param {String} pos The position of the element to towards which to scroll. Can be `'middle'`. Defaults to top.
  */
-function smoothScroll(elId, pos) {
+function smoothScrollToId(elId, pos) {
   function currentYPosition() {
     // Firefox, Chrome, Opera, Safari
     if (self.pageYOffset) return self.pageYOffset;
