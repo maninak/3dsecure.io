@@ -131,7 +131,7 @@ $ul:  $font-size-base * 8;    // ultra large
   @include for-phone-only {
     grid-template-rows: auto
                         auto;
-    grid-template-columns: 1fr minmax(270px, 440px) 1fr;
+    grid-template-columns: 1fr minmax(270px, 450px) 1fr;
     grid-template-areas:  'margin-l content-1 margin-r'
                           'margin-l content-2 margin-r';
   }
@@ -139,7 +139,7 @@ $ul:  $font-size-base * 8;    // ultra large
   @include for-tablet-portrait-up {
     grid-template-rows: auto
                         auto;
-    grid-template-columns: 1fr minmax(270px, 440px) 1fr;
+    grid-template-columns: 1fr minmax(270px, 450px) 1fr;
     grid-template-areas:  'margin-l content-1 margin-r'
                           'margin-l content-2 margin-r';
   }
@@ -148,9 +148,9 @@ $ul:  $font-size-base * 8;    // ultra large
     grid-template-rows: auto;
     grid-template-columns:
         1fr
-        minmax(250px, 440px)
+        minmax(250px, 450px)
         minmax(80px, 1fr)
-        minmax(250px, 440px)
+        minmax(250px, 450px)
         1fr;
     grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
   }
@@ -688,6 +688,9 @@ section.threeds {
 
   .threeds--explanation {
     grid-area: content-2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-left: rgba(255, 255, 255, $opacity-primary) 0.5em solid;
     padding-left: 0.8em;
 
@@ -695,12 +698,13 @@ section.threeds {
     @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
     @include for-tablet-landscape-up { margin-top: 0; }
 
-    p {
+    .threeds--explanation--text {
       font-size: 0.95em;
+    }
 
-      a {
-        font-size: 0.9em;
-      }
+    .threeds--explanation--more {
+      margin-top: 1em;
+      font-size: 0.85em;
     }
   }
 }
