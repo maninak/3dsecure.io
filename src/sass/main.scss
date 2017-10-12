@@ -719,7 +719,7 @@ section.footer {
   .footer--credits {
     display: grid;
     width: 100%;
-    padding-bottom: calc(60px + 8vw);
+    margin-bottom: calc(60px + 8vw);
 
     @include for-tablet-portrait-up {
       grid-template-rows: auto
@@ -837,7 +837,7 @@ section.footer {
 
   .footer--btt {
     display: flex;
-    margin: ($font-size-base * 2) 0;
+    margin-bottom: ($font-size-base * 2);
 
     a {
       border-color: rgba(255, 255, 255, $opacity-tertiary);
