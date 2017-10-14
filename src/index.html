@@ -1,5 +1,8 @@
 <html>
   <head>
+    <!-- Asset preloaders -->
+    <link href="/polyhedron.js" rel="preload" as="script">
+    <!-- Meta data -->
     <meta name=viewport content="width=device-width, initial-scale=1.0">
     <meta http-equiv="cache-control" content="public, max-age=31536000">
     <!-- Declare helper var for .woff2 font type format feature detection -->
@@ -79,8 +82,8 @@
       );
     </script>
     <noscript>
-      <link rel="stylesheet" href="assets/fonts/fonts-woff.css">
-      <link rel="stylesheet" href="main.css">
+      <link rel="stylesheet" href="/assets/fonts/fonts-woff.css">
+      <link rel="stylesheet" href="/main.css">
     </noscript>
   </head>
 
@@ -92,9 +95,10 @@
         <div class="navbar--wrap">
           <aside class="navbar--wrap--brand">
             <a class="no-link-style" href="#top" title="Go to Home page">
-              <img  src="assets/img/logo.png"
+              <img  src="/assets/img/logo.png"
                     alt="3dsecure.io logo icon polyhedron 3d secure"
-                    width="40px">
+                    width="40px"
+                    height="40px">
               <span>3dsecure.io</span>
             </a>
           </aside>
@@ -123,7 +127,7 @@
           <h1 class="hero--copy--title-big">3D Secure <br>Merchant Plugin <br>For Payment Gateways</h1>
           <h1 class="hero--copy--title-small">3D Secure <br>For Payment  <br>Gateways</h1>
           <p class="hero--copy--descr">
-            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#threeds" onclick="smoothScrollToId('3ds')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
+            3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#3ds" onclick="smoothScrollToId('3ds')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the dead-simple solution to your complex, fraudulent transaction problem.
           </p>
           <a class="btn btn--accent" href="enroll.html">BECOME 3D SECURED TODAY</a>
         </div>
@@ -138,9 +142,10 @@
             <div class="feat-wrap columns-x3">
               <div class="feat-wrap--feat">
                   <div class="feat-wrap--feat--icon-bg">
-                    <img  src="assets/img/shapes.svg"
+                    <img  src="/assets/img/shapes.svg"
                           alt="child toy blocks shapes round"
-                          width="28px">
+                          width="28px"
+                          height="28px">
                   </div>
                 <h4>Simple</h4>
                 <p>Determine if a card is enrolled for 3-D Secure authentication with a single API request.</p>
@@ -148,19 +153,20 @@
               </div>
               <div class="feat-wrap--feat">
                 <div class="feat-wrap--feat--icon-bg">
-                  <img  src="assets/img/turning-to-right.svg"
+                  <img  src="/assets/img/turning-to-right.svg"
                         alt="right turn avoid obstacle round"
                         width="28px"
                         height="28px">
                 </div>
                 <h4>Agile</h4>
-                <p>No need to acquire and maintain complicated and expensive licenses from credit card providers.</p>
+                <p>No need to acquire and maintain complicated and expensive licenses from credit card providers or other entities.</p>
               </div>
               <div class="feat-wrap--feat">
                   <div class="feat-wrap--feat--icon-bg">
-                    <img  src="assets/img/cloud.svg"
+                    <img  src="/assets/img/cloud.svg"
                           alt="cloud round"
-                          width="28px">
+                          width="28px"
+                          height="28px">
                   </div>
                 <h4>Managed</h4>
                 <p>Nothing for you to host, manage or keep up to date.</p>
@@ -188,21 +194,24 @@
             </div>
             <div class="pricing--traits">
               <div class="pricing--traits--trait">
-                <img  src="assets/img/checkmark.svg"
+                <img  src="/assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
-                      width="22px">
+                      width="22px"
+                      height="22px">
                 <span>No setup fees</span>
               </div>
               <div class="pricing--traits--trait">
-                <img  src="assets/img/checkmark.svg"
+                <img  src="/assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
-                      width="22px">
+                      width="22px"
+                      height="22px">
                 <span>No per transaction fees</span>
               </div>
               <div class="pricing--traits--trait">
-                <img  src="assets/img/checkmark.svg"
+                <img  src="/assets/img/checkmark.svg"
                       alt="checkmark filled black angled"
-                      width="22px">
+                      width="22px"
+                      height="22px">
                 <span>Fixed, predictable pricing</span>
               </div>
             </div>
@@ -216,38 +225,50 @@
             <div class="columns-x2-centered">
               <div class="threeds--pros">
                 <div class="threeds--pros--pro">
-                  <img  src="assets/img/checkmark-square.svg"
+                  <img  src="/assets/img/checkmark-square.svg"
                         alt="checkmark filled black square button"
-                        width="44px">
+                        width="44px"
+                        height="44px">
                   <span>Preempts and drastically reduces fraudulent chargebacks</span>
                 </div>
                 <div class="threeds--pros--pro">
+                  <img  src="/assets/img/checkmark-square.svg"
+                        alt="checkmark filled black square button"
+                        width="44px"
+                        height="44px">
+                  <span>Shifts transaction liability from merchant bank to card issuing bank</span>
+                </div>
+                <div class="threeds--pros--pro">
                   <img  src="assets/img/checkmark-square.svg"
                         alt="checkmark filled black square button"
-                        width="44px">
+                        width="44px"
+                        height="44px">
                   <span>Increases online purchasing due to boosted cardholder confidence</span>
                 </div>
                 <div class="threeds--pros--pro">
-                  <img  src="assets/img/checkmark-square.svg"
+                  <img  src="/assets/img/checkmark-square.svg"
                         alt="checkmark filled black square button"
-                        width="44px">
+                        width="44px"
+                        height="44px">
                   <span>Reduces declined transactions and processing delays</span>
                 </div>
                 <div class="threeds--pros--pro">
-                  <img  src="assets/img/checkmark-square.svg"
+                  <img  src="/assets/img/checkmark-square.svg"
                         alt="checkmark filled black square button"
-                        width="44px">
-                  <span>Shifts transaction liability from merchant bank to card issuing bank</span>
+                        width="44px"
+                        height="44px">
+                  <span>Eliminates needless customer friction over dispute handling (no false positives)</span>
                 </div>
               </div>
               <div class="threeds--explanation">
-                <p>
+                <p class="threeds--explanation--text">
                   At it's core, the 3-D Secure protocol is a 2-Factor authentication system adapted for credit card transactions.
                   <br><br>
-                  It's a security solution verifying that the transacting customer is the legitimate owner of the credit card used, by requiring an additional password.That password is only shared between the legitimate card holder and the bank that issued the card. Often in real-time via SMS.
+                  It's a security solution verifying that the transacting customer is the legitimate owner of the credit card used by requiring an additional secret. That secret is only shared between the legitimate card owner and the bank that issued the card. In fact, this procedure is often carried out in real-time via an SMS sharing a short-lived password.
                   <br><br>
-                  3-D Decure systems, including Verified by Visa&reg; and MasterCard SecureCode&reg;, automatically forward most of the liability from the Payment Gateway and the Merchant, back to the card-issuing bank instead.
-                  <br><br>
+                  Due to these enhanced authentication measures, popular 3-D Decure systems, including Verified by Visa&reg; and MasterCard SecureCode&reg;, automatically forward most of the liability from the Payment Gateway and the Merchant, back to the card-issuing bank instead.
+                </p>
+                <p class="threeds--explanation--more">
                   <a href="#" title="Get a more technical overview">Learn More</a>
                 </p>
               </div>
@@ -263,12 +284,13 @@
             <main>
               <h2 class="footer--credits--title">
                 <span class="footer--credits--title--prefix">Powered by</span>
-                <a class="no-link-style" href="https://www.clearhaus.com/" target="_blank">
+                <a class="no-link-style" href="https://www.clearhaus.com/" target="_blank" rel="noopener">
                   <span class="footer--credits--title--suffix">Clearhaus</span>
                   <img  class="footer--credits--title--clrhs-logo"
-                        src="assets/img/clearhaus-light.svg"
+                        src="/assets/img/clearhaus-light.svg"
                         alt="clearhaus logo white"
-                        width="100px">
+                        width="100px"
+                        height="100px">
                 </a>
               </h2>
             </main>
@@ -287,7 +309,7 @@
           </div>
           <div class="footer--copyright">
             &copy; Copyright Clearhaus A/S, <span class="js-year"/>
-            <script>
+            <script async defer>
               document.querySelector('.js-year').innerText = new Date().getFullYear()
             </script>
           </div>
