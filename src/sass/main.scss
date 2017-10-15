@@ -158,13 +158,31 @@ $ul:  $font-size-base * 8;    // ultra large
 
 .columns-x3 {
   display: grid;
-  grid-template-columns:
-      minmax(133px, 260px)
-      minmax(80px,  1fr)
-      minmax(133px, 260px)
-      minmax(80px,  1fr)
-      minmax(133px, 260px);
-  grid-template-areas: 'left gutter-l middle gutter-r right';
+
+  @include for-tablet-portrait-up {
+    grid-template-rows:
+        auto
+        minmax(100px,  1fr)
+        auto
+        minmax(100px,  1fr)
+        auto;
+    grid-template-areas:  'content-1'
+                          'gutter-t '
+                          'content-2'
+                          'gutter-b '
+                          'content-3';
+  }
+
+  @include for-tablet-landscape-up {
+    grid-template-rows: auto;
+    grid-template-columns:
+        minmax(133px, 260px)
+        minmax(80px,  1fr)
+        minmax(133px, 260px)
+        minmax(80px,  1fr)
+        minmax(133px, 260px);
+    grid-template-areas: 'content-1 gutter-l content-2 gutter-r content-3';
+  }
 }
 
 .ul-horizontal {
@@ -542,9 +560,9 @@ section.features {
   }
 
   .feat-wrap {
-    :nth-child(1).feat-wrap--feat { grid-area: left;    }
-    :nth-child(2).feat-wrap--feat { grid-area: middle;  }
-    :nth-child(3).feat-wrap--feat { grid-area: right;   }
+    :nth-child(1).feat-wrap--feat { grid-area: content-1; }
+    :nth-child(2).feat-wrap--feat { grid-area: content-2; }
+    :nth-child(3).feat-wrap--feat { grid-area: content-3; }
 
     .feat-wrap--feat--icon-bg {
       width: $font-size-base * 2.7;
@@ -573,30 +591,85 @@ section.pricing {
   color: $color-black-trans;
 
   .pricing--title {
-    grid-area: left;
+    grid-area: content-1;
     display: flex;
     align-items: center;
 
-    h2 {
-      margin-bottom: 0;
+    @include for-tablet-portrait-up {
+      justify-content: center;
+    }
 
-      :nth-child(2) {
-        color: rgba(0, 0, 0, $opacity-secondary);
+    @include for-tablet-landscape-up {
+      justify-content: left;
+    }
+
+    .pricing--title--content {
+      display: flex;
+
+      @include for-tablet-landscape-up {
+        flex-direction: column;
       }
       
-      :nth-child(3) {
-        color: rgba(0, 0, 0, $opacity-tertiary);
-        filter: blur(0.03em);
-      }
+        h2 {
+          margin-bottom: 0;
+
+          @include for-tablet-portrait-up {
+            display: inline-block;
+            margin-right: 0.3em;
+          }
+
+          @include for-tablet-landscape-up {
+            display: block;
+            margin-right: none;
+          }
+        }
+        
+        :nth-child(2) {
+          color: rgba(0, 0, 0, $opacity-secondary);
+        }
+        
+        :nth-child(3) {
+          color: rgba(0, 0, 0, $opacity-tertiary);
+          filter: blur(0.03em);
+        }
+
+        .pricing--title--content--subtitle {
+          font-family: $font-circularPro;
+          font-weight: 500;
+          letter-spacing: -0.03em;
+          line-height: 1.3em;
+          font-size: $font-size-base * 2.2;
+
+          @include for-tablet-portrait-up {
+            display: inline-block;
+            margin-right: 0.3em;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          @include for-tablet-landscape-up {
+            display: block;
+            margin-right: none;
+          }
+        }
     }
   }
 
   .pricing--price {
-    grid-area: middle;
+    grid-area: content-2;
     display: flex;
     align-items: center;
-    text-align: center;
     font-family: $font-calibre;
+
+    @include for-tablet-portrait-up {
+      justify-content: center;
+    }
+
+    @include for-tablet-landscape-up {
+      justify-content: left;
+    }
 
     .pricing--price--wrap {
       display: inline-block;
@@ -614,18 +687,31 @@ section.pricing {
   }
 
   .pricing--traits {
-    grid-area: right;
+    grid-area: content-3;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     font-family: $font-calibre;
     font-size: 1.1em;
 
-    .pricing--traits--trait {
+    @include for-tablet-landscape-up {
+      flex-direction: column;
+    }
+
+    .pricing--traits--wrap--trait {
       display: flex;
       align-items: center;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
+
+      @include for-tablet-portrait-up {
+        margin-bottom: 0.6em;
+      }
+
+      @include for-tablet-landscape-up {
+        margin-bottom: 1.2em;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       img {
         max-width: $font-size-base * 1.1;
@@ -664,7 +750,9 @@ section.threeds {
     @include for-tablet-landscape-up { margin-top: 0; }
     
     .threeds--pros--pro {
-      margin-bottom: 1.8em;
+      @include for-phone-only { margin-bottom: 1.2em; }
+      @include for-tablet-portrait-up { margin-bottom: 1.2em; }
+      @include for-tablet-landscape-up { margin-bottom: 1.8em; }
       
       &:last-child {
         margin-bottom: 0;
