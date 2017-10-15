@@ -562,9 +562,10 @@ section.features {
       justify-content: center;
       background-color: $color-primary;
 
-      img {
+      svg {
         max-width: $font-size-base * 1.1;
         max-height: $font-size-base * 1.1;
+        fill: $color-white;
       }
     }
   }
@@ -633,11 +634,11 @@ section.pricing {
       padding-top: 0.5em;
       padding-bottom: 0.5em;
 
-      img {
+      svg {
         max-width: $font-size-base * 1.1;
         max-height: $font-size-base * 1.1;
         margin-right: 0.5em;
-        opacity: $opacity-primary;
+        fill: rgba(0, 0, 0, $opacity-primary)
       }      
     }
   }
@@ -676,12 +677,13 @@ section.threeds {
         margin-bottom: 0;
       }
 
-      img {
+      svg {
         float: left;
         max-width: $font-size-base * 2.2;
         max-height: $font-size-base * 2.2;
         margin-top: 0.25em;
         margin-right: 0.8em;
+        fill: $color-accent;
       }
 
       span {

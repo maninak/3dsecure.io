@@ -153,7 +153,7 @@ gulp.task('minify:images', () => {
       imagemin.optipng({ optimizationLevel: 5 }),
       imagemin.svgo({
         plugins: [
-          { removeViewBox: true }
+          { removeViewBox: false }
         ]
       })
     ]))
@@ -228,7 +228,7 @@ gulp.task('inline:html', () => {
       .on('error', (err) => { gutil.log(gutil.colors.red(err.message)); })
       .pipe(inline({
         base: 'dist/',
-        disabledTypes: ['js', 'css', 'img'], // Only inline svg files
+        disabledTypes: ['js', 'css', 'img'], // Only handle inlining of svg files
       }))
       .pipe(gulp.dest(`${DEST_DIR}`));
 });
