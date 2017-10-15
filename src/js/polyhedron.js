@@ -89,10 +89,6 @@ function resizeRenderer() {
 function isElementVerticallyInViewport (el) {
   var rect = el.getBoundingClientRect();
   rect.bot = rect.top + rect.height;
-  console.log(
-      ((rect.top  >= 0)  && (rect.top  <= window.innerHeight)), '||', 
-      ((rect.bot  >= 0)  && (rect.bot  <= window.innerHeight))
-  ); // TODO delete
   return (
       ((rect.top  >= 0)  && (rect.top  <= window.innerHeight)) || // is element's top edge inside viewport?
       ((rect.bot  >= 0)  && (rect.bot  <= window.innerHeight))    // is element's bottom edge inside viewport?
