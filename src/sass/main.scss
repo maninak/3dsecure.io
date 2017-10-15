@@ -18,20 +18,25 @@ $url-CL-pattern-diamonds: 'assets/img/pattern-diamonds.png';
 /*
     Colors
 */
-$color-primary: #009688;
+// inspired from http://www.paletton.com/#uid=73r2n0kw0uj55+GbzS7B-gzQh5I
+$color-primary: #076c98;
+$color-primary-brighter: #008bc7;
 
-$color-primary-brighter: #00e6cf;
-$color-primary-light: #e7f5f4;
-$color-primary-grey: #cce2e0;
-$color-primary-dark: #003330;
-$color-primary-darker: #000808;
+$color-primary-lighter: #e7f6fe;
+$color-primary-light: #96cde5;
+$color-primary-dark: #033b53;
+$color-primary-darker: #00141d;
 
-$color-accent: #d9264d;
-$color-accent-brighter: #f20d3e;
-$color-accent-dark: #6c1326;
+$color-accent: #de7f12;
+$color-accent-brighter: #ff8800;
 
-$color-success: #187a27;
-$color-failure: #f42011;
+$color-accent-lighter: #ffecd7;
+$color-accent-light: #ffd4a3;
+$color-accent-dark: #9e5300;
+$color-accent-darker: #2d1800;
+
+$color-success: #00ac4b;
+$color-failure: #f13200;
 
 $color-white: rgba(255, 255, 255, $opacity-full);
 $color-white-trans: rgba(255, 255, 255, $opacity-primary);
@@ -364,7 +369,7 @@ header {
   min-height: 100vh;
   // background-image: linear-gradient(-30deg, $color-primary 0%, $color-primary-brighter 80%); // default bleu
   // background-image: linear-gradient(-30deg, $color-primary 0%, #6694af 80%); // brighter default bleu
-  background-image: linear-gradient(-30deg, #fff 0%, $color-primary 60%); // terquose with default bleu
+  background-image: linear-gradient(-30deg, $color-primary-lighter 0%, $color-primary 60%); // terquose with default bleu
   // background-image: linear-gradient(-30deg, #243949 0%, #517fa4 100%); // deheued bleu, better than mine
   // background-image: linear-gradient(-30deg, #d7d2cc 0%, #304352 100%); // silver powah
   // background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%); // moshy pastel grayz
@@ -404,7 +409,7 @@ section.navbar {
         img {
           margin-right: 0.25em;
           opacity: 0.9; // TODO delete when placeholder img is deleted
-          filter: hue-rotate(155deg); // TODO delete when placeholder img is deleted
+          filter: hue-rotate(188deg); // TODO delete when placeholder img is deleted
           transition: filter 0.1s ease;
         }
 
@@ -528,7 +533,7 @@ section.hero {
 */
 .features-backdrop {
   @include slanted-edge(bottom, left, -5deg);
-  background-image: linear-gradient(-5deg, $color-primary-light, $color-white);
+  background-image: linear-gradient(-5deg, $color-primary-lighter, $color-white);
 }
 
 section.features {
@@ -557,8 +562,8 @@ section.features {
       background-color: $color-primary;
 
       img {
-        max-width: $font-size-base * 1.4;
-        max-height: $font-size-base * 1.4;
+        max-width: $font-size-base * 1.1;
+        max-height: $font-size-base * 1.1;
       }
     }
   }
@@ -642,7 +647,7 @@ section.pricing {
 */
 .threeds-backdrop {
   @include slanted-edge(top, right, -5deg);
-  background-image: linear-gradient(-5deg, #00423e, $color-primary-dark);
+  background-image: linear-gradient(-5deg, $color-primary-dark, #0d364a);
 }
 
 section.threeds {
@@ -676,7 +681,6 @@ section.threeds {
         max-height: $font-size-base * 2.2;
         margin-top: 0.25em;
         margin-right: 0.8em;
-        opacity: $opacity-primary;
       }
 
       span {
@@ -691,7 +695,7 @@ section.threeds {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-left: rgba(255, 255, 255, $opacity-primary) 0.5em solid;
+    border-left: $color-accent 0.5em solid;
     padding-left: 0.8em;
 
     @include for-phone-only { margin-top: $font-size-base * 3; }
