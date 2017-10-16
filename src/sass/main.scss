@@ -622,7 +622,7 @@ section.pricing {
             }
   
             @include for-tablet-portrait-up {
-              display: inline-block;
+              display: inline-table;
               margin-right: 0.3em;
   
               &:last-child {
