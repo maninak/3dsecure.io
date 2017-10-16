@@ -125,20 +125,6 @@ $xl:  $font-size-base * 4;    // extra large
 $ul:  $font-size-base * 8;    // ultra large
 
 /*
-    Layout HTML helper classes
-*/
-
-// TODO delete
-
-.ul-horizontal {
-  list-style-type: none;
-  
-  li {
-    display: inline;
-  }
-}
-
-/*
     Applies the provided patterned image to the vertical side of the element to which this is included.
 
     Example:
@@ -386,9 +372,14 @@ section.navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      list-style-type: none;
 
       a {
         padding: 0.5em 1em 0.5em 1em;
+        
+        li {
+          display: inline;
+        }
       }
     }
   }
@@ -762,7 +753,7 @@ section.threeds {
           1fr;
       grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
     }
-    
+
     .threeds__wrap__pros {
       grid-area: content-1;
   
