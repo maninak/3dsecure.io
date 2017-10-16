@@ -392,12 +392,12 @@ section.navbar {
   font-size: 0.9em;
   color: $color-white-trans;
 
-  .navbar--wrap {
+  .navbar__wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    .navbar--wrap--brand {
+    .navbar__wrap__brand {
       a {
         display: flex;
         align-items: center;
@@ -424,7 +424,7 @@ section.navbar {
       }
     }
 
-    .navbar--wrap--main-links {
+    .navbar__wrap__main-links {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -444,22 +444,22 @@ section.hero {
   padding-bottom: $xl;
   color: $color-white;
 
-  .hero--copy {
+  .hero__copy {
     position: relative;
     z-index: 6;
 
-    .hero--copy--title-big {
+    .hero__copy__title-big {
       @include for-tablet-portrait-up { display: none; }
       @include for-tablet-landscape-up { display: inherit; }
     }
 
-    .hero--copy--title-small {
+    .hero__copy__title-small {
       @include for-phone-only { display: inherit; }
       @include for-tablet-portrait-up { display: inherit; }
       @include for-tablet-landscape-up { display: none; }
     }
     
-    .hero--copy--descr {
+    .hero__copy__descr {
       max-width: $brk-phone-vs-tablet-prtr;
       margin-bottom: 2em;
       font-size: 1.1em;
@@ -548,11 +548,11 @@ section.features {
   }
 
   .feat-wrap {
-    :nth-child(1).feat-wrap--feat { grid-area: left;    }
-    :nth-child(2).feat-wrap--feat { grid-area: middle;  }
-    :nth-child(3).feat-wrap--feat { grid-area: right;   }
+    :nth-child(1).feat-wrap__feat { grid-area: left;    }
+    :nth-child(2).feat-wrap__feat { grid-area: middle;  }
+    :nth-child(3).feat-wrap__feat { grid-area: right;   }
 
-    .feat-wrap--feat--icon-bg {
+    .feat-wrap__feat__icon-bg {
       width: $font-size-base * 2.7;
       height: $font-size-base * 2.7;
       margin-bottom: $font-size-base * 1;
@@ -579,7 +579,7 @@ section.pricing {
   padding-bottom: calc(14vw + 80px);
   color: $color-black-trans;
 
-  .pricing--title {
+  .pricing__title {
     grid-area: left;
     display: flex;
     align-items: center;
@@ -598,21 +598,21 @@ section.pricing {
     }
   }
 
-  .pricing--price {
+  .pricing__price {
     grid-area: middle;
     display: flex;
     align-items: center;
     text-align: center;
     font-family: $font-calibre;
 
-    .pricing--price--wrap {
+    .pricing__price__wrap {
       display: inline-block;
 
-      .pricing--price--wrap--plan {
+      .pricing__price__wrap__plan {
         font-size: 1.8em;
       }
 
-      .pricing--price--wrap--discl {
+      .pricing__price__wrap__discl {
         float: right;
         font-size: 0.7em;
         color: rgba(0, 0, 0, $opacity-secondary);
@@ -620,7 +620,7 @@ section.pricing {
     }
   }
 
-  .pricing--traits {
+  .pricing__traits {
     grid-area: right;
     display: flex;
     flex-direction: column;
@@ -628,7 +628,7 @@ section.pricing {
     font-family: $font-calibre;
     font-size: 1.1em;
 
-    .pricing--traits--trait {
+    .pricing__traits__trait {
       display: flex;
       align-items: center;
       padding-top: 0.5em;
@@ -663,14 +663,14 @@ section.threeds {
     text-align: center;
   }
 
-  .threeds--pros {
+  .threeds__pros {
     grid-area: content-1;
 
     @include for-phone-only { margin-top: 16px; } // 60px - 44px form title's margin-bottom
     @include for-tablet-portrait-up { margin-top: 16px; } // 60px - 44px form title's margin-bottom
     @include for-tablet-landscape-up { margin-top: 0; }
     
-    .threeds--pros--pro {
+    .threeds__pros__pro {
       margin-bottom: 1.8em;
       
       &:last-child {
@@ -693,7 +693,7 @@ section.threeds {
     }
   }
 
-  .threeds--explanation {
+  .threeds__explanation {
     grid-area: content-2;
     display: flex;
     flex-direction: column;
@@ -705,11 +705,11 @@ section.threeds {
     @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
     @include for-tablet-landscape-up { margin-top: 0; }
 
-    .threeds--explanation--text {
+    .threeds__explanation__text {
       font-size: 0.95em;
     }
 
-    .threeds--explanation--more {
+    .threeds__explanation__more {
       margin-top: 1em;
       font-size: 0.85em;
     }
@@ -729,7 +729,7 @@ section.footer {
   font-family: $font-calibre;
   color: $color-white-trans;
 
-  .footer--credits {
+  .footer__credits {
     display: grid;
     width: 100%;
     margin-bottom: calc(60px + 8vw);
@@ -759,12 +759,12 @@ section.footer {
         align-items: center;
       }
 
-      .footer--credits--title {
+      .footer__credits__title {
         display: flex;
         align-items: center;
         margin-bottom: 0;
 
-        .footer--credits--title--prefix {
+        .footer__credits__title__prefix {
           margin-right: 0.25em;
         }
 
@@ -778,24 +778,24 @@ section.footer {
             filter: drop-shadow($color-CL-primary 0 0 30px);
           }
 
-          &:hover .footer--credits--title--suffix {
+          &:hover .footer__credits__title__suffix {
             margin-bottom: -0.125em;
             border-bottom: 0.125em $color-accent-brighter solid;
             color: $color-white;
           }
           
-          &:hover .footer--credits--title--clrhs-logo {
+          &:hover .footer__credits__title__clrhs-logo {
             opacity: $opacity-full;
           }
 
-          .footer--credits--title--suffix {
+          .footer__credits__title__suffix {
             margin-right: $font-size-base * 1.5;
             margin-bottom: -0.05em;
             border-bottom: $color-white-trans 0.05em solid;
             transition: color 0.1s ease;
           }
 
-          .footer--credits--title--clrhs-logo {
+          .footer__credits__title__clrhs-logo {
             max-width: $font-size-base * 5;
             max-height: $font-size-base * 5;
             opacity: $opacity-primary;
@@ -820,7 +820,7 @@ section.footer {
         margin-top: 0;
       }
 
-      .footer--credits--member {
+      .footer__credits__member {
         font-size: 1.4em;
         letter-spacing: -0.03em;
 
@@ -833,12 +833,12 @@ section.footer {
           margin-bottom: $font-size-base * 1.5;
         }
 
-        .footer--credits--member--principal {
+        .footer__credits__member__principal {
           font-family: $font-circularPro;
         }
       }
 
-      .footer--credits--authorized {
+      .footer__credits__authorized {
         font-size: 0.95em;
 
         @include for-tablet-portrait-up {
@@ -848,7 +848,7 @@ section.footer {
     }
   }
 
-  .footer--btt {
+  .footer__btt {
     display: flex;
     margin-bottom: ($font-size-base * 2);
 
@@ -861,7 +861,7 @@ section.footer {
     }
   }
   
-  .footer--copyright {
+  .footer__copyright {
     text-align: center;
     padding-bottom: $md;
     font-size: 0.85em;
