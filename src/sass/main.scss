@@ -622,22 +622,13 @@ section.pricing {
 
           @include for-tablet-portrait-up {
             display: inline-block;
-            margin-right: 0.3em;
+            margin-right: 0.25em;
           }
 
           @include for-tablet-landscape-up {
             display: block;
             margin-right: none;
           }
-        }
-        
-        :nth-child(2) {
-          color: rgba(0, 0, 0, $opacity-secondary);
-        }
-        
-        :nth-child(3) {
-          color: rgba(0, 0, 0, $opacity-tertiary);
-          filter: blur(0.03em);
         }
 
         .pricing__title__content__subtitle {
@@ -646,6 +637,15 @@ section.pricing {
           letter-spacing: -0.03em;
           line-height: 1.3em;
           font-size: $font-size-base * 2.2;
+
+          &:nth-child(2) {
+            color: rgba(0, 0, 0, $opacity-secondary);
+          }
+          
+          &:nth-child(3) {
+            color: rgba(0, 0, 0, $opacity-tertiary);
+            filter: blur(0.03em);
+          }
 
           @include for-tablet-portrait-up {
             display: inline-block;
