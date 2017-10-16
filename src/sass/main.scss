@@ -610,7 +610,7 @@ section.pricing {
       justify-content: left;
     }
 
-    .pricing__title__content {
+    .pricing__title__wrap {
       display: flex;
 
       @include for-tablet-landscape-up {
@@ -631,7 +631,7 @@ section.pricing {
           }
         }
 
-        .pricing__title__content__subtitle {
+        .pricing__title__wrap__subtitle {
           font-family: $font-circularPro;
           font-weight: 500;
           letter-spacing: -0.03em;
