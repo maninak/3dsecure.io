@@ -114,6 +114,8 @@ function smoothScrollToId(elId, pos) {
     setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
     leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
   }
+
+  document.dispatchEvent(new Event('scroll'));
 }
 
 
