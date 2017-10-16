@@ -295,13 +295,8 @@ body {
   section {
     max-width: $brk-tablet-lnds-vs-desktop - ($font-size-base * 2); // ($font-size-base * 2) offsets padding
     margin: 0 auto;
-    padding-right: $font-size-base;
-    padding-left: $font-size-base;
-
-    @include for-phone-only {
-      padding-right: $font-size-base / 2;
-      padding-left: $font-size-base / 2;
-    }
+    padding-right: $font-size-base * 2;
+    padding-left: $font-size-base * 2;
   }
 }
 
@@ -503,9 +498,9 @@ section.features {
       grid-template-rows: auto;
       grid-template-columns:
           minmax(133px, 260px)
-          minmax(80px,  1fr)
+          minmax(60px,  1fr)
           minmax(133px, 260px)
-          minmax(80px,  1fr)
+          minmax(60px,  1fr)
           minmax(133px, 260px);
       grid-template-areas: 'content-1 gutter-l content-2 gutter-r content-3';
     }
@@ -586,6 +581,8 @@ section.pricing {
   
       .pricing__wrap__title__wrap {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
   
         @include for-tablet-landscape-up {
           flex-direction: column;
@@ -605,18 +602,18 @@ section.pricing {
             }
           }
   
-          .pricing__wrap__title__wrap__subtitle {
+          .pricing__wrap__title__wrap__subs__subtitle {
             font-family: $font-circularPro;
             font-weight: 500;
             letter-spacing: -0.03em;
             line-height: 1.3em;
             font-size: $font-size-base * 2.2;
   
-            &:nth-child(2) {
+            &:nth-child(1) {
               color: rgba(0, 0, 0, $opacity-secondary);
             }
             
-            &:nth-child(3) {
+            &:nth-child(2) {
               color: rgba(0, 0, 0, $opacity-tertiary);
               filter: blur(0.03em);
             }
@@ -831,7 +828,7 @@ section.footer {
     @include for-tablet-portrait-up {
       grid-template-rows: auto
                           auto;
-      grid-template-columns: 1fr 560px 1fr;
+      grid-template-columns: 1fr 520px 1fr;
       grid-template-areas:  'margin-l   main    margin-r'
                             'margin-l   aside   margin-r';
     }
@@ -890,10 +887,18 @@ section.footer {
           }
 
           .footer__credits__title__clrhs-logo {
-            max-width: $font-size-base * 5;
-            max-height: $font-size-base * 5;
             opacity: $opacity-primary;
             transition: opacity 0.1s ease;
+            
+            @include for-tablet-portrait-up {
+              max-width: $font-size-base * 3;
+              max-height: $font-size-base * 3;
+            }
+
+            @include for-tablet-landscape-up {
+              max-width: $font-size-base * 5;
+              max-height: $font-size-base * 5;
+            }
           }
         }
       }
@@ -905,7 +910,7 @@ section.footer {
       justify-content: space-between;
 
       @include for-tablet-portrait-up {
-        margin-top: $font-size-base * 2;
+        margin-top: $font-size-base * 3;
       }
 
       @include for-tablet-landscape-up {
@@ -919,10 +924,11 @@ section.footer {
         letter-spacing: -0.03em;
 
         @include for-tablet-portrait-up {
-          max-width: 260px;
+          max-width: 240px;
         }
 
         @include for-tablet-landscape-up {
+          max-width: 260px;
           display: unset;
           margin-bottom: $font-size-base * 1.5;
         }
@@ -936,6 +942,10 @@ section.footer {
         font-size: 0.95em;
 
         @include for-tablet-portrait-up {
+          max-width: 240px;
+        }
+
+        @include for-tablet-landscape-up {
           max-width: 260px;
         }
       }
