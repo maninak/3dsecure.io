@@ -130,37 +130,6 @@ $ul:  $font-size-base * 8;    // ultra large
 
 // TODO delete
 
-.columns-x2-centered {
-  display: grid;
-
-  @include for-phone-only {
-    grid-template-rows: auto
-                        auto;
-    grid-template-columns: 1fr minmax(270px, 450px) 1fr;
-    grid-template-areas:  'margin-l content-1 margin-r'
-                          'margin-l content-2 margin-r';
-  }
-
-  @include for-tablet-portrait-up {
-    grid-template-rows: auto
-                        auto;
-    grid-template-columns: 1fr minmax(270px, 450px) 1fr;
-    grid-template-areas:  'margin-l content-1 margin-r'
-                          'margin-l content-2 margin-r';
-  }
-
-  @include for-tablet-landscape-up {
-    grid-template-rows: auto;
-    grid-template-columns:
-        1fr
-        minmax(250px, 450px)
-        minmax(80px, 1fr)
-        minmax(250px, 450px)
-        1fr;
-    grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
-  }
-}
-
 .ul-horizontal {
   list-style-type: none;
   
@@ -764,57 +733,88 @@ section.threeds {
     text-align: center;
   }
 
-  .threeds__pros {
-    grid-area: content-1;
-
-    @include for-phone-only { margin-top: 16px; } // 60px - 44px form title's margin-bottom
-    @include for-tablet-portrait-up { margin-top: 16px; } // 60px - 44px form title's margin-bottom
-    @include for-tablet-landscape-up { margin-top: 0; }
+  .threeds__wrap {
+    display: grid;
+  
+    @include for-phone-only {
+      grid-template-rows: auto
+                          auto;
+      grid-template-columns: 1fr minmax(270px, 450px) 1fr;
+      grid-template-areas:  'margin-l content-1 margin-r'
+                            'margin-l content-2 margin-r';
+    }
+  
+    @include for-tablet-portrait-up {
+      grid-template-rows: auto
+                          auto;
+      grid-template-columns: 1fr minmax(270px, 450px) 1fr;
+      grid-template-areas:  'margin-l content-1 margin-r'
+                            'margin-l content-2 margin-r';
+    }
+  
+    @include for-tablet-landscape-up {
+      grid-template-rows: auto;
+      grid-template-columns:
+          1fr
+          minmax(250px, 450px)
+          minmax(80px, 1fr)
+          minmax(250px, 450px)
+          1fr;
+      grid-template-areas: 'margin-l content-1 gutter-m content-2 margin-r';
+    }
     
-    .threeds__pros__pro {
-      @include for-phone-only { margin-bottom: 1.2em; }
-      @include for-tablet-portrait-up { margin-bottom: 1.2em; }
-      @include for-tablet-landscape-up { margin-bottom: 1.8em; }
+    .threeds__wrap__pros {
+      grid-area: content-1;
+  
+      @include for-phone-only { margin-top: 16px; } // 60px - 44px form title's margin-bottom
+      @include for-tablet-portrait-up { margin-top: 16px; } // 60px - 44px form title's margin-bottom
+      @include for-tablet-landscape-up { margin-top: 0; }
       
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      svg {
-        float: left;
-        max-width: $font-size-base * 2.2;
-        max-height: $font-size-base * 2.2;
-        margin-top: 0.25em;
-        margin-right: 0.8em;
-        fill: $color-accent;
-      }
-
-      span {
-        display:flex;
-        font-size: 1.2em;
+      .threeds__wrap__pros__pro {
+        @include for-phone-only { margin-bottom: 1.2em; }
+        @include for-tablet-portrait-up { margin-bottom: 1.2em; }
+        @include for-tablet-landscape-up { margin-bottom: 1.8em; }
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+  
+        svg {
+          float: left;
+          max-width: $font-size-base * 2.2;
+          max-height: $font-size-base * 2.2;
+          margin-top: 0.25em;
+          margin-right: 0.8em;
+          fill: $color-accent;
+        }
+  
+        span {
+          display:flex;
+          font-size: 1.2em;
+        }
       }
     }
-  }
-
-  .threeds__explanation {
-    grid-area: content-2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-left: $color-accent 0.5em solid;
-    padding-left: 0.8em;
-
-    @include for-phone-only { margin-top: $font-size-base * 3; }
-    @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
-    @include for-tablet-landscape-up { margin-top: 0; }
-
-    .threeds__explanation__text {
-      font-size: 0.95em;
-    }
-
-    .threeds__explanation__more {
-      margin-top: 1em;
-      font-size: 0.85em;
+  
+    .threeds__wrap__explanation {
+      grid-area: content-2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: $color-accent 0.5em solid;
+      padding-left: 0.8em;
+  
+      @include for-phone-only { margin-top: $font-size-base * 3; }
+      @include for-tablet-portrait-up { margin-top: $font-size-base * 3; }
+      @include for-tablet-landscape-up { margin-top: 0; }
+  
+      .threeds__wrap__explanation__text {
+        font-size: 0.95em;
+      }
+  
+      .threeds__wrap__explanation__more {
+        margin-top: 1em;
+        font-size: 0.85em;
+      }
     }
   }
 }
