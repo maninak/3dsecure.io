@@ -3,9 +3,60 @@
 \*-----------------------------*/
 
 /*
+    Breakpoints
+*/
+:root {
+  --brk_phone-small_vs_phone-big:      460px;
+  --brk_phone-big_vs_tablet-small:     600px;
+  --brk_tablet-small_vs_tablet-big:    900px;
+  --brk_tablet-big_vs_desktop-small:   1200px;
+  --brk_desktop-small_vs_desktop-big:  1800px;
+}
+
+// CSS variables not supported in media queries according to spec
+// so sadly we will have to copy the raw values from the variables
+// declared above, to the mixins declared below (and keep them synced!) :/
+
+@mixin for-phone-small-up {
+  @media (min-width: 0px) { @content; }
+}
+
+@mixin for-phone-big-up {
+  @media (min-width: 460px) { @content; }
+}
+
+@mixin for-tablet-small-up {
+  @media (min-width: 600px) { @content; }
+}
+
+@mixin for-tablet-big-up {
+  @media (min-width: 900px) { @content; }
+}
+
+@mixin for-desktop-small-up {
+  @media (min-width: 1200px) { @content; }
+}
+
+@mixin for-desktop-big-up {
+  @media (min-width: 1800px) { @content; }
+}
+
+/*
     Misc
 */
-$font-size-base: 20px;
+:root {
+  @include for-phone-small-up {
+    --font-size-base: 18px;
+  }
+
+  @include for-phone-big-up {
+    --font-size-base: 19px;
+  }
+
+  @include for-tablet-small-up {
+    --font-size-base: 20px;
+  }
+}
 
 $opacity-full: 1;
 $opacity-primary: 0.87;
@@ -45,39 +96,6 @@ $color-black-trans: rgba(0, 0, 0, $opacity-primary);
 
 $color-CL-primary: #263347;
 
-/*
-    Breakpoints
-*/
-$brk_phone-small_vs_phone-big:      460px;
-$brk_phone-big_vs_tablet-small:     600px;
-$brk_tablet-small_vs_tablet-big:    900px;
-$brk_tablet-big_vs_desktop-small:   1200px;
-$brk_desktop-small_vs_desktop-big:  1800px;
-
-@mixin for-phone-small-up {
-  @media (min-width: 0px) { @content; }
-}
-
-@mixin for-phone-big-up {
-  @media (min-width: $brk_phone-small_vs_phone-big) { @content; }
-}
-
-@mixin for-tablet-small-up {
-  @media (min-width: $brk_phone-big_vs_tablet-small) { @content; }
-}
-
-@mixin for-tablet-big-up {
-  @media (min-width: $brk_tablet-small_vs_tablet-big) { @content; }
-}
-
-@mixin for-desktop-small-up {
-  @media (min-width: $brk_tablet-big_vs_desktop-small) { @content; }
-}
-
-@mixin for-desktop-big-up {
-  @media (min-width: $brk_desktop-small_vs_desktop-big) { @content; }
-}
-
 
 
 /*-----------------------------*\
@@ -103,13 +121,13 @@ h6 {
   line-height: 1.3em;
 }
 
-h1 { font-size: $font-size-base * 3;    }
-h2 { font-size: $font-size-base * 2.2;  }
-h4 { font-size: $font-size-base * 1.2;  }
+h1 { font-size: calc(var(--font-size-base) * 3);    }
+h2 { font-size: calc(var(--font-size-base) * 2.2);  }
+h4 { font-size: calc(var(--font-size-base) * 1.2);  }
 
 p {
   font-family: $font-calibre;
-  font-size: $font-size-base * 0.8;
+  font-size: calc(var(--font-size-base) * 0.8);
   line-height: 1.15em;
 }
 
@@ -122,12 +140,12 @@ p {
 /*
     Fixed size variables
 */
-$xs:  $font-size-base * 0.25; // extra small
-$sm:  $font-size-base * 0.5;  // small
-$md:  $font-size-base * 1;    // medium
-$lg:  $font-size-base * 2;    // large
-$xl:  $font-size-base * 4;    // extra large
-$ul:  $font-size-base * 8;    // ultra large
+$xs:  calc(var(--font-size-base) * 0.25); // extra small
+$sm:  calc(var(--font-size-base) * 0.5);  // small
+$md:  calc(var(--font-size-base) * 1);    // medium
+$lg:  calc(var(--font-size-base) * 2);    // large
+$xl:  calc(var(--font-size-base) * 4);    // extra large
+$ul:  calc(var(--font-size-base) * 8);    // ultra large
 
 /*
     Applies the provided patterned image to the vertical side of the element to which this is included.
@@ -205,10 +223,10 @@ $ul:  $font-size-base * 8;    // ultra large
 */
 .btn {
   display: inline-block;
-  padding: ($font-size-base * 0.7) ($font-size-base * 1.4) ($font-size-base * 0.7) ($font-size-base * 1.4);
+  padding: calc(var(--font-size-base) * 0.7) calc(var(--font-size-base) * 1.4);
   border-radius: 50px;
   font-family: $font-calibre;
-  font-size: $font-size-base * 0.7;
+  font-size: calc(var(--font-size-base) * 0.7);
   font-weight: bold;
   letter-spacing: 0.035em;
   text-transform: uppercase;
@@ -295,21 +313,23 @@ a:not(.no-link-style):not(.btn) {
     Overall layout
 */
 body {
-  font-size: $font-size-base;
+  font-size: calc(var(--font-size-base) * 1);
 
   section {
     margin: 0 auto;
 
     @include for-phone-small-up {
-      max-width: $brk_tablet-big_vs_desktop-small - ($font-size-base * 1); // ($font-size-base * 1) offsets padding
-      padding-right: $font-size-base;
-      padding-left: $font-size-base;
+      // calc(var(--font-size-base) * 1) offsets padding
+      max-width: calc(var(--brk_tablet-big_vs_desktop-small) - calc(var(--font-size-base) * 1));
+      padding-right: calc(var(--font-size-base) * 1);
+      padding-left: calc(var(--font-size-base) * 1);
     }
 
     @include for-phone-big-up {
-      max-width: $brk_tablet-big_vs_desktop-small - ($font-size-base * 2); // ($font-size-base * 2) offsets padding
-      padding-right: $font-size-base * 2;
-      padding-left: $font-size-base * 2;
+      // calc(var(--font-size-base) * 2) offsets padding
+      max-width: calc(var(--brk_tablet-big_vs_desktop-small) - calc(var(--font-size-base) * 2));
+      padding-right: calc(var(--font-size-base) * 2);
+      padding-left: calc(var(--font-size-base) * 2);
     }
   }
 }
@@ -384,7 +404,7 @@ section.navbar {
       list-style-type: none;
 
       a {
-        padding: 0.5em 1em 0.5em 1em;
+        padding: 0.5em 1em;
         
         li {
           display: inline;
@@ -417,7 +437,7 @@ section.hero {
     }
     
     .hero__copy__descr {
-      max-width: $brk_phone-big_vs_tablet-small;
+      max-width: var(--brk_phone-big_vs_tablet-small);
       margin-bottom: 2em;
       font-size: 1.1em;
       color: $color-white-trans;
@@ -495,8 +515,8 @@ section.hero {
 }
 
 section.features {
-  padding-top: calc(60px + 8vw);
-  padding-bottom: calc(60px + 8vw);
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+  padding-bottom: calc(calc(var(--font-size-base) * 3) + 8vw);
 
   h2,
   h4,
@@ -524,9 +544,9 @@ section.features {
 
     .feat-wrap__feat {
       .feat-wrap__feat__icon-bg {
-        width: $font-size-base * 2.7;
-        height: $font-size-base * 2.7;
-        margin-bottom: $font-size-base * 1;
+        width: calc(var(--font-size-base) * 2.7);
+        height: calc(var(--font-size-base) * 2.7);
+        margin-bottom: calc(var(--font-size-base) * 1);
         border-radius: 50px;
         display: flex;
         align-items: center;
@@ -534,8 +554,8 @@ section.features {
         background-color: $color-primary;
   
         svg {
-          max-width: $font-size-base * 1.1;
-          max-height: $font-size-base * 1.1;
+          max-width: calc(var(--font-size-base) * 1.1);
+          max-height: calc(var(--font-size-base) * 1.1);
           fill: $color-white;
         }
       }
@@ -547,8 +567,8 @@ section.features {
     Pricing section
 */
 section.pricing {
-  padding-top: calc(14vw + 80px);
-  padding-bottom: calc(14vw + 80px);
+  padding-top: calc(calc(calc(var(--font-size-base) * 4)) + 14vw); // default is 80px + 14vw
+  padding-bottom: calc(calc(calc(var(--font-size-base) * 4)) + 14vw);
   color: $color-black-trans;
 
   .pricing__wrap {
@@ -620,7 +640,7 @@ section.pricing {
             font-weight: 500;
             letter-spacing: -0.03em;
             line-height: 1.3em;
-            font-size: $font-size-base * 2.2;
+            font-size: calc(var(--font-size-base) * 2.2);
   
             &:nth-child(1) {
               color: rgba(0, 0, 0, $opacity-secondary);
@@ -705,8 +725,8 @@ section.pricing {
         }
   
         svg {
-          max-width: $font-size-base * 1.1;
-          max-height: $font-size-base * 1.1;
+          max-width: calc(var(--font-size-base) * 1.1);
+          max-height: calc(var(--font-size-base) * 1.1);
           margin-right: 0.5em;
           fill: rgba(0, 0, 0, $opacity-primary)
         }      
@@ -724,8 +744,8 @@ section.pricing {
 }
 
 section.threeds {
-  padding-top: calc(60px + 8vw);
-  padding-bottom: calc(60px + 8vw);
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+  padding-bottom: calc(calc(var(--font-size-base) * 3) + 8vw);
   font-family: $font-calibre;
   color: $color-white-trans;
 
@@ -772,8 +792,8 @@ section.threeds {
   
         svg {
           float: left;
-          max-width: $font-size-base * 2.2;
-          max-height: $font-size-base * 2.2;
+          max-width: calc(var(--font-size-base) * 2.2);
+          max-height: calc(var(--font-size-base) * 2.2);
           margin-top: 0.25em;
           margin-right: 0.8em;
           fill: $color-accent;
@@ -794,7 +814,7 @@ section.threeds {
       border-left: $color-accent 0.5em solid;
       padding-left: 0.8em;
   
-      @include for-phone-small-up { margin-top: $font-size-base * 3; }
+      @include for-phone-small-up { margin-top: calc(var(--font-size-base) * 3); }
       @include for-tablet-big-up { margin-top: 0; }
   
       .threeds__wrap__explanation__text {
@@ -818,13 +838,13 @@ footer {
 }
 
 section.footer {
-  padding-top: calc(60px + 8vw);
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
   font-family: $font-calibre;
   color: $color-white-trans;
 
   .footer__credits {
     display: grid;
-    margin-bottom: calc(60px + 8vw);
+    margin-bottom: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
 
     @include for-phone-small-up {
       grid-template-rows: auto
@@ -891,11 +911,11 @@ section.footer {
             transition: color 0.1s ease;
 
             @include for-phone-small-up {
-              margin-right: $font-size-base;
+              margin-right: calc(var(--font-size-base) * 1);
             }
 
             @include for-tablet-small-up {
-              margin-right: $font-size-base * 1.5;
+              margin-right: calc(var(--font-size-base) * 1.5);
             }
           }
 
@@ -904,13 +924,13 @@ section.footer {
             transition: opacity 0.1s ease;
             
             @include for-phone-small-up {
-              max-width: $font-size-base * 3;
-              max-height: $font-size-base * 3;
+              max-width: calc(var(--font-size-base) * 3);
+              max-height: calc(var(--font-size-base) * 3);
             }
 
             @include for-tablet-big-up {
-              max-width: $font-size-base * 5;
-              max-height: $font-size-base * 5;
+              max-width: calc(var(--font-size-base) * 5);
+              max-height: calc(var(--font-size-base) * 5);
             }
           }
         }
@@ -924,7 +944,7 @@ section.footer {
       @include for-phone-small-up {
         flex-wrap: wrap;
         justify-content: center;
-        margin-top: $font-size-base * 3;
+        margin-top: calc(var(--font-size-base) * 3);
       }
 
       @include for-tablet-small-up {
@@ -933,7 +953,7 @@ section.footer {
       }
 
       @include for-tablet-big-up {
-        min-height: $font-size-base * 8;
+        min-height: calc(var(--font-size-base) * 8);
         flex-direction: column;
         margin-top: 0;
       }
@@ -954,7 +974,7 @@ section.footer {
         letter-spacing: -0.03em;
 
         @include for-phone-small-up {
-          margin-bottom: $font-size-base * 1.5;
+          margin-bottom: calc(var(--font-size-base) * 1.5);
         }
 
         @include for-tablet-small-up {
@@ -962,7 +982,7 @@ section.footer {
         }
 
         @include for-tablet-big-up {
-          margin-bottom: $font-size-base * 1.5;
+          margin-bottom: calc(var(--font-size-base) * 1.5);
         }
 
         .footer__credits__member__principal {
@@ -978,7 +998,7 @@ section.footer {
 
   .footer__btt {
     display: flex;
-    margin-bottom: ($font-size-base * 2);
+    margin-bottom: (calc(var(--font-size-base) * 2));
 
     a {
       border-color: rgba(255, 255, 255, $opacity-tertiary);
