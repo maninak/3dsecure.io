@@ -127,8 +127,10 @@ h4 { font-size: calc(var(--font-size-base) * 1.2);  }
 
 p {
   font-family: $font-calibre;
-  font-size: calc(var(--font-size-base) * 0.8);
-  line-height: 1.15em;
+  line-height: 1.25em;
+
+  @include for-phone-small-up  { font-size: calc(var(--font-size-base) * 0.9); }
+  @include for-tablet-small-up { font-size: calc(var(--font-size-base) * 0.8); }
 }
 
   
@@ -725,10 +727,6 @@ section.pricing {
       font-family: $font-calibre;
 
       @include for-phone-small-up {
-        font-size: 0.9em;
-      }
-
-      @include for-phone-big-up {
         font-size: 1em;
       }
   
