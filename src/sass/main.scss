@@ -533,6 +533,20 @@ section.features {
   .feat-wrap {
     display: grid;
 
+    @include for-phone-small-up {
+      grid-template-rows:
+          auto
+          minmax(calc(var(--font-size-base) + 10vw),  auto)
+          auto
+          minmax(calc(var(--font-size-base) + 10vw),  auto)
+          auto;
+      grid-template-areas:  'content-1'
+                            'gutter-t '
+                            'content-2'
+                            'gutter-b '
+                            'content-3';
+    }
+
     @include for-tablet-small-up {
       grid-template-rows: auto;
       grid-template-columns:
