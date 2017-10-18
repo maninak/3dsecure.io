@@ -6,16 +6,16 @@
     Breakpoints
 */
 :root {
-  --brk_phone-small_vs_phone-big:      460px;
-  --brk_phone-big_vs_tablet-small:     600px;
-  --brk_tablet-small_vs_tablet-big:    900px;
-  --brk_tablet-big_vs_desktop-small:   1200px;
-  --brk_desktop-small_vs_desktop-big:  1800px;
+  --brkp_phone-sm_vs_phone-lg:      460px;
+  --brkp_phone-lg_vs_tablet-sm:     600px;
+  --brkp_tablet-sm_vs_tablet-lg:    900px;
+  --brkp_tablet-lg_vs_desktop-sm:   1200px;
+  --brkp_desktop-sm_vs_desktop-lg:  1800px;
 }
 
-// CSS variables not supported in media queries according to spec
-// so sadly we will have to copy the raw values from the variables
-// declared above, to the mixins declared below (and keep them synced!) :/
+// CSS variables not supported in media queries according to official spec.
+// So sadly we will have to copy the raw values from the variables
+// declared abov into to the mixins declared below (and keep them synced!) :/
 
 @mixin for-phone-small-up {
   @media (min-width: 0px) { @content; }
@@ -320,14 +320,14 @@ body {
 
     @include for-phone-small-up {
       // calc(var(--font-size-base) * 1) offsets padding
-      max-width: calc(var(--brk_tablet-big_vs_desktop-small) - calc(var(--font-size-base) * 1));
+      max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 1));
       padding-right: calc(var(--font-size-base) * 1);
       padding-left: calc(var(--font-size-base) * 1);
     }
 
     @include for-phone-big-up {
       // calc(var(--font-size-base) * 2) offsets padding
-      max-width: calc(var(--brk_tablet-big_vs_desktop-small) - calc(var(--font-size-base) * 2));
+      max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 2));
       padding-right: calc(var(--font-size-base) * 2);
       padding-left: calc(var(--font-size-base) * 2);
     }
@@ -437,7 +437,7 @@ section.hero {
     }
     
     .hero__copy__descr {
-      max-width: var(--brk_phone-big_vs_tablet-small);
+      max-width: var(--brkp_phone-lg_vs_tablet-sm);
       margin-bottom: 2em;
       font-size: 1.1em;
       color: $color-white-trans;
