@@ -572,8 +572,8 @@ section.features {
     Pricing section
 */
 section.pricing {
-  padding-top: calc(calc(calc(var(--font-size-base) * 4)) + 14vw); // default is 80px + 14vw
-  padding-bottom: calc(calc(calc(var(--font-size-base) * 4)) + 14vw);
+  padding-top: calc(calc(var(--font-size-base) * 4) + 14vw); // default is 80px + 14vw
+  padding-bottom: calc(calc(var(--font-size-base) * 4) + 14vw);
   color: $color-black-trans;
 
   .pricing__wrap {
