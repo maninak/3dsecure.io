@@ -462,34 +462,28 @@ section.hero {
   }
 
   .js-polyhedron-container {
-    --length-poly-container-phone-sm: 400px;
-    --length-poly-container-phone-lg: 500px;
-    --length-poly-container-tablet-sm: 600px;
-    --length-poly-container-tablet-lg: 700px;
-    --length-poly-container-desktop-sm: 800px;
-
     position: absolute;
     z-index: 3;
     
     @include for-tablet-small-up {
       right: -160px;
       bottom: -300px;
-      width: var(--length-poly-container-tablet-sm);
-      height: var(--length-poly-container-tablet-sm);
+      width: 600px;
+      height: 600px;
     }
 
     @include for-tablet-big-up {
       right: -185px;
       bottom: -350px;
-      width: var(--length-poly-container-tablet-lg);
-      height: var(--length-poly-container-tablet-lg);
+      width: 700px;
+      height: 700px;
     }
     
     @include for-desktop-small-up {
       right: -210px;
       bottom: -400px;
-      width: var(--length-poly-container-desktop-sm);
-      height: var(--length-poly-container-desktop-sm);
+      width: 800px;
+      height: 800px;
     }
   }
 
@@ -497,33 +491,34 @@ section.hero {
     content: "";
     display:block;
     position: absolute;
-    border-radius: 50%;
     background-color: rgba(255, 255, 255, $opacity-primary);
     z-index: 4;
-
-    @mixin polyhedron-container-before-ruleset($length-poly-container-css-var) {
-      --length-poly-container-before: calc(var($length-poly-container-css-var) - 200px);
-
-      width: var(--length-poly-container-before);
-      height: var(--length-poly-container-before);
-      margin-top: calc((var($length-poly-container-css-var) - var(--length-poly-container-before)) / 2);
-      margin-left: calc((var($length-poly-container-css-var) - var(--length-poly-container-before)) / 2);
-
-      @if $length-poly-container-css-var == '--length-poly-container-tablet-sm'  { filter: blur(90px);  }
-      @if $length-poly-container-css-var == '--length-poly-container-tablet-lg'  { filter: blur(100px); }
-      @if $length-poly-container-css-var == '--length-poly-container-desktop-sm' { filter: blur(110px); }
-    }
     
     @include for-tablet-small-up {
-      @include polyhedron-container-before-ruleset(--length-poly-container-tablet-sm)
+      width: 400px;
+      height: 400px;
+      margin-top: calc((600px - 400px) / 2);
+      margin-left: calc((600px - 400px) / 2);
+      border-radius: 50%;
+      filter: blur(90px);
     }
     
     @include for-tablet-big-up {
-      @include polyhedron-container-before-ruleset(--length-poly-container-tablet-lg)
+      width: 500px;
+      height: 500px;
+      margin-top: calc((700px - 500px) / 2);
+      margin-left: calc((700px - 500px) / 2);
+      border-radius: 50%;
+      filter: blur(100px);
     }
 
     @include for-desktop-small-up {
-      @include polyhedron-container-before-ruleset(--length-poly-container-desktop-sm);
+      width: 600px;
+      height: 600px;
+      margin-top: calc((800px - 600px) / 2);
+      margin-left: calc((800px - 600px) / 2);
+      border-radius: 50%;
+      filter: blur(110px);
     }
   }
 }
