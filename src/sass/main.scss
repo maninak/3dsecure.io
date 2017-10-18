@@ -220,6 +220,20 @@ $ul:  calc(var(--font-size-base) * 8);    // ultra large
   }
 }
 
+@mixin grid-content-rows-x3 {
+  grid-template-rows:
+      auto
+      minmax(calc(var(--font-size-base) + 10vw),  auto)
+      auto
+      minmax(calc(var(--font-size-base) + 10vw),  auto)
+      auto;
+  grid-template-areas:  'content-1'
+                        'gutter-t '
+                        'content-2'
+                        'gutter-b '
+                        'content-3';
+}
+
 /*
     Button HTML helper classes
 */
@@ -536,17 +550,7 @@ section.features {
     display: grid;
 
     @include for-phone-small-up {
-      grid-template-rows:
-          auto
-          minmax(calc(var(--font-size-base) + 10vw),  auto)
-          auto
-          minmax(calc(var(--font-size-base) + 10vw),  auto)
-          auto;
-      grid-template-areas:  'content-1'
-                            'gutter-t '
-                            'content-2'
-                            'gutter-b '
-                            'content-3';
+      @include grid-content-rows-x3;
     }
 
     @include for-tablet-small-up {
@@ -597,17 +601,7 @@ section.pricing {
     display: grid;
   
     @include for-phone-small-up {
-      grid-template-rows:
-          auto
-          minmax(calc(var(--font-size-base) + 10vw),  1fr)
-          auto
-          minmax(calc(var(--font-size-base) + 10vw),  1fr)
-          auto;
-      grid-template-areas:  'content-1'
-                            'gutter-t '
-                            'content-2'
-                            'gutter-b '
-                            'content-3';
+      @include grid-content-rows-x3;
     }
   
     @include for-tablet-big-up {
