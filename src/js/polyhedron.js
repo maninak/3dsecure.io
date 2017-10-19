@@ -76,7 +76,7 @@ function calcRendererSize() {
   if      (window.innerWidth >= 1200) { return 800; }
   else if (window.innerWidth >= 900)  { return 700; }
   else if (window.innerWidth >= 600)  { return 600; }
-  else                                { return 400; }
+  else                                { return 300; }
 }
 
 function resizeRenderer() {
