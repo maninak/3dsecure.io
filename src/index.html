@@ -85,6 +85,22 @@
       <link rel="stylesheet" href="/assets/fonts/fonts-woff.css">
       <link rel="stylesheet" href="/main.css">
     </noscript>
+    <style>
+      /* 
+         Ensures --font-base-width always gets initialized with the
+         correct value.
+
+         This block is placed after injected/inlined, above-the-fold
+         CSS at production build time.
+         Without it, optimised css injected in the html may have
+         out-of-order and, as such, dysfunctional media queries.
+         This can cause a font-size "pop" when the always correct
+         main.css file arrives.
+      */
+      @media (min-width: 320px) { :root { --font-size-base: 17px; }}
+      @media (min-width: 480px) { :root { --font-size-base: 18px; }}
+      @media (min-width: 600px) { :root { --font-size-base: 20px; }}
+    </style>
   </head>
 
   
