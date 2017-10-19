@@ -90,9 +90,11 @@
          Ensures --font-base-width always gets initialized with the
          correct value.
 
-         This block is placed after injected/inlined, above-the-fold
-         CSS at production build time.
-         Without it, optimised css injected in the html may have
+         This block is placed purposefully after the automatically
+         detected above-the-fold CSS  is injected/inlined, at
+         production build time.
+
+         Without it, optimised css injected into the HTML may contain
          out-of-order and, as such, dysfunctional media queries.
          This can cause a font-size "pop" when the always correct
          main.css file arrives.
