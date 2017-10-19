@@ -85,6 +85,24 @@
       <link rel="stylesheet" href="/assets/fonts/fonts-woff.css">
       <link rel="stylesheet" href="/main.css">
     </noscript>
+    <style>
+      /* 
+         Ensures --font-base-width always gets initialized with the
+         correct value.
+
+         This block is placed purposefully after the automatically
+         detected above-the-fold CSS  is injected/inlined, at
+         production build time.
+
+         Without it, optimised css injected into the HTML may contain
+         out-of-order and, as such, dysfunctional media queries.
+         This can cause a font-size "pop" when the always correct
+         main.css file arrives.
+      */
+      @media (min-width: 320px) { :root { --font-size-base: 17px; }}
+      @media (min-width: 480px) { :root { --font-size-base: 18px; }}
+      @media (min-width: 600px) { :root { --font-size-base: 20px; }}
+    </style>
   </head>
 
   
@@ -103,7 +121,7 @@
             </a>
           </aside>
           <nav>
-            <ul class="navbar__wrap__main-links ul-horizontal">
+            <ul class="navbar__wrap__main-links">
               <a href="#pricing" onclick="smoothScrollToId('pricing', 'middle')">
                 <li>Pricing</li>
               </a>
@@ -125,7 +143,8 @@
       <section class="hero">
         <div class="hero__copy">
           <h1 class="hero__copy__title-big">3D Secure <br>Merchant Plugin <br>For Payment Gateways</h1>
-          <h1 class="hero__copy__title-small">3D Secure <br>For Payment  <br>Gateways</h1>
+          <h1 class="hero__copy__title-short">3D Secure <br>For Payment  <br>Gateways</h1>
+          <h1 class="hero__copy__title-shortest">3D Secure <br>For Gateways</h1>
           <p class="hero__copy__descr">
             3dsecure.io is a managed Merchant Plug-In (MPI) as a service implementing the <a href="#3ds" onclick="smoothScrollToId('3ds')" title="See how it works">3-D Secure protocol</a>. Trusted by Payment Gateways around the globe, it's the simplest solution to your complex, fraudulent transaction problem.
           </p>
@@ -139,14 +158,14 @@
         <section class="features">
           <div>
             <h2>Features</h2>
-            <div class="feat-wrap columns-x3">
+            <div class="feat-wrap">
               <div class="feat-wrap__feat">
-                  <div class="feat-wrap__feat__icon-bg">
-                    <svg width="22px" height="22px">
-                      <use href="/assets/img/shapes.svg#shapes"
-                          xlink:href="/assets/img/shapes.svg#shapes"/>
-                    </svg>
-                  </div>
+                <div class="feat-wrap__feat__icon-bg">
+                  <svg width="22px" height="22px">
+                    <use href="/assets/img/shapes.svg#shapes"
+                        xlink:href="/assets/img/shapes.svg#shapes"/>
+                  </svg>
+                </div>
                 <h4>Simple</h4>
                 <p>Determine if a card is enrolled for 3-D Secure authentication with a single API request.</p>
                 <p>Integrate in a day, instead of in weeks.</p>
@@ -162,12 +181,12 @@
                 <p>No need to acquire and maintain complicated and expensive licenses from credit card providers or other entities.</p>
               </div>
               <div class="feat-wrap__feat">
-                  <div class="feat-wrap__feat__icon-bg">
-                    <svg width="22px" height="22px">
-                      <use href="/assets/img/cloud.svg#cloud"
-                          xlink:href="/assets/img/cloud.svg#cloud"/>
-                    </svg>
-                  </div>
+                <div class="feat-wrap__feat__icon-bg">
+                  <svg width="22px" height="22px">
+                    <use href="/assets/img/cloud.svg#cloud"
+                        xlink:href="/assets/img/cloud.svg#cloud"/>
+                  </svg>
+                </div>
                 <h4>Managed</h4>
                 <p>Nothing for you to host, manage or keep up to date.</p>
                 <p>This is a Software as a Service (SaaS) solution you can utilise instantly and never need to mind again.</p>
@@ -178,41 +197,45 @@
       </div>
       <div class="pricing-backdrop" id="pricing">
         <section class="pricing">
-          <div class="columns-x3">
-            <div class="pricing__title">
-              <h2>
-                <span>Pricing<br></span>
-                <span>lets you set<br></span>
-                <span>and forget</span>
-              </h2>
-            </div>
-            <div class="pricing__price">
-              <div class="pricing__price__wrap">
-                <div class="pricing__price__wrap__plan"><strong>&euro;599</strong> / month</div>
-                <div class="pricing__price__wrap__discl">price not subject to VAT</div>
+          <div class="pricing__wrap">
+            <div class="pricing__wrap__title"> 
+              <div class="pricing__wrap__title__wrap">
+                <h2>Pricing</h2> 
+                <span class="pricing__wrap__title__wrap__subs">
+                  <span class="pricing__wrap__title__wrap__subs__subtitle">lets you set</span> 
+                  <span class="pricing__wrap__title__wrap__subs__subtitle">and forget</span> 
+                </span>
               </div>
             </div>
-            <div class="pricing__traits">
-              <div class="pricing__traits__trait">
-                <svg width="22px" height="22px">
-                  <use href="/assets/img/checkmark.svg#checkmark"
-                      xlink:href="/assets/img/checkmark.svg#checkmark"/>
-                </svg>
-                <span>No setup fees</span>
+            <div class="pricing__wrap__price">
+              <div class="pricing__wrap__price__wrap">
+                <div class="pricing__wrap__price__wrap__plan"><strong>&euro;599</strong> / month</div>
+                <div class="pricing__wrap__price__wrap__discl">price not subject to VAT</div>
               </div>
-              <div class="pricing__traits__trait">
-                <svg width="22px" height="22px">
-                  <use href="/assets/img/checkmark.svg#checkmark"
-                      xlink:href="/assets/img/checkmark.svg#checkmark"/>
-                </svg>
-                <span>No per transaction fees</span>
-              </div>
-              <div class="pricing__traits__trait">
-                <svg width="22px" height="22px">
-                  <use href="/assets/img/checkmark.svg#checkmark"
-                      xlink:href="/assets/img/checkmark.svg#checkmark"/>
-                </svg>
-                <span>Fixed, predictable pricing</span>
+            </div>
+            <div class="pricing__wrap__traits">
+              <div class="pricing__wrap__traits__wrap">
+                <div class="pricing__wrap__traits__wrap__trait">
+                  <svg width="22px" height="22px">
+                    <use href="/assets/img/checkmark.svg#checkmark"
+                        xlink:href="/assets/img/checkmark.svg#checkmark"/>
+                  </svg>
+                  <span>No per transaction fees</span>
+                </div>
+                <div class="pricing__wrap__traits__wrap__trait">
+                  <svg width="22px" height="22px">
+                    <use href="/assets/img/checkmark.svg#checkmark"
+                        xlink:href="/assets/img/checkmark.svg#checkmark"/>
+                  </svg>
+                  <span>No setup or hidden fees</span>
+                </div>
+                <div class="pricing__wrap__traits__wrap__trait">
+                  <svg width="22px" height="22px">
+                    <use href="/assets/img/checkmark.svg#checkmark"
+                        xlink:href="/assets/img/checkmark.svg#checkmark"/>
+                  </svg>
+                  <span>Fixed, predictable pricing</span>
+                </div>
               </div>
             </div>
           </div>
@@ -222,37 +245,37 @@
         <section class="threeds">
           <div>
             <h2>How 3-D Secure helps your bussiness</h2>
-            <div class="columns-x2-centered">
-              <div class="threeds__pros">
-                <div class="threeds__pros__pro">
+            <div class="threeds__wrap">
+              <div class="threeds__wrap__pros">
+                <div class="threeds__wrap__pros__pro">
                   <svg width="44px" height="44px">
                     <use href="/assets/img/checkmark-square.svg#checkmark-square"
                         xlink:href="/assets/img/checkmark-square.svg#checkmark-square"/>
                   </svg>
                   <span>Preempts and drastically reduces fraudulent chargebacks</span>
                 </div>
-                <div class="threeds__pros__pro">
+                <div class="threeds__wrap__pros__pro">
                   <svg width="44px" height="44px">
                     <use href="/assets/img/checkmark-square.svg#checkmark-square"
                         xlink:href="/assets/img/checkmark-square.svg#checkmark-square"/>
                   </svg>
                   <span>Shifts transaction liability from merchant bank to card issuing bank</span>
                 </div>
-                <div class="threeds__pros__pro">
+                <div class="threeds__wrap__pros__pro">
                   <svg width="44px" height="44px">
                     <use href="/assets/img/checkmark-square.svg#checkmark-square"
                         xlink:href="/assets/img/checkmark-square.svg#checkmark-square"/>
                   </svg>
                   <span>Increases online purchasing due to boosted cardholder confidence</span>
                 </div>
-                <div class="threeds__pros__pro">
+                <div class="threeds__wrap__pros__pro">
                   <svg width="44px" height="44px">
                     <use href="/assets/img/checkmark-square.svg#checkmark-square"
                         xlink:href="/assets/img/checkmark-square.svg#checkmark-square"/>
                   </svg>
                   <span>Reduces declined transactions and processing delays</span>
                 </div>
-                <div class="threeds__pros__pro">
+                <div class="threeds__wrap__pros__pro">
                   <svg width="44px" height="44px">
                     <use href="/assets/img/checkmark-square.svg#checkmark-square"
                         xlink:href="/assets/img/checkmark-square.svg#checkmark-square"/>
@@ -260,15 +283,15 @@
                   <span>Eliminates needless customer friction over dispute handling (no false positives)</span>
                 </div>
               </div>
-              <div class="threeds__explanation">
-                <p class="threeds__explanation__text">
+              <div class="threeds__wrap__explanation">
+                <p class="threeds__wrap__explanation__text">
                   At it's core, the 3-D Secure protocol is a 2-Factor authentication system adapted for credit card transactions.
                   <br><br>
                   It's a security solution verifying that the transacting customer is the legitimate owner of the credit card used by requiring an additional secret. That secret is only shared between the legitimate card owner and the bank that issued the card. In fact, this procedure is often carried out in real-time via an SMS sharing a short-lived password.
                   <br><br>
                   Due to these enhanced authentication measures, popular 3-D Secure systems, including Verified by Visa&reg; and MasterCard SecureCode&reg;, automatically forward most of the liability from the Payment Gateway and the merchant, back to the card-issuing bank instead.
                 </p>
-                <p class="threeds__explanation__more">
+                <p class="threeds__wrap__explanation__more">
                   <a href="#" title="Get a more technical overview">Learn More</a>
                 </p>
               </div>
@@ -286,11 +309,10 @@
                 <span class="footer__credits__title__prefix">Powered by</span>
                 <a class="no-link-style" href="https://www.clearhaus.com/" target="_blank" rel="noopener">
                   <span class="footer__credits__title__suffix">Clearhaus</span>
-                  <img  class="footer__credits__title__clrhs-logo"
-                        src="/assets/img/clearhaus-light.svg"
-                        alt="clearhaus logo white"
-                        width="100px"
-                        height="100px">
+                  <svg class="footer__credits__title__clrhs-logo" width="100px" height="100px">
+                    <use href="/assets/img/clearhaus-light.svg#clearhaus-light"
+                        xlink:href="/assets/img/clearhaus-light.svg#clearhaus-light"/>
+                  </svg>
                 </a>
               </h2>
             </main>
@@ -305,7 +327,7 @@
             </aside>
           </div>
           <div class="footer__btt">
-            <a class="btn btn--outline btn--full-width" href="#top" onclick="smoothScrollToId('top')">Back to top</a>
+            <a class="btn btn--outline btn--full-width" href="#" onclick="smoothScrollToId('top')">Back to top</a>
           </div>
           <div class="footer__copyright">
             &copy; Copyright Clearhaus A/S, <span class="js-year"/>

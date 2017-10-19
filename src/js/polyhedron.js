@@ -64,9 +64,9 @@ var render = function() {
 
 var canvasWatcher = onIsElementInViewPortChange(renderer.domElement, render);
 window.addEventListener('scroll', throttle(canvasWatcher), false);
-window.addEventListener('resize', throttle(canvasWatcher), false);
+window.addEventListener('resize', debounce(canvasWatcher, 10, true), false);
 
-window.addEventListener('resize', throttle(resizeRenderer), false);
+window.addEventListener('resize', debounce(resizeRenderer, 10, true), false);
 
 /*
     Utilities
@@ -76,7 +76,7 @@ function calcRendererSize() {
   if      (window.innerWidth >= 1200) { return 800; }
   else if (window.innerWidth >= 900)  { return 700; }
   else if (window.innerWidth >= 600)  { return 600; }
-  else                                { return 400; }
+  else                                { return 300; }
 }
 
 function resizeRenderer() {
@@ -123,18 +123,17 @@ function debounce(func, msWait, execAsap) {
   var timeout;
 
   return function debounced () {
-      var obj = this, args = arguments;
-      function delayed () {
-          if (!execAsap)
-              func.apply(obj, args);
-          timeout = null;
-      };
+    var obj  = this, 
+        args = arguments;
 
-      if (timeout)
-          clearTimeout(timeout);
-      else if (execAsap)
-          func.apply(obj, args);
+    function delayed () {
+      if (!execAsap) { func.apply(obj, args); }
+      timeout = undefined;
+    }
 
-      timeout = setTimeout(delayed, msWait || 100);
-  };
+    if      (timeout)  { clearTimeout(timeout); }
+    else if (execAsap) { func.apply(obj, args); }
+    
+    timeout = setTimeout(delayed, msWait || 100);
+  }
 }
