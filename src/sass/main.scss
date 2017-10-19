@@ -197,7 +197,7 @@ $ul:  $font-size-base * 8;    // ultra large
   overflow: hidden;
   
     &::before {
-      content: " ";
+      content: "";
       display: block;
       width: 100%;
       height: 530px;
