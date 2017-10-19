@@ -17,6 +17,7 @@ const gulp        = require('gulp'),
       htmlmin     = require('gulp-htmlmin'),
       cachebust   = require('gulp-cache-bust'),
       critical    = require('critical').stream,
+      inline      = require('gulp-inline'),
       gutil       = require('gulp-util'),
       uglifyjs    = require('gulp-uglify');
 
@@ -152,7 +153,7 @@ gulp.task('minify:images', () => {
       imagemin.optipng({ optimizationLevel: 5 }),
       imagemin.svgo({
         plugins: [
-          { removeViewBox: true }
+          { removeViewBox: false }
         ]
       })
     ]))
@@ -212,7 +213,7 @@ gulp.task('minify:css', () => {
 // Generate CSS for production
 gulp.task('generate:css-prod', gulp.series('transpile:sass', 'treeshake:css', 'minify:css'));
 
-// Generate & Inline Critical-path CSS into HTML files
+// Generate & Inline Critical-path CSS and SVGs into HTML files
 gulp.task('inline:html', () => {
   return gulp.src(`${DEST_DIR}/*.html`)
       .pipe(critical({
@@ -225,6 +226,10 @@ gulp.task('inline:html', () => {
         timeout: 30000,
       }))
       .on('error', (err) => { gutil.log(gutil.colors.red(err.message)); })
+      .pipe(inline({
+        base: 'dist/',
+        disabledTypes: ['js', 'css', 'img'], // Only handle inlining of svg files
+      }))
       .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
