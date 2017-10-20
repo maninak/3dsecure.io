@@ -852,7 +852,7 @@ section.threeds {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-left: $color-accent 0.15em solid;
+      border-left: $color-accent 0.16em solid;
       padding-left: 0.8em;
   
       @include for-phone-small-up { margin-top: calc(var(--font-size-base) * 3); }
