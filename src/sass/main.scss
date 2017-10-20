@@ -78,7 +78,7 @@ $color-primary-light: #96cde5;
 $color-primary-dark: #033b53;
 $color-primary-darker: #00141d;
 
-$color-accent: #ec8713;
+$color-accent: #de7f12;
 $color-accent-brighter: #ff8800;
 
 $color-accent-lighter: #ffecd7;
@@ -852,7 +852,7 @@ section.threeds {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-left: $color-accent 0.5em solid;
+      border-left: $color-accent 0.15em solid;
       padding-left: 0.8em;
   
       @include for-phone-small-up { margin-top: calc(var(--font-size-base) * 3); }
