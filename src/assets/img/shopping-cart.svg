@@ -1,41 +1,72 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="shopping-cart" x="0px" y="0px" viewBox="0 0 459.529 459.529" style="enable-background:new 0 0 459.529 459.529;" xml:space="preserve">
-<g>
-	<g>
-		<path d="M17,55.231h48.733l69.417,251.033c1.983,7.367,8.783,12.467,16.433,12.467h213.35c6.8,0,12.75-3.967,15.583-10.2    l77.633-178.5c2.267-5.383,1.7-11.333-1.417-16.15c-3.117-4.817-8.5-7.65-14.167-7.65H206.833c-9.35,0-17,7.65-17,17    s7.65,17,17,17H416.5l-62.9,144.5H164.333L94.917,33.698c-1.983-7.367-8.783-12.467-16.433-12.467H17c-9.35,0-17,7.65-17,17    S7.65,55.231,17,55.231z"/>
-		<path d="M135.433,438.298c21.25,0,38.533-17.283,38.533-38.533s-17.283-38.533-38.533-38.533S96.9,378.514,96.9,399.764    S114.183,438.298,135.433,438.298z"/>
-		<path d="M376.267,438.298c0.85,0,1.983,0,2.833,0c10.2-0.85,19.55-5.383,26.35-13.317c6.8-7.65,9.917-17.567,9.35-28.05    c-1.417-20.967-19.833-37.117-41.083-35.7c-21.25,1.417-37.117,20.117-35.7,41.083    C339.433,422.431,356.15,438.298,376.267,438.298z"/>
-	</g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-</svg>
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="shopping-cart"
+   x="0px"
+   y="0px"
+   viewBox="0 0 459.529 459.529"
+   style="enable-background:new 0 0 459.529 459.529;"
+   xml:space="preserve"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="shopping-cart.svg"><metadata
+     id="metadata47"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs45" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     id="namedview43"
+     showgrid="false"
+     inkscape:zoom="2.0542773"
+     inkscape:cx="270.44334"
+     inkscape:cy="298.75146"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g5" /><g
+     id="g3"><g
+       id="g5"><path
+         d="m 17,53.231 50.733,0 69.417,253.033 c 1.983,7.367 6.783,12.467 14.433,12.467 l 213.35,0 c 6.8,0 12.75,-3.967 15.583,-10.2 l 76.34221,-178.32789 c 1.64375,-5.04924 2.26852,-14.52507 -6.35587,-19.08823 -9.18692,-3.69395 -18.27035,-0.21524 -22.66934,8.11612 -23.55092,53.59199 -27.05058,60.99424 -74.233,167.5 l -189.267,0 L 94.917,33.698 C 92.934,26.331 86.134,21.231 78.484,21.231 l -61.484,0 c -9.35,0 -17,7.65 -17,17 0,9.35 7.6578641,15.383401 17,15 z"
+         id="path7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="sccsscccccccssss" /><path
+         d="M135.433,438.298c21.25,0,38.533-17.283,38.533-38.533s-17.283-38.533-38.533-38.533S96.9,378.514,96.9,399.764    S114.183,438.298,135.433,438.298z"
+         id="path9" /><path
+         d="M376.267,438.298c0.85,0,1.983,0,2.833,0c10.2-0.85,19.55-5.383,26.35-13.317c6.8-7.65,9.917-17.567,9.35-28.05    c-1.417-20.967-19.833-37.117-41.083-35.7c-21.25,1.417-37.117,20.117-35.7,41.083    C339.433,422.431,356.15,438.298,376.267,438.298z"
+         id="path11" /><path
+         id="path3444"
+         d="m 249.51234,204.67616 c 2.3,2.3 5.4,3.5 8.5,3.5 3.1,0 6.1,-1.2 8.5,-3.5 l 77.90001,-77.9 c 3.8825,-3.8825 4.7,-14.3 0,-19 -4.7,-4.7 -16.3,-4.7 -21,0 l -65.40001,65.5 -28.4,-24.4 c -5.03185,-4.32314 -15.14225,-3.41274 -19,2 -4.26974,5.99079 -2.7,16.3 2,21 z"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cscssccsscc" /></g></g><g
+     id="g13" /><g
+     id="g15" /><g
+     id="g17" /><g
+     id="g19" /><g
+     id="g21" /><g
+     id="g23" /><g
+     id="g25" /><g
+     id="g27" /><g
+     id="g29" /><g
+     id="g31" /><g
+     id="g33" /><g
+     id="g35" /><g
+     id="g37" /><g
+     id="g39" /><g
+     id="g41" /></svg>
