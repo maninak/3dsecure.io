@@ -18,7 +18,7 @@
 // declared abov into to the mixins declared below (and keep them synced!) :/
 
 @mixin for-phone-small-up {
-  @media (min-width: 320px) { @content; }
+  @media (min-width: 1px) { @content; }
 }
 
 @mixin for-phone-big-up {
