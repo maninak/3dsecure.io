@@ -60,18 +60,19 @@ function setPaddingSlanted(el, padPosition, desiredPadding, slantAngle) {
  * <a onclick="smoothScroll('info')">
  * 
  * @param {String} elId The id of the DOM element towards which to scroll the page
- * @param {String} pos The position of the element to towards which to scroll. Can be `'middle'`. Defaults to top.
+ * @param {String} position The position of the element to towards which to scroll. Can be `'middle'`. Defaults to top.
  */
-function smoothScrollToId(elId, pos) {
+function smoothScrollToId(elId, position) {
   function currentYPosition() {
     // Firefox, Chrome, Opera, Safari
-    if (self.pageYOffset) return self.pageYOffset;
+    if (self.pageYOffset) { return self.pageYOffset; }
     // Internet Explorer 6 - standards mode
-    if (document.documentElement && document.documentElement.scrollTop)
-        return document.documentElement.scrollTop;
+    else if (document.documentElement && document.documentElement.scrollTop) {
+      return document.documentElement.scrollTop;
+    }
     // Internet Explorer 6, 7 and 8
-    if (document.body.scrollTop) return document.body.scrollTop;
-    return 0;
+    else if (document.body.scrollTop) { return document.body.scrollTop; }
+    else { return 0; }
   }
 
   function elYPosition(elId) {
@@ -80,35 +81,56 @@ function smoothScrollToId(elId, pos) {
     // if so specified, calculate element position so as to scroll to its middle
     // if not specified, default to scrolling to the element's top
     var y;
-    if (pos === 'middle') {
-      y = el.offsetTop + (el.clientHeight /2) - (window.innerHeight / 2);
-    } else {
+    if (position === 'middle') {
+      y = el.offsetTop + (el.clientHeight / 2) - (window.innerHeight / 2);
+    }
+    else {
       y = el.offsetTop;
     }
 
     var node = el;
-    while (node.offsetParent && node.offsetParent != document.body) {
+    while ((node.offsetParent) && (node.offsetParent != document.body)) {
       node = node.offsetParent;
       y += node.offsetTop;
-    } return y;
+    }
+    
+    return y;
   }
 
   var startY = currentYPosition();
   var stopY = elYPosition(elId);
-  var distance = stopY > startY ? stopY - startY : startY - stopY;
-  if (distance < 100) {
-    scrollTo(0, stopY); return;
-  }
-  var speed = Math.round(distance / 100);
-  if (speed >= 20) speed = 20;
-  var step = Math.round(distance / 25);
-  var leapY = stopY > startY ? startY + step : startY - step;
-  var timer = 0;
-  if (stopY > startY) {
-    for ( var i=startY; i<stopY; i+=step ) {
+  var distance = (stopY > startY) ? stopY - startY : startY - stopY;
+  
+  if (distance < 100) { 
+    scrollTo(0, stopY);
+    return; 
+  } 
+    
+  var speed = Math.round(distance / 100); 
+  if (speed >= 20) { speed = 20; } 
+    
+  var step = Math.round(distance / 25); 
+  var leapY = (stopY > startY) ? startY + step : startY - step; 
+  var timer = 0; 
+    
+  if (stopY > startY) { 
+    for (var i = startY; i < stopY; i += step) { 
       setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-      leapY += step; if (leapY > stopY) leapY = stopY; timer++;
-    } return;
+      document.dispatchEvent(new Event('scroll')); 
+      leapY += step;
+      if (leapY > stopY) { leapY = stopY; }
+      timer++;
+    }
+  }
+  else if (stopY <= startY) {
+    for (var i = startY; i > stopY; i -= step) { 
+      setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
+      leapY -= step;
+      if (leapY < stopY) { leapY = stopY; }
+      timer++;
+    }
+  }
+}
   }
   for ( var i=startY; i>stopY; i-=step ) {
     setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
