@@ -358,6 +358,9 @@ body {
     Header (contains `Navbar` and `Hero` sections)
 */
 header {
+  // 86px by default with current design. On navbar design change, this values must be updated manually.
+  --length-navbar-height: calc(var(--font-size-base) * 4.3);
+
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -378,17 +381,26 @@ header {
     min-height: 0px;
     max-height: 900px;
   }
+  
+  // TODO test transitioning opacity as well
+  .js-navbar--hidden  { transform: translateY(calc(0px - var(--length-navbar-height))); }
+  .js-navbar--visible { transform: translateY(0px); }
 }
 
 /*
     Navbar section
 */
 section.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0px;
   padding-top: $md;
   padding-bottom: $md;
   font-family: $font-calibre;
   font-size: 0.9em;
   color: $color-white-trans;
+  z-index: 10;
+  transition: transform 0.4s;
 
   .navbar__wrap {
     display: flex;
@@ -445,7 +457,8 @@ section.navbar {
     Hero section
 */
 section.hero {
-  padding-top: calc(calc(var(--font-size-base) * 1) + 8vw); // default is 60px + 8vw
+  // 60px + 8vw + 86px (86px == height of navbar) by default
+  padding-top: calc(calc(var(--font-size-base) * 1) + 8vw + var(--length-navbar-height));
   padding-bottom: calc(calc(var(--font-size-base) * 1) + 8vw);
   color: $color-white;
 
@@ -561,7 +574,7 @@ section.hero {
 }
 
 section.features {
-  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // 60px + 8vw by default
   padding-bottom: calc(calc(var(--font-size-base) * 3) + 8vw);
 
   h2,
@@ -617,7 +630,7 @@ section.features {
     Pricing section
 */
 section.pricing {
-  padding-top: calc(calc(var(--font-size-base) * 4) + 14vw); // default is 80px + 14vw
+  padding-top: calc(calc(var(--font-size-base) * 4) + 14vw); // 80px + 14vw by default
   padding-bottom: calc(calc(var(--font-size-base) * 4) + 14vw);
   color: $color-black-trans;
 
@@ -785,7 +798,7 @@ section.pricing {
 }
 
 section.threeds {
-  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // 60px + 8vw by default
   padding-bottom: calc(calc(var(--font-size-base) * 3) + 8vw);
   font-family: $font-calibre;
   color: $color-white-trans;
@@ -879,13 +892,13 @@ footer {
 }
 
 section.footer {
-  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+  padding-top: calc(calc(var(--font-size-base) * 3) + 8vw); // 60px + 8vw by default
   font-family: $font-calibre;
   color: $color-white-trans;
 
   .footer__credits {
     display: grid;
-    margin-bottom: calc(calc(var(--font-size-base) * 3) + 8vw); // default is 60px + 8vw
+    margin-bottom: calc(calc(var(--font-size-base) * 3) + 8vw); // 60px + 8vw by default
 
     @include for-phone-small-up {
       grid-template-rows: auto

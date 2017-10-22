@@ -133,17 +133,65 @@ function smoothScrollToId(elId, position) {
     }
   }
 }
+
+
+
+/*-----------------------------*\
+ *  Navbar
+\*-----------------------------*/
+
+var navbarEl = document.querySelector('section.navbar');
+var navbarHeight = navbarEl.clientHeight;
+var prevTime = 0;
+var prevY = document.body.scrollTop; // init with distance of viewport's top from webpages's top
+var minScrollSpeed = 0.75; // speed in px/sec, less than which navbar will not be pushed around
+var minTimeBetweenScrolls = 50; // minimum time between navbar state re-evaluation (performance)
+
+/**
+ * When invoked upon each scroll event, it evaluates whether the navbar CSS state should be updated
+ * and does it if so.
+ * 
+ * It instantly hides the navbar on downward scroll. On upward scrolls the navbar is hidden only
+ * if user scrolled fast enough (requires assured intention from user and provides affordance until
+ * then).
+ * 
+ * @param {{}} event The latest scroll event
+ */
+function evaluateNavbarState(event) {
+  var newTime = event.timeStamp;
+  var newY = document.body.scrollTop;
+
+  // if scrolling events come too often, ignore them until some time has passed
+  if ((newTime - prevTime) < minTimeBetweenScrolls) { return; }
+  
+  var scrollSpeed = (newY - prevY) / (newTime - prevTime);
+  console.log('scrollSpeed', scrollSpeed); // TODO delete
+
+  // If viewport is not past navbar, enforce that it's visible
+  if (newY <= navbarHeight) {
+    navbarEl.classList.remove('js-navbar--hidden');
+    navbarEl.classList.add('js-navbar--visible');
   }
-  for ( var i=startY; i>stopY; i-=step ) {
-    setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-    leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
+  // If user scrolled downwards and is past the navbar, instantly hide it
+  else if (scrollSpeed > 0) { 
+    navbarEl.classList.remove('js-navbar--visible');
+    navbarEl.classList.add('js-navbar--hidden');
+  }
+  // Else if user scrolled upwards and fast, bring navbar into viewport
+  else if ((scrollSpeed < 0) && (Math.abs(scrollSpeed) >= minScrollSpeed)) {
+    console.log('FAST SCROLL UP:', scrollSpeed); // TODO delete
+    navbarEl.classList.remove('js-navbar--hidden');
+    navbarEl.classList.add('js-navbar--visible');
   }
 
-  document.dispatchEvent(new Event('scroll'));
+  prevTime = newTime;
+  prevY = newY;
 }
 
 
 
 /*-----------------------------*\
- *  Initialization
+ *  Event listeners
 \*-----------------------------*/
+
+window.addEventListener('scroll', function(event) { evaluateNavbarState(event); });
