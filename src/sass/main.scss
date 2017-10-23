@@ -288,12 +288,29 @@ $ul:  calc(var(--font-size-base) * 8);    // ultra large
   text-align: center;
 }
 
-.btn--accent {
-  background-color: $color-accent;
+.btn--primary {
+  border: 1px solid $color-primary;
+  background-color: $color-primary;
   color: $color-white;
-  transition: background-color 0.1s ease;
+  transition: border-color 0.1s ease,
+              background-color 0.1s ease;
 
   &:hover {
+    border-color: $color-primary-brighter;
+    background-color: $color-primary-brighter;
+    color: $color-white;
+  }
+}
+
+.btn--accent {
+  border: 1px solid $color-accent;
+  background-color: $color-accent;
+  color: $color-white;
+  transition: border-color 0.1s ease,
+              background-color 0.1s ease;
+
+  &:hover {
+    border-color: $color-accent-brighter;
     background-color: $color-accent-brighter;
     color: $color-white;
   }
@@ -386,10 +403,6 @@ header {
     min-height: 0px;
     max-height: 900px;
   }
-  
-  // TODO test transitioning opacity as well
-  .js-navbar--hidden  { transform: translateY(calc(0px - var(--length-navbar-height))); }
-  .js-navbar--visible { transform: translateY(0px); }
 }
 
 /*
@@ -402,13 +415,32 @@ section.navbar {
   padding-top: $md;
   padding-bottom: $md;
   font-family: $font-calibre;
-  font-size: 0.9em;
-  color: $color-white-trans;
+  font-size: 0.8em;
   z-index: 10;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.1 ease;
-  transition: transform 0.4s;
-  will-change: box-shadow, transform;
+  transition: color 0.3s ease,
+              background-color 0.3s ease,
+              box-shadow 0.3s ease,
+              transform 0.4s;
+  will-change: color, background-color, box-shadow, transform;
+  
+  // TODO test transitioning opacity as well
+  &.js-navbar--visible { transform: translateY(0px); }
+  &.js-navbar--hidden  { transform: translateY(calc(0px - var(--length-navbar-height))); }
+  &.js-navbar--attached {
+    color: $color-white-trans;
+    background-color: transparent;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, $opacity-none);
+  }
+  &.js-navbar--detached {
+    color: $color-black-trans;
+    background-color: $color-white;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    
+    *:hover:not(.btn),
+    *:hover * {
+      color: $color-black !important;
+    }
+  }
 
   .navbar__wrap {
     @include layout_main-content-column;
