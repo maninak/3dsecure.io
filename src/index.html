@@ -1,7 +1,9 @@
 <html>
   <head>
     <!-- Asset preloaders -->
-    <link href="/polyhedron.js" rel="preload" as="script">
+    <link rel="preload" href="/polyhedron.js" as="script">
+    <!-- Service worker -->
+    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js') }</script>
     <!-- Meta data -->
     <meta name=viewport content="width=device-width, initial-scale=1.0">
     <meta http-equiv="cache-control" content="public, max-age=31536000">
