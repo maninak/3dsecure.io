@@ -237,6 +237,25 @@ $ul:  calc(var(--font-size-base) * 8);    // ultra large
                         'content-3';
 }
 
+@mixin layout_main-content-column {
+  margin-right: auto;
+  margin-left: auto;
+
+  @include for-phone-small-up {
+    // calc(var(--font-size-base) * 1) offsets padding
+    max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 1));
+    padding-right: calc(var(--font-size-base) * 1);
+    padding-left: calc(var(--font-size-base) * 1);
+  }
+
+  @include for-phone-big-up {
+    // calc(var(--font-size-base) * 2) offsets padding
+    max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 2));
+    padding-right: calc(var(--font-size-base) * 2);
+    padding-left: calc(var(--font-size-base) * 2);
+  }
+}
+
 /*
     Button HTML helper classes
 */
@@ -335,22 +354,8 @@ body {
   min-width: 320px;
   font-size: calc(var(--font-size-base) * 1);
 
-  section {
-    margin: 0 auto;
-
-    @include for-phone-small-up {
-      // calc(var(--font-size-base) * 1) offsets padding
-      max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 1));
-      padding-right: calc(var(--font-size-base) * 1);
-      padding-left: calc(var(--font-size-base) * 1);
-    }
-
-    @include for-phone-big-up {
-      // calc(var(--font-size-base) * 2) offsets padding
-      max-width: calc(var(--brkp_tablet-lg_vs_desktop-sm) - calc(var(--font-size-base) * 2));
-      padding-right: calc(var(--font-size-base) * 2);
-      padding-left: calc(var(--font-size-base) * 2);
-    }
+  section:not(.navbar) {
+    @include layout_main-content-column;
   }
 }
 
@@ -400,9 +405,14 @@ section.navbar {
   font-size: 0.9em;
   color: $color-white-trans;
   z-index: 10;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.1 ease;
   transition: transform 0.4s;
+  will-change: box-shadow, transform;
 
   .navbar__wrap {
+    @include layout_main-content-column;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
