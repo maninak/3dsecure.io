@@ -199,7 +199,12 @@ gulp.task('minify:js', () => {
 // Remove unutilized CSS rules
 gulp.task('treeshake:css', () => {
   return gulp.src(`${DEST_DIR}/*.css`)
-    .pipe(uncss({ html: [HTML_SRC_GLOB] }))
+    .pipe(uncss({
+      html: [HTML_SRC_GLOB],
+      ignore: [
+        /[^ ]*\.js-[^ {]*/, // never remove css rules like `.js-navbar-visible`
+      ]
+    }))
     .pipe(gulp.dest(`${DEST_DIR}`));
 });
 
