@@ -19,7 +19,8 @@ const gulp        = require('gulp'),
       critical    = require('critical').stream,
       inline      = require('gulp-inline'),
       gutil       = require('gulp-util'),
-      uglifyjs    = require('gulp-uglify');
+      uglifyjs    = require('gulp-uglify'),
+      webserver   = require('gulp-webserver');
 
 
 
@@ -130,8 +131,8 @@ gulp.task('watch:sass', () => {
 // Wrapper task that calls all watchers
 gulp.task('watch:all', gulp.parallel('watch:assets', 'watch:html', 'watch:js', 'watch:sass'));
 
-// Launch a web server
-gulp.task('launch:web-server', (done) => {
+// Launch a web server configured for development
+gulp.task('launch:webserver-dev', (done) => {
   browserSync({
     server: { baseDir: DEST_DIR },
     open: false,
@@ -139,7 +140,7 @@ gulp.task('launch:web-server', (done) => {
 });
 
 // Serve unoptimized code and watch for src changes
-gulp.task('serve:dev', gulp.series('build:dev', gulp.parallel('launch:web-server', 'watch:all')));
+gulp.task('serve:dev', gulp.series('build:dev', 'launch:webserver-dev', 'watch:all'));
 
 /*
     Production
@@ -261,3 +262,15 @@ gulp.task('build:prod',
     gulp.series('clean:dest', 
         gulp.parallel('generate:assets-prod', 
             gulp.series(gulp.parallel('minify:js', 'generate:css-prod'), 'generate:html-prod'))));
+
+// Launch a web server configured for production
+gulp.task('launch:webserver-prod', (done) => {
+  return gulp.src(`${DEST_DIR}`)
+    .pipe(webserver({
+      port: 8000,
+    })
+  );
+});
+            
+// Serve fully optimized, production code (does not watch for file changes)
+gulp.task('serve:prod', gulp.series('build:prod', 'launch:webserver-prod'));
