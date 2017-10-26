@@ -192,8 +192,8 @@ function evaluateNavbarState(event) {
   var newTime = event.timeStamp;
   var newY = document.body.scrollTop;
 
-  if ((!isNavbarAttached) && (newY > 0)) {} // performance optimization
-  else if (newY > 0) { setNavbarDetached(); }
+  if ((!isNavbarAttached) && (newY > navbarHeight * 2)) {} // performance optimization
+  else if (newY > navbarHeight * 2) { setNavbarDetached(); }
   else { setNavbarAttached(); }
 
   // if scrolling events come too often, avoid further processing until some time has passed
